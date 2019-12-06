@@ -35,8 +35,8 @@ class vector3D {
 
   scl(num) {
   /*
-  * Multiplica el vector por un escalar
   * @param {number}
+  * Multiplica el vector por un escalar
   */
     this.x *= num;
     this.y *= num;
@@ -54,4 +54,11 @@ class vector3D {
     return;
   }
 
+  static add(a,b) {
+    return new vector3D(a.x + b.x, a.y + b.y, a.z + b.z);
+  }
+
+  static sub(a,b) {
+    return new vector3D(a.x - b.x, a.y - b.y, a.z - b.z);
+  }
 }
