@@ -4,52 +4,55 @@ body {
   background-attachment: fixed;
   background-size: cover;
   margin: 0;
-  height: 100vh;
 }
 
 body h1 {
-  color: #00CDB8;
+  color: #060b4b;
   text-align: center;
   font-size: 4em;
-  text-shadow: 3px 3px 2px #10FFE6;
+  text-shadow: 3px 3px 2px #a8ceb5;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 body ul.menu {
+  display: block;
   list-style-type: none;
   padding: 0;
   position: absolute;
+  left: 0;
+  right: 0;
   top: 0;
   bottom: 0;
   margin: auto;
-  width: 50%;
+  width: 60%;
   height: 19em;
+  text-align: center;
 }
 
 body ul.menu li.menu-item {
-  font-size: 1.5em;
-  width: 60%;
-  display: block;
-  background-color: #77A1F5;
-  color: #005950;
+  margin: auto;
+  background-color: #6e9fbd;
   line-height: 3;
   margin: 0 0 1em;
   text-align: center;
-  border-radius: 0 1.5em 1.5em 0;
+  border-radius: 0 1.5em;
   -webkit-transition: width 0.4s ease-in-out, -webkit-box-shadow 0.4s ease-in-out;
   transition: width 0.4s ease-in-out, -webkit-box-shadow 0.4s ease-in-out;
   transition: width 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
   transition: width 0.4s ease-in-out, box-shadow 0.4s ease-in-out, -webkit-box-shadow 0.4s ease-in-out;
   font-family: Arial, Helvetica, sans-serif;
+  width: 50%;
+  display: inline-block;
 }
 
 body ul.menu li.menu-item span {
+  color: #060b4b;
   width: 70%;
 }
 
 body ul.menu li.menu-item:hover {
   cursor: pointer;
-  width: 90%;
-  -webkit-box-shadow: 5px 5px 2px #011234;
-          box-shadow: 5px 5px 2px #011234;
+  width: 60%;
+  -webkit-box-shadow: 5px 5px 2px #a8ceb5;
+          box-shadow: 5px 5px 2px #a8ceb5;
 }
