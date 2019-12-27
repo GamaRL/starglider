@@ -13,6 +13,7 @@ let flyControls;
 let time;
 let targets = [];
 let nave_img;
+let muertos = 0;
 
 function config() {
     ////Instanciamos un nuevo objeto Scane////
@@ -20,8 +21,8 @@ function config() {
 
     ////Instanciamos una cámara y se configura su posición////
     camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 0, -2);
-    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    camera.position.set(0, 0, 0);
+    camera.lookAt(new THREE.Vector3(0, 2, 0));
 
     ////Instanciamos un renderer que nos permite crear escenas en 3D, configuramos su tamaño////
     renderer = new THREE.WebGLRenderer();
@@ -34,9 +35,9 @@ function config() {
 
     ////flyControls nos permitira simular el movimiento permitiendonos girar y trasladarnos////
     flyControls = new THREE.FlyControls(camera, document.querySelector("#game_output"));
-    flyControls.movementSpeed = 0.5;
-    flyControls.rollSpeed = Math.PI / 30;
-    // flyControls.autoForward = true;
+    flyControls.movementSpeed = 1;
+    flyControls.rollSpeed = Math.PI / 9;
+    flyControls.autoForward = true;
     flyControls.dragToLook = false;
 
     time = new THREE.Clock();
@@ -53,7 +54,14 @@ let balas = [];
 
 function maketargets(nave_img) {
     for (let i = 0; i < 50; i++) {
-        targets[i] = new Nave(new THREE.Vector3(Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5), new THREE.Vector3(), nave_img.clone());
+        let x = (Math.random() - 0.5) * 17 - 8;
+        let y = (Math.random() - 0.5) * 17 - 8;
+        let z = (Math.random() - 0.5) * 17 - 8;
+        targets[i] = new Nave(new THREE.Vector3(x, y, z),
+            camera.position,
+            nave_img.clone()
+        );
+
         targets[i].nave_img.name = "target" + i;
     }
     console.log(scene);
@@ -74,15 +82,23 @@ function init() {
         console.error(error);
     });
 
+    for (let i = 0; i < 10; i++) {
+        let material = new THREE.MeshBasicMaterial({color: 0xffffff * Math.random()});
+        let geometry = new THREE.SphereGeometry(2, 32, 32);
+        let mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+        mesh.position.set(Math.random() * 15 - 7, Math.random() * 15 - 7, Math.random() * 15 - 7);
+    }
+
     document.onkeypress = (evt) => {
-        if (balas.length < 50 && evt.keyCode === 32) {
+        if (balas.length < 70 && evt.keyCode === 32) {
             let disparador = new THREE.Vector3(0, -0.3, 0);
             disparador.unproject(camera);
             let velocity = new THREE.Vector3(0, 0, 1);
             velocity.unproject(camera);
 
             velocity.sub(disparador).normalize();
-            velocity.multiplyScalar(10);
+            velocity.multiplyScalar(150);
 
             balas.push(new Bala(disparador, velocity));
         }
@@ -101,7 +117,13 @@ function init() {
             if (crash_object) {
                 scene.remove(crash_object);
                 targets = targets.filter(target => target.name !== crash_object.name);
+                muertos++;
+                console.log(muertos);
             }
+        }
+
+        for (let i = 0; i < targets.length; i++) {
+            targets[i].update(delta, camera.position);
         }
         balas = balas.filter(bala => bala.vida > 0);
 
