@@ -9,7 +9,8 @@ body {
 body h1 {
   color: #060b4b;
   text-align: center;
-  font-size: 4em;
+  font-size: 3em;
+  color: red;
   text-shadow: 3px 3px 2px #a8ceb5;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
