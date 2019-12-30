@@ -4,131 +4,34 @@
  * Author: undefined
  */
 
-window.onload = init;
-
-let camera;
-let renderer;
-let scene;
-let flyControls;
-let time;
+// window.onload = init;
 let targets = [];
 let nave_img;
+let loader = new THREE.GLTFLoader();
+
 let muertos = 0;
+loader.load('../statics/3Dmodels/nave.glb', function (gltf) {
+    nave_img = gltf.scene.children[2];
+    nave_img.scale.set(0.1, 0.1, 0.1);
+    // nave_img.rotation.set(0, 0, Math.PI / 2);
+    init();
+}, undefined, function (error) {
+    console.error(error);
+});
 
-function config() {
-    ////Instanciamos un nuevo objeto Scane////
-    scene = new THREE.Scene();
-
-    ////Instanciamos una cámara y se configura su posición////
-    camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 0, 0);
-    camera.lookAt(new THREE.Vector3(0, 2, 0));
-
-    ////Instanciamos un renderer que nos permite crear escenas en 3D, configuramos su tamaño////
-    renderer = new THREE.WebGLRenderer();
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(new THREE.Color(0x080034));
-
-    //Se crea un canvas dentro de "game_output para dibujar ahí las escenas
-    document.getElementById("game_output").appendChild(renderer.domElement);
-
-    ////flyControls nos permitira simular el movimiento permitiendonos girar y trasladarnos////
-    flyControls = new THREE.FlyControls(camera, document.querySelector("#game_output"));
-    flyControls.movementSpeed = 1;
-    flyControls.rollSpeed = Math.PI / 9;
-    flyControls.autoForward = true;
-    flyControls.dragToLook = false;
-
-    time = new THREE.Clock();
-    var light = new THREE.PointLight(0xffff, 3, 100);
-    light.position.set(0, 0, 0);
-    light.lookAt(0, 0, 0);
-    scene.add(light);
-
-    let ax = new THREE.AxesHelper(100);
-    scene.add(ax);
-}
-
-let balas = [];
-
-function maketargets(nave_img) {
-    for (let i = 0; i < 50; i++) {
-        let x = (Math.random() - 0.5) * 17 - 8;
-        let y = (Math.random() - 0.5) * 17 - 8;
-        let z = (Math.random() - 0.5) * 17 - 8;
-        targets[i] = new Nave(new THREE.Vector3(x, y, z),
-            camera.position,
-            nave_img.clone()
-        );
-
-        targets[i].nave_img.name = "target" + i;
-    }
-    console.log(scene);
-}
 
 function init() {
-    config();
-    let mira = new Mira();
-    var loader = new THREE.GLTFLoader();
 
-    loader.load('../statics/3Dmodels/nave.glb', function (gltf) {
-        nave_img = gltf.scene.children[2];
-        nave_img.scale.set(0.1, 0.1, 0.1);
-        nave_img.rotation.set(0, 0, Math.PI / 2);
-        console.log(nave_img);
-        maketargets(nave_img);
-    }, undefined, function (error) {
-        console.error(error);
-    });
+    game = new Juego("game_output");
+    game.models = [nave_img];
+    game.maketargets();
 
-    for (let i = 0; i < 10; i++) {
-        let material = new THREE.MeshBasicMaterial({color: 0xffffff * Math.random()});
-        let geometry = new THREE.SphereGeometry(2, 32, 32);
-        let mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh);
-        mesh.position.set(Math.random() * 15 - 7, Math.random() * 15 - 7, Math.random() * 15 - 7);
-    }
-
-    document.onkeypress = (evt) => {
-        if (balas.length < 70 && evt.keyCode === 32) {
-            let disparador = new THREE.Vector3(0, -0.3, 0);
-            disparador.unproject(camera);
-            let velocity = new THREE.Vector3(0, 0, 1);
-            velocity.unproject(camera);
-
-            velocity.sub(disparador).normalize();
-            velocity.multiplyScalar(150);
-
-            balas.push(new Bala(disparador, velocity));
-        }
-    };
 
 
     render();
 
     function render() {
-        let delta = time.getDelta();
-        mira.update();
-
-        for (let i = 0; i < balas.length; i++) {
-            var crash_object = balas[i].update(delta);
-
-            if (crash_object) {
-                scene.remove(crash_object);
-                targets = targets.filter(target => target.name !== crash_object.name);
-                muertos++;
-                console.log(muertos);
-            }
-        }
-
-        for (let i = 0; i < targets.length; i++) {
-            targets[i].update(delta, camera.position);
-        }
-        balas = balas.filter(bala => bala.vida > 0);
-
-        flyControls.update(delta);
+        game.update();
         requestAnimationFrame(render);
-        renderer.render(scene, camera);
     }
 }

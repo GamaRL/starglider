@@ -6,11 +6,11 @@
  */
 
 class Mira {
-    constructor() {
+    constructor(id_container) {
         this.img = document.createElement("img");
         this.img.setAttribute("id", "mira");
-        this.img.setAttribute("src", "../statics/images/mira.png")
-        let container = document.getElementById("game_output");
+        this.img.setAttribute("src", "../statics/images/mira.png");
+        let container = document.getElementById(id_container);
         this.rotation = 0;
         container.appendChild(this.img);
     }
