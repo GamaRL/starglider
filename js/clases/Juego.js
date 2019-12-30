@@ -60,10 +60,10 @@ class Juego {
     }
 
     maketargets() {
-        for (let i = 0; i < 50; i++) {
-            let x = (Math.random() - 0.5) * 17 - 8;
-            let y = (Math.random() - 0.5) * 17 - 8;
-            let z = (Math.random() - 0.5) * 17 - 8;
+        for (let i = 0; i < 1; i++) {
+            let x = (Math.random() - 0.5) * 17;
+            let y = (Math.random() - 0.5) * 17;
+            let z = (Math.random() - 0.5) * 17;
             this.targets[i] = new Nave(
                 new THREE.Vector3(x, y, z),
                 game.camera.position,
@@ -94,7 +94,7 @@ class Juego {
         }
         this.player.balas = this.player.balas.filter(bala => bala.vida > 0);
 
-        this.flyControls.update(delta);
+        // this.flyControls.update(delta);
         this.renderer.render(this.scene, this.camera);
     }
 

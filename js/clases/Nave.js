@@ -21,8 +21,17 @@ class Nave {
     update(dt) {
         let acc = new THREE.Vector3(this.nave_img.position.x, this.nave_img.position.y, this.nave_img.position.z).sub(game.camera.position).normalize().negate();
 
+        // let d_ = new THREE.Vector3().copy(this.nave_img.position);
+        // d_.sub(game.camera.position);
+
         this.nave_img.position.addScaledVector(this.velocidad, dt);
         this.nave_img.lookAt(game.camera.position);
+        // this.nave_img.rotation.z = -this.velocidad.z;
+        // this.nave_img.rotation.set(
+        //     Math.atan(d_.y / d_.z),
+        //     Math.atan(d_.x / d_.z),
+        //     Math.atan(d_.x / d_.y)
+        // );
         this.velocidad.addScaledVector(acc, dt);
     }
 }
