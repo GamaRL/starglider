@@ -30,6 +30,7 @@ function init() {
 
     function render() {
         game.update();
+        game.radar.render(game.camera);
         requestAnimationFrame(render);
     }
 }

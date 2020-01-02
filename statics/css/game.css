@@ -17,3 +17,17 @@ img#mira {
     right: 0;
     margin: auto;
 }
+
+div.radar {
+    display: block;
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    border-radius: 50%;
+    overflow: hidden;
+    z-index: 3;
+    right: 0.5em;
+    top: 0.5em;
+    background-color: transparent;
+}
+
