@@ -58,9 +58,9 @@ class Juego {
 
                 let velocity = new THREE.Vector3();
                 this.camera.getWorldDirection(velocity).normalize();
-                velocity.multiplyScalar(150);
+                velocity.multiplyScalar(500);
 
-                this.player.balas.push(new Bala(disparador, velocity, 0x0EBDB8));
+                this.player.balas.push(new Bala(disparador, velocity, 0x0BBD20));
             }
         };
     };

@@ -13,7 +13,7 @@ class Bala {
             wireframe: true
         }));
         this.dibujo.position.set(position.x, position.y, position.z);
-        this.vida = 2;
+        this.vida = 0.5;
         game.scene.add(this.dibujo);
     }
 
@@ -27,7 +27,6 @@ class Bala {
         if (intersects.length > 0) {
             this.vida = 0;
             crash_object = intersects[0].object;
-            console.log(crash_object);
         } else {
 
             this.dibujo.position.add(velocity);

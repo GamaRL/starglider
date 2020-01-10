@@ -30,10 +30,7 @@ class Nave {
 
     update(dt, camera, balas) {
         let acc = new THREE.Vector3(
-            this.nave_img.position.x,
-            this.nave_img.position.y,
-            this.nave_img.position.z
-        ).sub(game.camera.position).negate().normalize().multiplyScalar(0.5);
+        ).copy(this.nave_img.position).sub(game.camera.position).negate().normalize().multiplyScalar(0.1);
 
         this.nave_img.position.addScaledVector(this.velocidad, dt);
         this.nave_img.lookAt(camera.position);
@@ -46,8 +43,10 @@ class Nave {
         );
 
         let distance = new THREE.Vector3().copy(camera.position).sub(this.nave_img.position).length();
-        if (distance < 6 && distance > 2 && Math.random() > 0.75) {
-            let bala_velocity = new THREE.Vector3().copy(camera.position).sub(this.nave_img.position).normalize().multiplyScalar(150);
+        if (distance < 6 && distance > 2 && Math.random() > 0.8) {
+            let bala_velocity = new THREE.Vector3().copy(camera.position).sub(this.nave_img.position);
+            bala_velocity.add(new THREE.Vector3(Math.random/5, Math.random()/5, Math.random()/5));
+            bala_velocity.normalize().multiplyScalar(150);
             this.disparar(bala_velocity, balas);
         }
     }
