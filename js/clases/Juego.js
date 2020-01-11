@@ -12,8 +12,8 @@ class Juego {
 
         ////Instanciamos una cámara y se configura su posición////
         this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
-        this.camera.position.set(0, 0, 0);
-        this.camera.lookAt(new THREE.Vector3(0, 0, 1));
+        this.camera.position.set(0, 0, 10);
+        this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
         ////Instanciamos un renderer que nos permite crear escenas en 3D, configuramos su tamaño////
         this.renderer = new THREE.WebGLRenderer();
@@ -26,7 +26,7 @@ class Juego {
 
         ////flyControls nos permitira simular el movimiento permitiendonos girar y trasladarnos////
         this.flyControls = new THREE.FlyControls(this.camera, document.querySelector("#" + id_element));
-        // this.flyControls.movementSpeed = 0.5;
+        this.flyControls.movementSpeed = 0.5;
         this.flyControls.rollSpeed = Math.PI / 10;
         this.flyControls.autoForward = true;
         this.flyControls.dragToLook = false;
@@ -38,7 +38,6 @@ class Juego {
 
         var light = new THREE.PointLight(0xffff, 1, 100);
         light.position.set(0, 0, 0);
-        light.lookAt(0, 20, 0);
         this.scene.add(light);
 
         this.mira = new Mira(id_element);
@@ -50,23 +49,35 @@ class Juego {
         this.targets_objects = []; //Guarda los las imégenes que se van creando en la escena. Será un subconjunto de targets
 
         this.balas_enemigas = [];
+        let s_geom = new THREE.SphereBufferGeometry(1,32,32);
+        let s_mat = new THREE.MeshBasicMaterial({color: 0xffffff});
+        for (let i=0; i<50; i++) {
+            let s = new THREE.Mesh(s_geom, s_mat);
+            s.position.set(Math.random() * 1000 - 500, Math.random() * 1000 - 500, Math.random() * 1000 - 500);
+            // s.position.set(new THREE.Vector3());
+            this.scene.add(s);
+        }
 
         document.onkeypress = (evt) => {
-            if (this.player.balas.length < 70 && evt.keyCode === 32) {
-                let disparador = new THREE.Vector3(0, -0.3, 0);
-                disparador.unproject(this.camera);
+            if (evt.keyCode === 32) {
+                let disparador1 = new THREE.Vector3(1, 0, 0);
+                disparador1.unproject(this.camera);
+
+                let disparador2 = new THREE.Vector3(-1, 0, 0);
+                disparador2.unproject(this.camera);
 
                 let velocity = new THREE.Vector3();
                 this.camera.getWorldDirection(velocity).normalize();
                 velocity.multiplyScalar(500);
 
-                this.player.balas.push(new Bala(disparador, velocity, 0x0BBD20));
+                this.player.balas.push(new Bala(disparador1, velocity, 0x0BBD20));
+                this.player.balas.push(new Bala(disparador2, velocity, 0x0BBD20));
             }
         };
     };
 
     maketargets() {
-        for (let i = 0; i < 20;    i++) {
+        for (let i = 0; i < 20; i++) {
             let x = (Math.random() - 0.5) * 17;
             let y = (Math.random() - 0.5) * 17;
             let z = (Math.random() - 0.5) * 17;

@@ -7,12 +7,12 @@
 
 class Bala {
     constructor(position, velocity, color) {
-        this.velocity = new THREE.Vector3(velocity.x, velocity.y, velocity.z);
-        this.dibujo = new THREE.Mesh(new THREE.SphereGeometry(0.01, 32, 32), new THREE.MeshBasicMaterial({
+        this.velocity = new THREE.Vector3().copy(velocity);
+        this.dibujo = new THREE.Mesh(new THREE.SphereBufferGeometry(0.1, 4, 4), new THREE.MeshBasicMaterial({
             color,
             wireframe: true
         }));
-        this.dibujo.position.set(position.x, position.y, position.z);
+        this.dibujo.position.copy(position);
         this.vida = 0.5;
         game.scene.add(this.dibujo);
     }
@@ -24,11 +24,10 @@ class Bala {
         let velocity = new THREE.Vector3(this.velocity.x, this.velocity.y, this.velocity.z);
         velocity.multiplyScalar(dt);
 
-        if (intersects.length > 0) {
+        if (intersects.length > 0 && this.vida > 0.45) {
             this.vida = 0;
             crash_object = intersects[0].object;
         } else {
-
             this.dibujo.position.add(velocity);
             this.vida -= dt;
         }
