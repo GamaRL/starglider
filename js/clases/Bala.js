@@ -6,9 +6,9 @@
  */
 
 class Bala {
-    constructor(position, velocity, color) {
+    constructor(position, velocity, color, geometry = new THREE.SphereBufferGeometry(0.1, 5, 5)) {
         this.velocity = new THREE.Vector3().copy(velocity);
-        this.dibujo = new THREE.Mesh(new THREE.SphereBufferGeometry(0.1, 4, 4), new THREE.MeshBasicMaterial({
+        this.dibujo = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({
             color,
             wireframe: true
         }));

@@ -7,11 +7,11 @@
 
 class Nave {
     constructor(position, grav_center, nave_img, radar) {
-        this.velocidad = new THREE.Vector3(5*Math.random() - 2.5, 5*Math.random() - 2.5, 0);
-        let radius = new THREE.Vector3().copy(grav_center).sub(position);
-        this.velocidad.z = -(this.velocidad.x * radius.x + this.velocidad.y * radius.y) / radius.z;
+        this.velocidad = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
+        this.desfase = (Math.random() - 0.5) * 4 * Math.PI;
+        this.desfaseSpeed = (Math.random() - 0.5)/0.5 *Math.random()/10;
 
-        this.vida = 20;
+        this.vida = 50;
         this.nave_img = nave_img;
         this.nave_img.position.copy(position);
         game.scene.add(this.nave_img);
@@ -24,7 +24,7 @@ class Nave {
     }
 
     disparar(velocity, balas) {
-        balas.push(new Bala(this.nave_img.position, velocity, 0xBD000E));
+        balas.push(new Bala(this.nave_img.position, velocity, 0xBD000E, new THREE.SphereBufferGeometry(0.01, 32, 32)));
     }
 
     update(dt, camera, balas) {
@@ -36,16 +36,21 @@ class Nave {
             .multiplyScalar(0.5);
 
         this.nave_img.position.addScaledVector(this.velocidad, dt);
-        this.nave_img.lookAt(camera.position);
         this.velocidad.addScaledVector(acc, dt);
+        this.nave_img.lookAt(camera.position);
+        this.nave_img.rotation.z = this.desfase;
+        this.desfase += this.desfaseSpeed;
+        if (Math.abs(this.desfase) > 2 * Math.PI) {
+            this.desfase = 0;
+        }
 
         this.img_radar.position.copy(this.nave_img.position);
 
         let distance = new THREE.Vector3().copy(camera.position).sub(this.nave_img.position).length();
-        if (distance < 10 && distance > 5 && Math.random() > 0.95) {
+        if (distance < 15 && distance > 2 && Math.random() > 0.9) {
             let bala_velocity = new THREE.Vector3().copy(camera.position).sub(this.nave_img.position);
-            bala_velocity.add(new THREE.Vector3(Math.random*0.5 - 0.25, Math.random*0.5 - 0.25, Math.random*0.5 - 0.25));
-            bala_velocity.normalize().multiplyScalar(150);
+            bala_velocity.add(new THREE.Vector3(Math.random * 0.5 - 0.25, Math.random * 0.5 - 0.25, Math.random * 0.5 - 0.25));
+            bala_velocity.normalize().multiplyScalar(50);
             this.disparar(bala_velocity, balas);
         }
     }
