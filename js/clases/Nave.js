@@ -9,7 +9,7 @@ class Nave {
     constructor(position, grav_center, nave_img, radar) {
         this.velocidad = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
         this.desfase = (Math.random() - 0.5) * 4 * Math.PI;
-        this.desfaseSpeed = (Math.random() - 0.5)/0.5 *Math.random()/10;
+        this.desfaseSpeed = (Math.random() - 0.5) / 0.5 * Math.random() / 100;
 
         this.vida = 50;
         this.nave_img = nave_img;

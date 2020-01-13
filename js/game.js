@@ -13,7 +13,6 @@ let muertos = 0;
 loader.load('../statics/3Dmodels/nave.glb', function (gltf) {
     nave_img = gltf.scene.children[2];
     nave_img.scale.set(0.2, 0.2, 0.2);
-
     init();
 }, undefined, function (error) {
     console.error(error);
@@ -22,8 +21,7 @@ loader.load('../statics/3Dmodels/nave.glb', function (gltf) {
 
 function init() {
 
-    game = new Juego("game_output");
-    game.models = [nave_img];
+    game = new Juego("game_output", [nave_img]);
     game.maketargets();
 
     render();

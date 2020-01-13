@@ -6,7 +6,7 @@
  */
 
 class Juego {
-    constructor(id_element) {
+    constructor(id_element, models) {
         ////Instanciamos un nuevo objeto Scane////
         this.scene = new THREE.Scene();
 
@@ -43,7 +43,11 @@ class Juego {
         this.mira = new Mira(id_element);
         this.radar = new Radar(id_element);
 
-        this.player = new Jugador(this.camera);
+        this.models = models;
+
+        this.player = new Jugador(this.camera, this.models[0]);
+        console.log(this.player);
+        this.scene.add(this.player.nave_img);
 
         this.targets = []; //Guarda las objetos tipo Nave que se vayan creando en la escena
         this.targets_objects = []; //Guarda los las imégenes que se van creando en la escena. Será un subconjunto de targets
@@ -106,7 +110,10 @@ class Juego {
         this.mira.update();
 
         this.balas_enemigas.forEach(bala => {
-            bala.update(delta, []);
+            let crash = bala.update(delta, [this.player.nave_img]);
+            if (crash) {
+                console.log("Te han dado");
+            }
         });
         this.balas_enemigas = this.balas_enemigas.filter(bala => bala.vida > 0);
 
@@ -119,9 +126,9 @@ class Juego {
                     target => {
                         let response = true;
                         if (target.nave_img.name === crash_object.name) {
-                            if (target.vida > 10)
+                            if (target.vida > 10) {
                                 target.vida -= 10;
-                            else {
+                            } else {
                                 target.destroy(this.scene, this.radar);
                                 muertos++;
                                 console.log(muertos);
@@ -138,7 +145,7 @@ class Juego {
             this.targets[i].update(delta, this.camera.clone(), this.balas_enemigas);
         }
         this.player.balas = this.player.balas.filter(bala => bala.vida > 0);
-
+        this.player.update();
         this.flyControls.update(delta);
         this.renderer.render(this.scene, this.camera);
     }
