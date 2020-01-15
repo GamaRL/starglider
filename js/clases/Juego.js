@@ -1,6 +1,6 @@
 /**
  * Project: starglider
- * Date: dicuembre 2019
+ * Date: diciembre 2019
  * Author: undefined
  * Class: Juego
  */
@@ -55,7 +55,8 @@ class Juego {
         this.balas_enemigas = [];
         this.drawStars();
 
-        document.onkeypress = (evt) => {
+        document.onkeydown = (evt) => {
+            // Se cre aun evento para que al presionar la tecla de espacio se
             if (evt.keyCode === 32) {
                 let disparador1 = new THREE.Vector3(1, 0, 0);
                 disparador1.unproject(this.camera);
@@ -73,11 +74,12 @@ class Juego {
         };
     };
 
+
     drawStars() {
         let s_geom = new THREE.SphereBufferGeometry(1, 32, 32);
         let s_mat = new THREE.MeshBasicMaterial({color: 0xffffff});
 
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 200; i++) {
             let s = new THREE.Mesh(s_geom, s_mat);
 
             let pos = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
