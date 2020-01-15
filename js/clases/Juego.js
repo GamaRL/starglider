@@ -7,6 +7,15 @@
 
 class Juego {
     constructor(id_element, models) {
+      /*
+      * Parámetros:
+      * -id_element (String): Nos indica el id del
+      *   elemento html div en donde se va a crear
+      *   la escena.
+      * -models (Array): Contiene los modelos 3D que
+      *   se necesitan para jugar el juego.
+      *   (Por ejemplo, las naves)
+      */
         ////Instanciamos un nuevo objeto Scane////
         this.scene = new THREE.Scene();
 
@@ -76,6 +85,7 @@ class Juego {
 
 
     drawStars() {
+      /*Genera 200 estrellas aleatorias a una distancia aleatoria entre 250 y 750 metros del origen*/
         let s_geom = new THREE.SphereBufferGeometry(1, 32, 32);
         let s_mat = new THREE.MeshBasicMaterial({color: 0xffffff});
 
