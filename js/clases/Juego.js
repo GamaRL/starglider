@@ -112,6 +112,7 @@ class Juego {
         let y = (Math.random() - 0.5) * 30;
         let z = (Math.random() - 0.5) * 30;
         let new_target = new Nave(
+            console.log("Hola");
             new THREE.Vector3(x, y, z).add(this.camera.position),
             this.camera.position,
             this.models[0].clone(),
