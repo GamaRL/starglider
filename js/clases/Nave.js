@@ -7,7 +7,11 @@
 
 class Nave {
     constructor(position, grav_center, nave_img, radar) {
-        this.velocidad = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
+        this.velocidad = new THREE.Vector3(
+            Math.random() - 0.5,
+            Math.random() - 0.5,
+            Math.random() - 0.5).setLength(2);
+
         this.desfase = (Math.random() - 0.5) * 4 * Math.PI;
         this.desfaseSpeed = (Math.random() - 0.5) / 0.5 * Math.random() / 100;
 
@@ -32,13 +36,12 @@ class Nave {
             .copy(this.nave_img.position)
             .sub(game.camera.position)
             .negate()
-            .normalize()
-            .multiplyScalar(0.5);
+            .setLength(0.5);
 
         let distance = new THREE.Vector3().copy(camera.position).sub(this.nave_img.position).length();
 
-        if (distance < 3) {
-            acc.multiplyScalar(-3);
+        if (distance < 2.5) {
+            acc.multiplyScalar(-3).cross(new THREE.Vector3(1,1,1));
         }
 
         this.nave_img.position.addScaledVector(this.velocidad, dt);

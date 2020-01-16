@@ -7,15 +7,16 @@
 
 class Juego {
     constructor(id_element, models) {
-      /*
-      * Parámetros:
-      * -id_element (String): Nos indica el id del
-      *   elemento html div en donde se va a crear
-      *   la escena.
-      * -models (Array): Contiene los modelos 3D que
-      *   se necesitan para jugar el juego.
-      *   (Por ejemplo, las naves)
-      */
+        /*********************************************
+         *  Parámetros:
+         * -id_element (String): Nos indica el id del
+         *   elemento html div en donde se va a crear
+         *   la escena.
+         * -models (Array): Contiene los modelos 3D que
+         *   se necesitan para jugar el juego.
+         *   (Por ejemplo, las naves)
+         *********************************************/
+
         ////Instanciamos un nuevo objeto Scane////
         this.scene = new THREE.Scene();
 
@@ -40,12 +41,9 @@ class Juego {
         this.flyControls.autoForward = true;
         this.flyControls.dragToLook = false;
 
-        this.time = new THREE.Clock();
-        // time nos permitirá ver la variación de
-        // tiempo "real" que habrá entre la ejecución
-        // de dos ciclos render
+        this.time = new THREE.Clock(); //Nos permite llevar la cuenta del tiempo en el juego
 
-        var light = new THREE.PointLight(0xffff, 1, 100);
+        var light = new THREE.PointLight(0xffff, 10, 100);
         light.position.set(0, 0, 0);
         this.scene.add(light);
 
@@ -54,28 +52,37 @@ class Juego {
 
         this.models = models;
 
+        let planet = new THREE.Mesh(
+            new THREE.SphereGeometry(100, 32, 32),
+            new THREE.MeshBasicMaterial({color: 0x0000ff})
+        );
+        planet.position.set(0,-100,100);
+
+        // planet.castShadow(true);
+
+        this.scene.add(planet);
         this.player = new Jugador(this.camera, this.models[0]);
-        console.log(this.player);
         this.scene.add(this.player.nave_img);
 
-        this.targets = []; //Guarda las objetos tipo Nave que se vayan creando en la escena
-        this.targets_objects = []; //Guarda los las imégenes que se van creando en la escena. Será un subconjunto de targets
+        this.targets = []; //Guarda los enemigos que se van creando en el juego
+        this.targets_objects = []; //Guarda el objeto Object3D con correspondiente a los enemigos
+        this.balas_enemigas = []; //Guarda todas las balas enemigas
 
-        this.balas_enemigas = [];
         this.drawStars();
 
         document.onkeydown = (evt) => {
-            // Se cre aun evento para que al presionar la tecla de espacio se
+            /************************************************
+             * Se agrega un evento que nos permitirá disparar
+             * al presionar la tecla de espacio
+             ************************************************/
             if (evt.keyCode === 32) {
-                let disparador1 = new THREE.Vector3(1, 0, 0);
-                disparador1.unproject(this.camera);
+                let disparador1 = new THREE.Vector3(1, 0, 0).unproject(this.camera);
+                let disparador2 = new THREE.Vector3(-1, 0, 0).unproject(this.camera);
 
-                let disparador2 = new THREE.Vector3(-1, 0, 0);
-                disparador2.unproject(this.camera);
-
+                //Las balas salen disparadas en la dirección en la que el jugador está jugando
                 let velocity = new THREE.Vector3();
-                this.camera.getWorldDirection(velocity).normalize();
-                velocity.multiplyScalar(500);
+                this.camera.getWorldDirection(velocity);
+                velocity.setLength(500); //
 
                 this.player.balas.push(new Bala(disparador1, velocity, 0x0BBD20));
                 this.player.balas.push(new Bala(disparador2, velocity, 0x0BBD20));
@@ -85,11 +92,11 @@ class Juego {
 
 
     drawStars() {
-      /*Genera 200 estrellas aleatorias a una distancia aleatoria entre 250 y 750 metros del origen*/
+        /*Genera 200 estrellas aleatorias a una distancia aleatoria entre 250 y 750 metros del origen*/
         let s_geom = new THREE.SphereBufferGeometry(1, 32, 32);
         let s_mat = new THREE.MeshBasicMaterial({color: 0xffffff});
 
-        for (let i = 0; i < 200; i++) {
+        for (let i = 0; i < 100; i++) {
             let s = new THREE.Mesh(s_geom, s_mat);
 
             let pos = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
@@ -100,21 +107,21 @@ class Juego {
         }
     }
 
-    maketargets() {
-        for (let i = 0; i < 15; i++) {
-            let x = (Math.random() - 0.5) * 30;
-            let y = (Math.random() - 0.5) * 30;
-            let z = (Math.random() - 0.5) * 30;
-            this.targets[i] = new Nave(
-                new THREE.Vector3(x, y, z),
-                this.camera.position,
-                this.models[0].clone(),
-                this.radar
-            );
+    maketargets(target_number) {
+        let x = (Math.random() - 0.5) * 30;
+        let y = (Math.random() - 0.5) * 30;
+        let z = (Math.random() - 0.5) * 30;
+        let new_target = new Nave(
+            new THREE.Vector3(x, y, z).add(this.camera.position),
+            this.camera.position,
+            this.models[0].clone(),
+            this.radar
+        );
 
-            this.targets[i].nave_img.name = "target" + i;
-            this.targets_objects.push(this.targets[i].nave_img);
-        }
+        this.targets.push(new_target);
+
+        new_target.nave_img.name = "target" + target_number;
+        this.targets_objects.push(new_target.nave_img);
     }
 
     update() {

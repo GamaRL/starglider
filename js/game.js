@@ -22,12 +22,19 @@ loader.load('../statics/3Dmodels/nave.glb', function (gltf) {
 function init() {
 
     game = new Juego("game_output", [nave_img]);
-    game.maketargets();
+    let target_number = 0;
+    for (let i=0; i<5; i++) {
+        game.maketargets(target_number++);
+    }
+    console.log(game.targets);
 
     render();
 
     function render() {
         game.update();
+        if (Math.random()>0.999) {
+            game.maketargets(target_number++);
+        }
         game.radar.render(game.camera);
         requestAnimationFrame(render);
     }
