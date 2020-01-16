@@ -11,6 +11,7 @@ class Nave {
             Math.random() - 0.5,
             Math.random() - 0.5,
             Math.random() - 0.5).setLength(2);
+        //No sé qué onda
 
         this.desfase = (Math.random() - 0.5) * 4 * Math.PI;
         this.desfaseSpeed = (Math.random() - 0.5) / 0.5 * Math.random() / 100;
