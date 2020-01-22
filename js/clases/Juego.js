@@ -6,17 +6,17 @@
  */
 
 class Juego {
-    constructor(id_element, models) {
-        /*********************************************
-         *  Parámetros:
-         * -id_element (String): Nos indica el id del
-         *   elemento html div en donde se va a crear
-         *   la escena.
-         * -models (Array): Contiene los modelos 3D que
-         *   se necesitan para jugar el juego.
-         *   (Por ejemplo, las naves)
-         *********************************************/
+    /*********************************************
+     *  Parámetros:
+     * -id_element (String): Nos indica el id del
+     *   elemento html div en donde se va a crear
+     *   la escena.
+     * -models (Array): Contiene los modelos 3D que
+     *   se necesitan para jugar el juego.
+     *   (Por ejemplo, las naves)
+     *********************************************/
 
+    constructor(id_element, models) {
         ////Instanciamos un nuevo objeto Scane////
         this.scene = new THREE.Scene();
 
@@ -132,6 +132,7 @@ class Juego {
             let crash = bala.update(delta, [this.player.nave_img]);
             if (crash) {
                 console.log("Te han dado");
+                this.player.vida -= 10;
             }
         });
         this.balas_enemigas = this.balas_enemigas.filter(bala => bala.vida > 0);

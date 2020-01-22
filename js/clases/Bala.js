@@ -5,23 +5,24 @@
  * Class: Bala
  */
 
+/*  
+*   Esta "clase" nos permite crear balas,
+*   estas se dispararan a través del espacio
+*   en el juego
+*/
 class Bala {
-    /******************************************
-     * Esta "clase" nos permite crear balas,
-     * estas se dispararan a través del espacio
-     * en el juego
-     ******************************************/
-    constructor(position, velocity, color, geometry = new THREE.SphereBufferGeometry(0.1, 5, 5)) {
-        /*************************************************************
-         * Parámetros:
-         * -position (Vector3): Lugar de donde se dispara
-         * -velocity (Vector3): Vector velocidad con el que se moverá
-         * -color (number): Color del que será la bala (Se recomienda
-         *   usar formato hexadecimal)
-         * -geometry (Geometry): Geometría de THREE.js que se usará
-         *   para representar la bala
-         *************************************************************/
+    
+    /*************************************************************
+     * Parámetros:
+     * -position (Vector3): Lugar de donde se dispara
+     * -velocity (Vector3): Vector velocidad con el que se moverá
+     * -color (number): Color del que será la bala (Se recomienda
+     *   usar formato hexadecimal)
+     * -geometry (Geometry): Geometría de THREE.js que se usará
+     *   para representar la bala
+     *************************************************************/
 
+    constructor(position, velocity, color, geometry = new THREE.SphereBufferGeometry(0.1, 5, 5)) {
         this.velocity = new THREE.Vector3().copy(velocity);
         this.dibujo = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({
             color,
@@ -32,15 +33,15 @@ class Bala {
         game.scene.add(this.dibujo);
     }
 
+    /*********************************************************
+     * Función update: Se encarga de actualizar los atributos del objeto.
+     * Parámetros:
+     * -dt (number): Un "diferencial de tiempo" con el
+     *   que se deberán hacer los cálculos para el movimiento
+     * -targets (Array): Contiene a objetos Object3D con los
+     *   que puede colisionar
+     **********************************************************/
     update(dt, targets) {
-        /*********************************************************
-         * Se encarga de actualizar los atributos del objeto.
-         * Parámetros:
-         * -dt (number): Un "diferencial de tiempo" con el
-         *   que se deberán hacer los cálculos para el movimiento
-         * -targets (Array): Contiene a objetos Object3D con los
-         *   que puede colisionar
-         **********************************************************/
         let intersects = this.cast_objects(this.velocity.length() * dt, targets);
         let crash_object;
 
@@ -61,16 +62,16 @@ class Bala {
 
     }
 
+    /**************************************************
+     * Se encarga de verificar si a cierta distancia
+     * hay algún objeto con el que pueda colisionar
+     * Parámetros:
+     * -distance (number): Máxima distancia a la que
+     *   verificar
+     * -tagets (Array): Objetos con los que puede
+     *   colisionar
+     **************************************************/
     cast_objects(distance, targets) {
-        /**************************************************
-         * Se encarga de verificar si a cierta distancia
-         * hay algún objeto con el que pueda colisionar
-         * Parámetros:
-         * -distance (number): Máxima distancia a la que
-         *   verificar
-         * -tagets (Array): Objetos con los que puede
-         *   colisionar
-         **************************************************/
         let vel_norm = new THREE.Vector3();
         vel_norm.copy(this.velocity);
         vel_norm.normalize();

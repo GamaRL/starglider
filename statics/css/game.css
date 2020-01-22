@@ -6,7 +6,7 @@ body {
     z-index: -1;
 }
 
-img#mira {
+#mira {
     display: block;
     width: 50px;
 
@@ -31,3 +31,15 @@ div.radar {
     background-color: transparent;
 }
 
+#barraVida {
+    position: absolute;
+    display: block;
+    width: 300px;
+    height: 50px;
+    z-index: 30;
+    background-color: green;
+    bottom: 1em;
+    left: 1em;
+
+    -webkit-transition: all 0.2s;
+}
