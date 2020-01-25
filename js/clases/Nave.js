@@ -55,7 +55,7 @@ class Nave {
 
         this.img_radar.position.copy(this.nave_img.position);
 
-        if (distance < 15 && distance > 1 && Math.random() > 0.85) {
+        if (distance < 20 && distance > 1.5 && Math.random() > 0.9) {
             let bala_velocity = new THREE.Vector3().copy(camera.position).sub(this.nave_img.position);
             bala_velocity.add(new THREE.Vector3(Math.random * 0.5 - 0.25, Math.random * 0.5 - 0.25, Math.random * 0.5 - 0.25).multiplyScalar(0.1));
             bala_velocity.normalize().multiplyScalar(50);
