@@ -7,6 +7,12 @@
 
 
 class Radar {
+    /*******************************************
+     * Función constructor()
+     * Parámetros:
+     * -id_container (String): Nos dice en qué
+     *  elemento html se pondrá la imagen
+     *******************************************/
     constructor(id_container) {
         let container = document.getElementById(id_container);
         this.img = document.createElement("div");
@@ -29,7 +35,7 @@ class Radar {
     }
 
     render(camera) {
-        this.camera  = camera.clone();
+        this.camera = camera.clone();
         let new_pos = new THREE.Vector3();
         this.camera.getWorldDirection(new_pos);
         this.camera.position.sub(new_pos.multiplyScalar(5));

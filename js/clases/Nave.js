@@ -41,7 +41,7 @@ class Nave {
         let distance = new THREE.Vector3().copy(camera.position).sub(this.nave_img.position).length();
 
         if (distance < 2.5) {
-            acc.multiplyScalar(-3).cross(new THREE.Vector3(1,1,1));
+            acc.multiplyScalar(-3).cross(new THREE.Vector3(1, 1, 1));
         }
 
         this.nave_img.position.addScaledVector(this.velocidad, dt);

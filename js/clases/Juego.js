@@ -53,17 +53,17 @@ class Juego {
 
         this.models = models;
 
-        let planet = createMesh( new THREE.SphereGeometry(130, 32, 32), "jupiter.jpg");
+        let planet = createMesh(new THREE.SphereGeometry(130, 32, 32), "jupiter.jpg");
 
-        planet.position.set(0,-200,200);
+        planet.position.set(0, -200, 200);
 
-        let mars = createMesh( new THREE.SphereGeometry(100, 32, 32), "mars.jpg");
+        let mars = createMesh(new THREE.SphereGeometry(100, 32, 32), "mars.jpg");
 
-        mars.position.set(0,200,200);
+        mars.position.set(0, 200, 200);
 
-        let neptune = createMesh( new THREE.SphereGeometry(70, 32, 32), "neptuno.jpg");
+        let neptune = createMesh(new THREE.SphereGeometry(70, 32, 32), "neptuno.jpg");
 
-        neptune.position.set(-300,-100,-200);
+        neptune.position.set(-300, -100, -200);
 
         this.scene.add(planet);
         this.scene.add(mars);
@@ -119,7 +119,6 @@ class Juego {
         let y = (Math.random() - 0.5) * 30;
         let z = (Math.random() - 0.5) * 30;
         let new_target = new Nave(
-            // console.log("Hola");
             new THREE.Vector3(x, y, z).add(this.camera.position),
             this.camera.position,
             this.models[0].clone(),
@@ -132,25 +131,29 @@ class Juego {
         this.targets_objects.push(new_target.nave_img);
     }
 
-    
+
     update() {
+        //Se obtiene el tempo que ha pasado desde la ultima ejecución de update()
         let delta = this.time.getDelta();
+
         this.mira.update();
 
         this.balas_enemigas.forEach(bala => {
             let crash = bala.update(delta, [this.player.nave_img]);
-            if (crash) {
-                console.log("Te han dado");
+            if (crash)
                 this.player.vida -= 10;
-            }
         });
+
         this.balas_enemigas = this.balas_enemigas.filter(bala => bala.vida > 0);
 
-
+        //Se ejecuta un update para cada bala del jugador
         for (let i = 0; i < this.player.balas.length; i++) {
+
+            //El método update de balas devuelve un crash_object en caso de haber colisionado
             var crash_object = this.player.balas[i].update(delta, this.targets_objects);
 
             if (crash_object) {
+                //Se eliminan los objetivos que tengan vida menor a 0
                 this.targets = this.targets.filter(
                     target => {
                         let response = true;
@@ -166,28 +169,26 @@ class Juego {
                         }
                         return response;
                     });
-                // console.log(this.targets.length);
             }
         }
 
         for (let i = 0; i < this.targets.length; i++) {
             this.targets[i].update(delta, this.camera.clone(), this.balas_enemigas);
         }
+
+        //Se eliminan las balas que ya no tengan tiempo de vida
         this.player.balas = this.player.balas.filter(bala => bala.vida > 0);
+
         this.player.update();
         this.flyControls.update(delta);
         this.renderer.render(this.scene, this.camera);
-
-
     }
-
-
 }
+
 function createMesh(geom, imageFile) {
-    var texture = THREE.ImageUtils.loadTexture("../statics/images/" + imageFile);
-    var mat = new THREE.MeshPhongMaterial();
+    let texture = THREE.ImageUtils.loadTexture("../statics/images/" + imageFile);
+    let mat = new THREE.MeshPhongMaterial();
     mat.map = texture;
 
-    var mesh = new THREE.Mesh(geom, mat);
-    return mesh;
+    return new THREE.Mesh(geom, mat);
 }

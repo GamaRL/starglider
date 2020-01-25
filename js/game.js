@@ -23,7 +23,7 @@ function init() {
 
     game = new Juego("game_output", [nave_img]);
     let target_number = 0;
-    for (let i=0; i<10; i++) {
+    for (let i = 0; i < 10; i++) {
         game.maketargets(target_number++);
     }
     console.log(game.targets);
