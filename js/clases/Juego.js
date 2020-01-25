@@ -65,6 +65,10 @@ class Juego {
 
         neptune.position.set(-300, -100, -200);
 
+        this.planets = [];
+        this.planets.push(planet);
+        this.planets.push(mars);
+        this.planets.push(neptune);
         this.scene.add(planet);
         this.scene.add(mars);
         this.scene.add(neptune);
@@ -96,6 +100,7 @@ class Juego {
             }
         };
     };
+
 
 
     drawStars() {
@@ -133,6 +138,9 @@ class Juego {
 
 
     update() {
+        for(let i = 0; i<this.planets.length; i++){
+            this.planets[i].rotation.y += 0.0005;
+        }
         //Se obtiene el tempo que ha pasado desde la ultima ejecución de update()
         let delta = this.time.getDelta();
 
@@ -189,6 +197,5 @@ function createMesh(geom, imageFile) {
     let texture = THREE.ImageUtils.loadTexture("../statics/images/" + imageFile);
     let mat = new THREE.MeshPhongMaterial();
     mat.map = texture;
-
     return new THREE.Mesh(geom, mat);
 }

@@ -6,6 +6,7 @@
 
 // window.onload = init;
 let targets = [];
+let planets = [];
 let nave_img;
 let loader = new THREE.GLTFLoader();
 
