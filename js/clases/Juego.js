@@ -43,7 +43,7 @@ class Juego {
 
         this.time = new THREE.Clock(); //Nos permite llevar la cuenta del tiempo en el juego
 
-        var light = new THREE.PointLight(0xffff, 10, 100);
+        var light = new THREE.PointLight(0xffffff, 3, 400);
         light.position.set(0, 0, 0);
         this.scene.add(light);
 
@@ -52,15 +52,23 @@ class Juego {
 
         this.models = models;
 
-        let planet = new THREE.Mesh(
-            new THREE.SphereGeometry(100, 32, 32),
-            new THREE.MeshBasicMaterial({color: 0x0000ff})
-        );
-        planet.position.set(0,-100,100);
+        let planet = createMesh( new THREE.SphereGeometry(130, 32, 32), "jupiter.jpg");
+
+        planet.position.set(0,-200,200);
+
+        let mars = createMesh( new THREE.SphereGeometry(100, 32, 32), "mars.jpg");
+
+        mars.position.set(0,200,200);
+
+        let neptune = createMesh( new THREE.SphereGeometry(70, 32, 32), "neptuno.jpg");
+
+        neptune.position.set(-300,-100,-200);
 
         // planet.castShadow(true);
 
         this.scene.add(planet);
+        this.scene.add(mars);
+        this.scene.add(neptune);
         this.player = new Jugador(this.camera, this.models[0]);
         this.scene.add(this.player.nave_img);
 
@@ -124,6 +132,7 @@ class Juego {
         this.targets_objects.push(new_target.nave_img);
     }
 
+    
     update() {
         let delta = this.time.getDelta();
         this.mira.update();
@@ -168,7 +177,17 @@ class Juego {
         this.player.update();
         this.flyControls.update(delta);
         this.renderer.render(this.scene, this.camera);
+
+
     }
 
 
+}
+function createMesh(geom, imageFile) {
+    var texture = THREE.ImageUtils.loadTexture("../statics/images/" + imageFile);
+    var mat = new THREE.MeshPhongMaterial();
+    mat.map = texture;
+
+    var mesh = new THREE.Mesh(geom, mat);
+    return mesh;
 }
