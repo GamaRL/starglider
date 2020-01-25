@@ -24,7 +24,9 @@ class Jugador {
         this.nave_img.position.copy(this.camera.position);
         this.nave_img.lookAt(look);
 
-        this.barraVida.style.width = (300 * this.vida / 500) + "px";
+        this.barraVida.style.width = (Math.floor(300 * this.vida / 500)) + "px";
+        if (this.vida < 500)
+            this.vida += 0.1;
 
 
     }
