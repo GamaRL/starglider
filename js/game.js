@@ -23,16 +23,12 @@ function init() {
 
     game = new Juego("game_output", [nave_img]);
     let target_number = 0;
-    for (let i = 0; i < 10; i++) {
-        game.maketargets(target_number++);
-    }
-    console.log(game.targets);
 
     render();
 
     function render() {
         game.update();
-        if (game.muertos < 10) {
+        if (game.targets.length < 15) {
             game.maketargets(target_number++);
         }
         game.radar.render(game.camera);
