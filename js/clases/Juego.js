@@ -21,7 +21,7 @@ class Juego {
         this.scene = new THREE.Scene();
 
         ////Instanciamos una cámara y se configura su posición////
-        this.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.camera.position.set(0, 0, 0);
         this.camera.lookAt(new THREE.Vector3(0, 0, 10));
 
@@ -45,6 +45,7 @@ class Juego {
 
         var light = new THREE.PointLight(0xffff, 10, 100);
         light.position.set(0, 0, 0);
+
         this.scene.add(light);
 
         this.mira = new Mira(id_element);
@@ -57,8 +58,6 @@ class Juego {
             new THREE.MeshBasicMaterial({color: 0x0000ff})
         );
         planet.position.set(0,-100,100);
-
-        // planet.castShadow(true);
 
         this.scene.add(planet);
         this.player = new Jugador(this.camera, this.models[0]);
@@ -92,7 +91,7 @@ class Juego {
 
 
     drawStars() {
-        /*Genera 200 estrellas aleatorias a una distancia aleatoria entre 250 y 750 metros del origen*/
+        /*Genera 100 estrellas aleatorias a una distancia aleatoria entre 250 y 750 metros del origen*/
         let s_geom = new THREE.SphereBufferGeometry(1, 32, 32);
         let s_mat = new THREE.MeshBasicMaterial({color: 0xffffff});
 
