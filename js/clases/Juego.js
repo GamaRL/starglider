@@ -139,7 +139,7 @@ class Juego {
 
     update() {
         for(let i = 0; i<this.planets.length; i++){
-            this.planets[i].rotation.y += 0.0005;
+            this.planets[i].rotation.y += 0.0009;
         }
         //Se obtiene el tempo que ha pasado desde la ultima ejecución de update()
         let delta = this.time.getDelta();
