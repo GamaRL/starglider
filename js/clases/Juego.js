@@ -38,7 +38,7 @@ class Juego {
         this.flyControls = new THREE.FlyControls(this.camera, document.querySelector("#" + id_element));
         this.flyControls.movementSpeed = 2;
         this.flyControls.rollSpeed = Math.PI / 9;
-        // this.flyControls.autoForward = true;
+        this.flyControls.autoForward = true;
         this.flyControls.dragToLook = false;
 
         this.time = new THREE.Clock(); //Nos permite llevar la cuenta del tiempo en el juego
@@ -53,7 +53,7 @@ class Juego {
 
         this.models = models;
 
-        let planet = createMesh(new THREE.SphereGeometry(130, 32, 32), "jupiter.jpg");
+        let planet = createMesh(new THREE.SphereGeometry(130, 40, 42), "jupiter.jpg");
 
         planet.position.set(0, -200, 200);
 
@@ -103,11 +103,11 @@ class Juego {
 
 
     drawStars() {
-        /*Genera 100 estrellas aleatorias a una distancia aleatoria entre 250 y 750 metros del origen*/
+        /*Genera 200 estrellas aleatorias a una distancia aleatoria entre 250 y 750 metros del origen*/
         let s_geom = new THREE.SphereBufferGeometry(1, 32, 32);
         let s_mat = new THREE.MeshBasicMaterial({color: 0xffffff});
 
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 150; i++) {
             let s = new THREE.Mesh(s_geom, s_mat);
 
             let pos = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
@@ -194,7 +194,7 @@ class Juego {
 
 function createMesh(geom, imageFile) {
     let texture = THREE.ImageUtils.loadTexture("../statics/images/" + imageFile);
-    let mat = new THREE.MeshLambertMaterial();
+    let mat = new THREE.MeshLambertMaterial({opacity:0.8});
     mat.map = texture;
     return new THREE.Mesh(geom, mat);
 }
