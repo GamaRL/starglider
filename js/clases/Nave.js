@@ -47,7 +47,10 @@ class Nave {
         this.nave_img.position.addScaledVector(this.velocidad, dt);
         this.velocidad.addScaledVector(acc, dt);
         this.nave_img.lookAt(camera.position);
-        this.nave_img.rotation.z = this.desfase;
+        this.nave_img.rotateX(Math.PI/2);
+        this.nave_img.rotateY(this.desfase);
+        // this.nave_img.rotateY(-Math.PI/3);
+
         this.desfase += this.desfaseSpeed;
         if (Math.abs(this.desfase) > 2 * Math.PI) {
             this.desfase = 0;
@@ -57,7 +60,14 @@ class Nave {
 
         if (distance < 20 && distance > 1.5 && Math.random() > 0.9) {
             let bala_velocity = new THREE.Vector3().copy(camera.position).sub(this.nave_img.position);
-            bala_velocity.add(new THREE.Vector3(Math.random * 0.5 - 0.25, Math.random * 0.5 - 0.25, Math.random * 0.5 - 0.25).multiplyScalar(0.1));
+            bala_velocity.add(
+                new THREE.Vector3(
+                    Math.random * 0.5 - 0.25,
+                    Math.random * 0.5 - 0.25,
+                    Math.random * 0.5 - 0.25
+                ).multiplyScalar(0.01)
+            );
+
             bala_velocity.normalize().multiplyScalar(50);
             this.disparar(bala_velocity, balas);
         }

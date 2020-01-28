@@ -9,27 +9,36 @@ let targets = [];
 let planets = [];
 let nave_img;
 let loader = new THREE.GLTFLoader();
-
+let models = [];
 let muertos = 0;
-loader.load('../statics/3Dmodels/nave.glb', function (gltf) {
-    nave_img = gltf.scene.children[2];
-    nave_img.scale.set(0.2, 0.2, 0.2);
-    init();
-}, undefined, function (error) {
-    console.error(error);
+loader.load('../statics/3Dmodels/nave.glb', function(gltf) {
+    models[1] = gltf.scene.children[2];
+    models[1].scale.set(0.2, 0.2, 0.2);
+    // models[1].rotateX(Math.PI/2);
+
+    loader.load('../statics/3Dmodels/nivel1.glb', function (gltf) {
+        console.log(gltf.scene.children);
+        models[0] = gltf.scene.children[0];
+        models[0].scale.set(0.15, 0.15, 0.15);
+        init();
+    }, undefined, function (error) {
+        console.error(error);
+    });
 });
+
+
 
 
 function init() {
 
-    game = new Juego("game_output", [nave_img]);
+    game = new Juego("game_output", models);
     let target_number = 0;
 
     render();
 
     function render() {
         game.update();
-        if (game.targets.length < 15) {
+        if (game.targets.length < 10) {
             game.maketargets(target_number++);
         }
         game.radar.render(game.camera);

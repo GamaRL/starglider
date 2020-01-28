@@ -22,8 +22,8 @@ class Juego {
 
         ////Instanciamos una cámara y se configura su posición////
         this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
-        this.camera.position.set(0, 0, 0);
-        this.camera.lookAt(new THREE.Vector3(0, 0, 10));
+        this.camera.position.set(0, 10, 0);
+        this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
         ////Instanciamos un renderer que nos permite crear escenas en 3D, configuramos su tamaño////
         this.renderer = new THREE.WebGLRenderer();
@@ -38,7 +38,7 @@ class Juego {
         this.flyControls = new THREE.FlyControls(this.camera, document.querySelector("#" + id_element));
         this.flyControls.movementSpeed = 2;
         this.flyControls.rollSpeed = Math.PI / 9;
-        this.flyControls.autoForward = true;
+        // this.flyControls.autoForward = true;
         this.flyControls.dragToLook = false;
 
         this.time = new THREE.Clock(); //Nos permite llevar la cuenta del tiempo en el juego
@@ -72,8 +72,7 @@ class Juego {
         this.scene.add(planet);
         this.scene.add(mars);
         this.scene.add(neptune);
-        this.player = new Jugador(this.camera, this.models[0]);
-        this.scene.add(this.player.nave_img);
+        this.player = new Jugador(this.camera, this.models[1]);
 
         this.targets = []; //Guarda los enemigos que se van creando en el juego
         this.targets_objects = []; //Guarda el objeto Object3D con correspondiente a los enemigos
