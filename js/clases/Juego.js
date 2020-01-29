@@ -43,7 +43,7 @@ class Juego {
 
         this.time = new THREE.Clock(); //Nos permite llevar la cuenta del tiempo en el juego
 
-        var light = new THREE.PointLight(0xffffff, 3, 400);
+        var light = new THREE.PointLight(0xffffff, 1.5, 400);
         light.position.set(0, 0, 0);
 
         this.scene.add(light);
@@ -52,6 +52,13 @@ class Juego {
         this.radar = new Radar(id_element);
 
         this.models = models;
+
+        function createMesh(geom, imageFile) {
+            let texture = new THREE.TextureLoader().load("../statics/images/" + imageFile);
+            let mat = new THREE.MeshLambertMaterial({opacity: 0.8, emissive: 0x010101, opacity: 0.5});
+            mat.map = texture;
+            return new THREE.Mesh(geom, mat);
+        }
 
         let planet = createMesh(new THREE.SphereGeometry(100, 40, 40), "jupitermap.jpg");
 
@@ -67,7 +74,7 @@ class Juego {
 
         let venus = createMesh(new THREE.SphereGeometry(40, 42, 42), "venusmap.jpg");
 
-        venus.position.set(100,-100,-100);
+        venus.position.set(100, -100, -100);
 
         this.planets = [];
         this.planets.push(planet);
@@ -229,11 +236,4 @@ class Juego {
     }
 }
 
-function
 
-createMesh(geom, imageFile) {
-    let texture = new THREE.TextureLoader().load("../statics/images/" + imageFile);
-    let mat = new THREE.MeshLambertMaterial({opacity: 0.8});
-    mat.map = texture;
-    return new THREE.Mesh(geom, mat);
-}
