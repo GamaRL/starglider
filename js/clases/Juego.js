@@ -53,25 +53,31 @@ class Juego {
 
         this.models = models;
 
-        let planet = createMesh(new THREE.SphereGeometry(100, 40, 40), "jupiter.jpg");
+        let planet = createMesh(new THREE.SphereGeometry(100, 40, 40), "jupitermap.jpg");
 
         planet.position.set(0, -200, 200);
 
-        let mars = createMesh(new THREE.SphereGeometry(70, 40, 40), "mars.jpg");
+        let mars = createMesh(new THREE.SphereGeometry(70, 40, 40), "marsmap.jpg");
 
         mars.position.set(0, 200, 200);
 
-        let neptune = createMesh(new THREE.SphereGeometry(52, 42, 42), "neptuno.jpg");
+        let neptune = createMesh(new THREE.SphereGeometry(52, 42, 42), "neptunemap.jpg");
 
         neptune.position.set(-250, -0, -50);
+
+        let venus = createMesh(new THREE.SphereGeometry(40, 42, 42), "venusmap.jpg");
+
+        venus.position.set(100,-100,-100);
 
         this.planets = [];
         this.planets.push(planet);
         this.planets.push(mars);
         this.planets.push(neptune);
+        this.planets.push(venus);
         this.scene.add(planet);
         this.scene.add(mars);
         this.scene.add(neptune);
+        this.scene.add(venus);
         this.player = new Jugador(this.camera, this.models[1]);
 
         this.targets = []; //Guarda los enemigos que se van creando en el juego
