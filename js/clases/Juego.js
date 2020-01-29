@@ -55,7 +55,7 @@ class Juego {
 
         function createMesh(geom, imageFile) {
             let texture = new THREE.TextureLoader().load("../statics/images/" + imageFile);
-            let mat = new THREE.MeshLambertMaterial({opacity: 0.8, emissive: 0x010101, opacity: 0.5});
+            let mat = new THREE.MeshLambertMaterial({opacity: 0.8, emissive: 0x010101});
             mat.map = texture;
             return new THREE.Mesh(geom, mat);
         }
@@ -91,7 +91,14 @@ class Juego {
         this.targets_objects = []; //Guarda el objeto Object3D con correspondiente a los enemigos
         this.balas_enemigas = []; //Guarda todas las balas enemigas
 
-        this.drawStars();
+        this.drawStars(0xBD3673, 50);
+        this.drawStars(0xBDA220, 100);
+        this.drawStars(0x4B93BD, 50);
+        this.drawStars(0x0B46BD, 50);
+        this.drawStars(0xBD6405, 100);
+        this.drawStars(0x9C3ABD, 50);
+        this.drawStars(0xffffff, 800);
+
 
         document.onkeydown = (evt) => {
             /************************************************
@@ -111,10 +118,13 @@ class Juego {
                 this.player.balas.push(new Bala(disparador2, velocity, 0x0BBD20));
             }
         };
+
+        window.addEventListener('resize',this.onResize, false)
     };
 
 
-    async drawStars() {
+
+    async drawStars(color, number) {
         function generateSprite() {
             let canvas = document.createElement('canvas');
             canvas.width = 16;
@@ -147,10 +157,10 @@ class Juego {
             size: 10,
             transparent: true,
             blending: THREE.AdditiveBlending,
-            color: 0xFFFFFF,
+            color,
             map: generateSprite()
         });
-        for (let i = 0; i < 1500; i++) {
+        for (let i = 0; i < number; i++) {
             let particle = new THREE.Vector3(
                 Math.random() - 0.5,
                 Math.random() - 0.5,

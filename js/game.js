@@ -11,6 +11,7 @@ let nave_img;
 let loader = new THREE.GLTFLoader();
 let models = [];
 let muertos = 0;
+var game;
 loader.load('../statics/3Dmodels/nave.glb', function(gltf) {
     models[1] = gltf.scene.children[2];
     models[1].scale.set(0.2, 0.2, 0.2);
@@ -29,10 +30,18 @@ loader.load('../statics/3Dmodels/nave.glb', function(gltf) {
 
 
 
+
+
 function init() {
 
     game = new Juego("game_output", models);
     let target_number = 0;
+    function onResize() {
+        game.camera.aspect = window.innerWidth / window.innerHeight;
+        game.camera.updateProjectionMatrix();
+        game.renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+    window.addEventListener('resize',onResize, false);
 
     render();
 
