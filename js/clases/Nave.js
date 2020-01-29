@@ -12,9 +12,6 @@ class Nave {
             Math.random() - 0.5,
             Math.random() - 0.5).setLength(2);
 
-        this.desfase = (Math.random() - 0.5) * 4 * Math.PI;
-        this.desfaseSpeed = (Math.random() - 0.5) / 0.5 * Math.random() / 100;
-
         this.vida = 50;
         this.nave_img = nave_img;
         this.nave_img.position.copy(position);
@@ -47,14 +44,7 @@ class Nave {
         this.nave_img.position.addScaledVector(this.velocidad, dt);
         this.velocidad.addScaledVector(acc, dt);
         this.nave_img.lookAt(camera.position);
-        this.nave_img.rotateX(Math.PI/2);
-        this.nave_img.rotateY(this.desfase);
-        // this.nave_img.rotateY(-Math.PI/3);
-
-        this.desfase += this.desfaseSpeed;
-        if (Math.abs(this.desfase) > 2 * Math.PI) {
-            this.desfase = 0;
-        }
+        this.nave_img.rotateX(Math.PI/2 + 0.4);
 
         this.img_radar.position.copy(this.nave_img.position);
 

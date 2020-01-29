@@ -53,17 +53,17 @@ class Juego {
 
         this.models = models;
 
-        let planet = createMesh(new THREE.SphereGeometry(130, 40, 42), "jupiter.jpg");
+        let planet = createMesh(new THREE.SphereGeometry(100, 40, 40), "jupiter.jpg");
 
         planet.position.set(0, -200, 200);
 
-        let mars = createMesh(new THREE.SphereGeometry(100, 32, 32), "mars.jpg");
+        let mars = createMesh(new THREE.SphereGeometry(70, 40, 40), "mars.jpg");
 
         mars.position.set(0, 200, 200);
 
-        let neptune = createMesh(new THREE.SphereGeometry(70, 32, 32), "neptuno.jpg");
+        let neptune = createMesh(new THREE.SphereGeometry(52, 42, 42), "neptuno.jpg");
 
-        neptune.position.set(-300, -100, -200);
+        neptune.position.set(-250, -0, -50);
 
         this.planets = [];
         this.planets.push(planet);
@@ -101,21 +101,52 @@ class Juego {
     };
 
 
+    async drawStars() {
+        function generateSprite() {
+            let canvas = document.createElement('canvas');
+            canvas.width = 16;
+            canvas.height = 16;
+            let context = canvas.getContext('2d');
+            let gradient = context.createRadialGradient(
+                canvas.width / 2,
+                canvas.height / 2,
+                0,
+                canvas.width / 2,
+                canvas.height / 2,
+                canvas.width / 2);
 
-    drawStars() {
-        /*Genera 200 estrellas aleatorias a una distancia aleatoria entre 250 y 750 metros del origen*/
-        let s_geom = new THREE.SphereBufferGeometry(1, 32, 32);
-        let s_mat = new THREE.MeshBasicMaterial({color: 0xffffff});
-
-        for (let i = 0; i < 150; i++) {
-            let s = new THREE.Mesh(s_geom, s_mat);
-
-            let pos = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
-            pos.normalize().multiplyScalar(Math.random() * 500 + 250);
-
-            s.position.copy(pos);
-            this.scene.add(s);
+            gradient.addColorStop(0.0, 'rgba(255,255,255,1)');
+            gradient.addColorStop(0.2, 'rgba(255,255,255,.8)');
+            gradient.addColorStop(0.5, 'rgba(255,255,255,.1)');
+            gradient.addColorStop(0.8, 'rgba(255,255,255,.01)');
+            gradient.addColorStop(1.0, 'rgba(255,255,255,0)');
+            context.fillStyle = gradient;
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            let texture = new THREE.Texture(canvas);
+            texture.needsUpdate = true;
+            return texture;
         }
+
+        /*Genera 200 estrellas aleatorias a una distancia aleatoria entre 250 y 750 metros del origen*/
+
+        let geom = new THREE.Geometry();
+        let material = new THREE.PointsMaterial({
+            size: 10,
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+            color: 0xFFFFFF,
+            map: generateSprite()
+        });
+        for (let i = 0; i < 1500; i++) {
+            let particle = new THREE.Vector3(
+                Math.random() - 0.5,
+                Math.random() - 0.5,
+                Math.random() - 0.5
+            ).setLength(250 + Math.random() * 750);
+            geom.vertices.push(particle);
+        }
+        let cloud = new THREE.Points(geom, material);
+        this.scene.add(cloud);
     }
 
     maketargets(target_number) {
@@ -137,7 +168,7 @@ class Juego {
 
 
     update() {
-        for(let i = 0; i<this.planets.length; i++){
+        for (let i = 0; i < this.planets.length; i++) {
             this.planets[i].rotation.y += 0.001;
         }
         //Se obtiene el tempo que ha pasado desde la ultima ejecución de update()
@@ -192,9 +223,11 @@ class Juego {
     }
 }
 
-function createMesh(geom, imageFile) {
-    let texture = THREE.ImageUtils.loadTexture("../statics/images/" + imageFile);
-    let mat = new THREE.MeshLambertMaterial({opacity:0.8});
+function
+
+createMesh(geom, imageFile) {
+    let texture = new THREE.TextureLoader().load("../statics/images/" + imageFile);
+    let mat = new THREE.MeshLambertMaterial({opacity: 0.8});
     mat.map = texture;
     return new THREE.Mesh(geom, mat);
 }
