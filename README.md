@@ -1,8 +1,9 @@
 # Starglider
 
-Proyecto de Consuros Interpreparatorianos 2019-2020. Juego tipo "Starglider".
+Proyecto para presenatr en los Consuros Interpreparatorianos 2019-2020. Juego tipo "Starglider".
 
-Equipo:
+##Equipo: undefined
+	- Mariana Melo
+	- Samuel Elí Méndez Sánchez
+	- Gamaliel Ríos Lira
 
-Samuel Elí Mández Sánchez
-Gamaliel Ríos Lira
