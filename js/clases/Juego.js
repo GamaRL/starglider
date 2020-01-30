@@ -21,7 +21,7 @@ class Juego {
         this.scene = new THREE.Scene();
 
         ////Instanciamos una cámara y se configura su posición////
-        this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
         this.camera.position.set(0, 10, 0);
         this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
@@ -29,14 +29,14 @@ class Juego {
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.renderer.setClearColor(new THREE.Color(0x0000));
+        this.renderer.setClearColor(new THREE.Color(0x000000));
 
         //Se crea un canvas dentro de "game_output para dibujar ahí las escenas
         document.getElementById(id_element).appendChild(this.renderer.domElement);
 
         ////flyControls nos permitira simular el movimiento permitiendonos girar y trasladarnos////
         this.flyControls = new THREE.FlyControls(this.camera, document.querySelector("#" + id_element));
-        this.flyControls.movementSpeed = 2;
+        this.flyControls.movementSpeed = 5;
         this.flyControls.rollSpeed = Math.PI / 9;
         this.flyControls.autoForward = true;
         this.flyControls.dragToLook = false;
@@ -60,11 +60,11 @@ class Juego {
             return new THREE.Mesh(geom, mat);
         }
 
-        let planet = createMesh(new THREE.SphereGeometry(100, 40, 40), "jupitermap.jpg");
+        let planet = createMesh(new THREE.SphereGeometry(100, 40, 40), "planetAmap.jpg");
 
         planet.position.set(0, -200, 200);
 
-        let mars = createMesh(new THREE.SphereGeometry(70, 40, 40), "marsmap.jpg");
+        let mars = createMesh(new THREE.SphereGeometry(70, 40, 40), "planetBmap.png");
 
         mars.position.set(0, 200, 200);
 
@@ -72,11 +72,16 @@ class Juego {
 
         neptune.position.set(-250, -0, -50);
 
-        let venus = createMesh(new THREE.SphereGeometry(40, 42, 42), "venusmap.jpg");
+        let venus = createMesh(new THREE.SphereGeometry(40, 42, 42), "planetCmap.jpg");
 
         venus.position.set(100, -100, -100);
 
+        //let planetA = createMesh(new THREE.SphereGeometry(70, 42, 42), "planetAmap.jpg");
+
+        //planetA.position.set(150, -30, 200);
+
         this.planets = [];
+
         this.planets.push(planet);
         this.planets.push(mars);
         this.planets.push(neptune);
@@ -91,13 +96,13 @@ class Juego {
         this.targets_objects = []; //Guarda el objeto Object3D con correspondiente a los enemigos
         this.balas_enemigas = []; //Guarda todas las balas enemigas
 
-        this.drawStars(0xBD3673, 50);
+        this.drawStars(0xBD3673, 500);
         this.drawStars(0xBDA220, 100);
-        this.drawStars(0x4B93BD, 50);
-        this.drawStars(0x0B46BD, 50);
+        this.drawStars(0x4B93BD, 500);
+        this.drawStars(0x0B46BD, 500);
         this.drawStars(0xBD6405, 100);
-        this.drawStars(0x9C3ABD, 50);
-        this.drawStars(0xffffff, 800);
+        this.drawStars(0x9C3ABD, 500);
+        this.drawStars(0xffffff, 50000);
 
 
         document.onkeydown = (evt) => {
@@ -170,7 +175,7 @@ class Juego {
 
         let geom = new THREE.Geometry();
         let material = new THREE.PointsMaterial({
-            size: 10,
+            size: 7,
             transparent: true,
             blending: THREE.AdditiveBlending,
             color,
@@ -181,7 +186,7 @@ class Juego {
                 Math.random() - 0.5,
                 Math.random() - 0.5,
                 Math.random() - 0.5
-            ).setLength(250 + Math.random() * 750);
+            ).setLength(250 +  Math.random() * 750);
             geom.vertices.push(particle);
         }
         let cloud = new THREE.Points(geom, material);
