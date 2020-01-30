@@ -22,8 +22,11 @@ class Juego {
 
         ////Instanciamos una cámara y se configura su posición////
         this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
-        this.camera.position.set(0, 10, 0);
-        this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+        this.camera.position.set(0, 0, 0);
+        this.camera.lookAt(new THREE.Vector3(
+            Math.random()-0.5,
+            Math.random()-0.5,
+            Math.random()-0.5).setLength(10));
 
         ////Instanciamos un renderer que nos permite crear escenas en 3D, configuramos su tamaño////
         this.renderer = new THREE.WebGLRenderer();
@@ -43,8 +46,11 @@ class Juego {
 
         this.time = new THREE.Clock(); //Nos permite llevar la cuenta del tiempo en el juego
 
-        var light = new THREE.PointLight(0xffffff, 1.5, 1200);
+        let light = new THREE.PointLight(0xffffff, 1.5, 1200);
         light.position.set(0, 0, 0);
+
+        // let ambientLight = new THREE.AmbientLight({color:0xc0c0c0, intensity: 0.1});
+        // this.scene.add(ambientLight);
 
         this.scene.add(light);
 
@@ -55,7 +61,7 @@ class Juego {
 
         function createMesh(geom, imageFile) {
             let texture = new THREE.TextureLoader().load("../statics/images/" + imageFile);
-            let mat = new THREE.MeshLambertMaterial({opacity: 0.8, emissive: 0x010101});
+            let mat = new THREE.MeshLambertMaterial({opacity: 0.8});
             mat.map = texture;
             return new THREE.Mesh(geom, mat);
         }
@@ -96,13 +102,13 @@ class Juego {
         this.targets_objects = []; //Guarda el objeto Object3D con correspondiente a los enemigos
         this.balas_enemigas = []; //Guarda todas las balas enemigas
 
-        this.drawStars(0xBD3673, 500);
-        this.drawStars(0xBDA220, 100);
-        this.drawStars(0x4B93BD, 500);
-        this.drawStars(0x0B46BD, 500);
+        this.drawStars(0xBD3673, 50);
+        this.drawStars(0xBDA220, 200);
+        this.drawStars(0x4B93BD, 100);
+        this.drawStars(0x0B46BD, 10);
         this.drawStars(0xBD6405, 100);
-        this.drawStars(0x9C3ABD, 500);
-        this.drawStars(0xffffff, 50000);
+        // this.drawStars(0x9C3ABD, 500);
+        this.drawStars(0xffffff, 800);
 
 
         document.onkeydown = (evt) => {
@@ -194,11 +200,19 @@ class Juego {
     }
 
     maketargets(target_number) {
-        let x = (Math.random() - 0.5) * 30;
-        let y = (Math.random() - 0.5) * 30;
-        let z = (Math.random() - 0.5) * 30;
+        let position = new THREE.Vector3();
+        this.camera.getWorldDirection(position);
+        position.negate().add(new THREE.Vector3(
+            Math.random()-0.5,
+            Math.random()-0.5,
+            Math.random()-0.5
+        ).setLength(0.1)).setLength(Math.random() * 5);
+
+        // let x = (Math.random() - 0.5) * 30;
+        // let y = (Math.random() - 0.5) * 30;
+        // let z = (Math.random() - 0.5) * 30;
         let new_target = new Nave(
-            new THREE.Vector3(x, y, z).add(this.camera.position),
+            position.add(this.camera.position),
             this.camera.position,
             this.models[0].clone(),
             this.radar
@@ -218,7 +232,7 @@ class Juego {
         //Se obtiene el tempo que ha pasado desde la ultima ejecución de update()
         let delta = this.time.getDelta();
 
-        this.mira.update();
+        this.mira.update(this.targets_objects, this.camera);
 
         this.balas_enemigas.forEach(bala => {
             let crash = bala.update(delta, [this.player.nave_img]);

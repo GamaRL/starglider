@@ -16,6 +16,14 @@ body {
     bottom: 0;
     right: 0;
     margin: auto;
+
+    height: 50px;
+    border-radius: 50%;
+    transition: border 0.2s;
+}
+
+#mira.shoot {
+    border: solid rgba(0,255,0,0.9) 5px;
 }
 
 div.radar {
@@ -40,6 +48,5 @@ div.radar {
     /*background-color: rgba(0,200,0,0.9);*/
     bottom: 1em;
     left: 1em;
-
-    -webkit-transition: all 0.2s;
+    -webkit-transition: width 1s;
 }

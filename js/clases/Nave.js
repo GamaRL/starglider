@@ -33,7 +33,7 @@ class Nave {
             .copy(this.nave_img.position)
             .sub(game.camera.position)
             .negate()
-            .setLength(0.5);
+            .setLength(0.2);
 
         let distance = new THREE.Vector3().copy(camera.position).sub(this.nave_img.position).length();
 
