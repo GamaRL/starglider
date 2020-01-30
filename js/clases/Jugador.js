@@ -26,8 +26,11 @@ class Jugador {
 
         this.barraVida.style.width = (Math.floor(300 * this.vida / 500)) + "px";
         if (this.vida < 500)
-            this.vida += 0.1;
+            this.vida += 0.05;
 
+        let r = (this.vida <= 250) ? 255 : Math.floor(255 * (1 - (this.vida - 250) / 250));
+        let g = (this.vida >= 250) ? 255 : Math.floor(255 * ( this.vida / 250));
 
+        this.barraVida.style.backgroundColor = `rgb(${r}, ${g}, 0)`;
     }
 }

@@ -17,7 +17,7 @@ class Nave {
         this.nave_img.position.copy(position);
         game.scene.add(this.nave_img);
 
-        let img_radar_geom = new THREE.SphereGeometry(0.1, 32, 32);
+        let img_radar_geom = new THREE.SphereGeometry(0.2, 32, 32);
         let img_radar_mat = new THREE.MeshBasicMaterial({color: 0xff00ff});
         this.img_radar = new THREE.Mesh(img_radar_geom, img_radar_mat);
         this.img_radar.position.copy(position);

@@ -29,7 +29,7 @@ class Juego {
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.renderer.setClearColor(new THREE.Color(0x0b0b23));
+        this.renderer.setClearColor(new THREE.Color(0x0000));
 
         //Se crea un canvas dentro de "game_output para dibujar ahí las escenas
         document.getElementById(id_element).appendChild(this.renderer.domElement);
@@ -43,7 +43,7 @@ class Juego {
 
         this.time = new THREE.Clock(); //Nos permite llevar la cuenta del tiempo en el juego
 
-        var light = new THREE.PointLight(0xffffff, 1.5, 400);
+        var light = new THREE.PointLight(0xffffff, 1.5, 1200);
         light.position.set(0, 0, 0);
 
         this.scene.add(light);
@@ -117,18 +117,34 @@ class Juego {
                 this.player.balas.push(new Bala(disparador1, velocity, 0x0BBD20));
                 this.player.balas.push(new Bala(disparador2, velocity, 0x0BBD20));
             }
+
+            if (evt.keyCode === 87) {
+                // alert(evt.keyCode);
+                this.flyControls.movementSpeed = 15;
+                // alert("Hola");
+            }
         };
 
-        window.addEventListener('resize',this.onResize, false)
-    };
+        document.onkeypress = (evt) => {
 
+        };
+
+        document.onkeyup = (evt) => {
+            if (evt.keyCode === 87) {
+                this.flyControls.movementSpeed = 2;
+            }
+        };
+
+
+        window.addEventListener('resize', this.onResize, false)
+    };
 
 
     async drawStars(color, number) {
         function generateSprite() {
             let canvas = document.createElement('canvas');
-            canvas.width = 16;
-            canvas.height = 16;
+            canvas.width = 32;
+            canvas.height = 32;
             let context = canvas.getContext('2d');
             let gradient = context.createRadialGradient(
                 canvas.width / 2,
@@ -140,7 +156,7 @@ class Juego {
 
             gradient.addColorStop(0.0, 'rgba(255,255,255,1)');
             gradient.addColorStop(0.2, 'rgba(255,255,255,.8)');
-            gradient.addColorStop(0.5, 'rgba(255,255,255,.1)');
+            gradient.addColorStop(0.5, 'rgba(255,255,255,.05)');
             gradient.addColorStop(0.8, 'rgba(255,255,255,.01)');
             gradient.addColorStop(1.0, 'rgba(255,255,255,0)');
             context.fillStyle = gradient;
