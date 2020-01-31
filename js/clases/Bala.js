@@ -50,12 +50,13 @@ class Bala {
 
         if (intersects.length > 0 && this.vida > 0.45) {
             this.vida = 0;
-            crash_object = intersects[0].object;
+            crash_object = intersects[0].object.parent;
+            // console.log(crash_object.parent);
         } else {
             this.dibujo.position.add(velocity);
             this.vida -= dt;
-        }
 
+        }
         if (this.vida <= 0) {
             game.scene.remove(this.dibujo);
         }
@@ -78,6 +79,6 @@ class Bala {
         vel_norm.normalize();
         let caster = new THREE.Raycaster(this.dibujo.position, vel_norm, 0, distance);
 
-        return caster.intersectObjects(targets, false);
+        return caster.intersectObjects(targets, true);
     }
 }

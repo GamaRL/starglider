@@ -20,7 +20,7 @@ class Mira {
         camera.getWorldDirection(pointer);
         pointer.normalize();
         let caster = new THREE.Raycaster(camera.position, pointer, 0, 80);
-        return caster.intersectObjects(targets, false);
+        return caster.intersectObjects(targets, true);
     }
 
     update(targets, camera) {

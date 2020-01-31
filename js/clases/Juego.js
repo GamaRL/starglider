@@ -39,20 +39,25 @@ class Juego {
 
         ////flyControls nos permitira simular el movimiento permitiendonos girar y trasladarnos////
         this.flyControls = new THREE.FlyControls(this.camera, document.querySelector("#" + id_element));
-        this.flyControls.movementSpeed = 5;
+        this.flyControls.movementSpeed = 1;
         this.flyControls.rollSpeed = Math.PI / 9;
         this.flyControls.autoForward = true;
         this.flyControls.dragToLook = false;
 
         this.time = new THREE.Clock(); //Nos permite llevar la cuenta del tiempo en el juego
 
-        let light = new THREE.PointLight(0xffffff, 1.5, 1200);
-        light.position.set(0, 0, 0);
+        // let light = new THREE.PointLight(0xffffff, 1.5, 1200);
+        // light.position.set(0, 0, 0);
 
-        // let ambientLight = new THREE.AmbientLight({color:0xc0c0c0, intensity: 0.1});
-        // this.scene.add(ambientLight);
+        let light2 = new THREE.PointLight(0xffffff, 1.5, 1200);
+        light2.position.set(0, 0, 500);
 
-        this.scene.add(light);
+        let light3 = new THREE.PointLight(0xffffff, 1.5, 1200);
+        light3.position.set(0, 0, -500);
+
+        // this.scene.add(light);
+        this.scene.add(light2);
+        this.scene.add(light3);
 
         this.mira = new Mira(id_element);
         this.radar = new Radar(id_element);
@@ -131,7 +136,7 @@ class Juego {
 
             if (evt.keyCode === 87) {
                 // alert(evt.keyCode);
-                this.flyControls.movementSpeed = 15;
+                this.flyControls.movementSpeed = 10;
                 // alert("Hola");
             }
         };
@@ -206,11 +211,7 @@ class Juego {
             Math.random()-0.5,
             Math.random()-0.5,
             Math.random()-0.5
-        ).setLength(0.1)).setLength(Math.random() * 5);
-
-        // let x = (Math.random() - 0.5) * 30;
-        // let y = (Math.random() - 0.5) * 30;
-        // let z = (Math.random() - 0.5) * 30;
+        ).setLength(0.1)).setLength(15 - Math.random() * 5);
         let new_target = new Nave(
             position.add(this.camera.position),
             this.camera.position,
@@ -237,7 +238,7 @@ class Juego {
         this.balas_enemigas.forEach(bala => {
             let crash = bala.update(delta, [this.player.nave_img]);
             if (crash)
-                this.player.vida -= 10;
+                this.player.vida -= 20;
         });
 
         this.balas_enemigas = this.balas_enemigas.filter(bala => bala.vida > 0);

@@ -38,7 +38,7 @@ class Radar {
         this.camera = camera.clone();
         let new_pos = new THREE.Vector3();
         this.camera.getWorldDirection(new_pos);
-        this.camera.position.sub(new_pos.multiplyScalar(5));
+        this.camera.position.sub(new_pos.multiplyScalar(15));
         this.renderer.render(this.scene, this.camera);
     }
 

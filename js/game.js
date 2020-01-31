@@ -13,14 +13,17 @@ let models = [];
 let muertos = 0;
 var game;
 loader.load('../statics/3Dmodels/nave.glb', function(gltf) {
-    models[1] = gltf.scene.children[2];
+    // models[1] = gltf.scene.children[2];
+    let group = new THREE.Group();
+    group.add(gltf.scene.children[2]);
+    models[1] = group;
     models[1].scale.set(0.2, 0.2, 0.2);
     // models[1].rotateX(Math.PI/2);
 
-    loader.load('../statics/3Dmodels/nivel1.glb', function (gltf) {
+    loader.load('../statics/3Dmodels/navebuena.glb', function (gltf) {
         console.log(gltf.scene.children);
         models[0] = gltf.scene.children[0];
-        models[0].scale.set(0.15, 0.15, 0.15);
+        // models[0].scale.set(0.15, 0.15, 0.15);
         init();
     }, undefined, function (error) {
         console.error(error);
@@ -47,7 +50,7 @@ function init() {
 
     function render() {
         game.update();
-        if (game.targets.length < 10) {
+        if (game.targets.length < 15) {
             game.maketargets(target_number++);
         }
         game.radar.render(game.camera);
