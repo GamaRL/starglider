@@ -24,9 +24,9 @@ class Juego {
         this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
         this.camera.position.set(0, 0, 0);
         this.camera.lookAt(new THREE.Vector3(
-            Math.random()-0.5,
-            Math.random()-0.5,
-            Math.random()-0.5).setLength(10));
+            Math.random() - 0.5,
+            Math.random() - 0.5,
+            Math.random() - 0.5).setLength(10));
 
         ////Instanciamos un renderer que nos permite crear escenas en 3D, configuramos su tamaño////
         this.renderer = new THREE.WebGLRenderer();
@@ -39,20 +39,26 @@ class Juego {
 
         ////flyControls nos permitira simular el movimiento permitiendonos girar y trasladarnos////
         this.flyControls = new THREE.FlyControls(this.camera, document.querySelector("#" + id_element));
-        this.flyControls.movementSpeed = 5;
-        this.flyControls.rollSpeed = Math.PI / 9;
+        this.flyControls.movementSpeed = 1;
+        this.flyControls.rollSpeed = Math.PI / 11;
         this.flyControls.autoForward = true;
         this.flyControls.dragToLook = false;
 
+        this.escudo = new Escudo();
+
+
+        this.maxSpeedActivated = false;
+
         this.time = new THREE.Clock(); //Nos permite llevar la cuenta del tiempo en el juego
 
-        let light = new THREE.PointLight(0xffffff, 1.5, 1200);
-        light.position.set(0, 0, 0);
+        let light1 = new THREE.PointLight(0xffffff, 1.5, 1200);
+        light1.position.set(0, 0, 500);
 
-        // let ambientLight = new THREE.AmbientLight({color:0xc0c0c0, intensity: 0.1});
-        // this.scene.add(ambientLight);
+        let light2 = new THREE.PointLight(0xffffff, 1.5, 1200);
+        light2.position.set(0, 0, -500);
 
-        this.scene.add(light);
+        this.scene.add(light1);
+        this.scene.add(light2);
 
         this.mira = new Mira(id_element);
         this.radar = new Radar(id_element);
@@ -99,7 +105,7 @@ class Juego {
         this.player = new Jugador(this.camera, this.models[1]);
 
         this.targets = []; //Guarda los enemigos que se van creando en el juego
-        this.targets_objects = []; //Guarda el objeto Object3D con correspondiente a los enemigos
+        this.targets_objects = []; //Guarda el objeto Object3D correspondiente a los enemigos
         this.balas_enemigas = []; //Guarda todas las balas enemigas
 
         this.drawStars(0xBD3673, 50);
@@ -123,26 +129,29 @@ class Juego {
                 //Las balas salen disparadas en la dirección en la que el jugador está jugando
                 let velocity = new THREE.Vector3();
                 this.camera.getWorldDirection(velocity);
-                velocity.setLength(500); //
+                velocity.setLength(200); //
 
                 this.player.balas.push(new Bala(disparador1, velocity, 0x0BBD20));
                 this.player.balas.push(new Bala(disparador2, velocity, 0x0BBD20));
             }
 
             if (evt.keyCode === 87) {
-                // alert(evt.keyCode);
-                this.flyControls.movementSpeed = 15;
-                // alert("Hola");
+                if (!this.maxSpeedActivated)
+                    this.flyControls.movementSpeed = 10;
             }
         };
 
         document.onkeypress = (evt) => {
-
+            if (evt.keyCode == 112 && this.escudo.life == 5) {
+                if (!this.escudo.isActivated()) {
+                    this.escudo.activate();
+                }
+            }
         };
 
         document.onkeyup = (evt) => {
             if (evt.keyCode === 87) {
-                this.flyControls.movementSpeed = 2;
+                this.flyControls.movementSpeed = 1;
             }
         };
 
@@ -177,8 +186,6 @@ class Juego {
             return texture;
         }
 
-        /*Genera 200 estrellas aleatorias a una distancia aleatoria entre 250 y 750 metros del origen*/
-
         let geom = new THREE.Geometry();
         let material = new THREE.PointsMaterial({
             size: 7,
@@ -192,25 +199,16 @@ class Juego {
                 Math.random() - 0.5,
                 Math.random() - 0.5,
                 Math.random() - 0.5
-            ).setLength(250 +  Math.random() * 750);
+            ).setLength(250 + Math.random() * 750);
             geom.vertices.push(particle);
         }
         let cloud = new THREE.Points(geom, material);
         this.scene.add(cloud);
     }
 
-    maketargets(target_number) {
-        let position = new THREE.Vector3();
-        this.camera.getWorldDirection(position);
-        position.negate().add(new THREE.Vector3(
-            Math.random()-0.5,
-            Math.random()-0.5,
-            Math.random()-0.5
-        ).setLength(0.1)).setLength(Math.random() * 5);
-
-        // let x = (Math.random() - 0.5) * 30;
-        // let y = (Math.random() - 0.5) * 30;
-        // let z = (Math.random() - 0.5) * 30;
+    async maketargets(target_number) {
+        let position = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
+        position.setLength(20 - Math.random() * 5);
         let new_target = new Nave(
             position.add(this.camera.position),
             this.camera.position,
@@ -236,11 +234,15 @@ class Juego {
 
         this.balas_enemigas.forEach(bala => {
             let crash = bala.update(delta, [this.player.nave_img]);
-            if (crash)
-                this.player.vida -= 10;
+            if (crash && !this.escudo.isActivated()) {
+                console.log("Te han dado");
+                this.player.vida -= 15;
+            }
         });
 
-        this.balas_enemigas = this.balas_enemigas.filter(bala => bala.vida > 0);
+        this.escudo.update();
+
+        this.thiss_enemigas = this.balas_enemigas.filter(bala => bala.vida > 0);
 
         //Se ejecuta un update para cada bala del jugador
         for (let i = 0; i < this.player.balas.length; i++) {
@@ -258,8 +260,8 @@ class Juego {
                                 target.vida -= 10;
                             } else {
                                 target.destroy(this.scene, this.radar);
-                                muertos++;
-                                console.log(muertos);
+                                destroy++;
+                                console.log(destroy);
                                 response = false;
                             }
                         }

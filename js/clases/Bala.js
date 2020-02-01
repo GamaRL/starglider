@@ -22,7 +22,7 @@ class Bala {
      *   para representar la bala
      *************************************************************/
 
-    constructor(position, velocity, color, geometry = new THREE.SphereBufferGeometry(0.1, 5, 5)) {
+    constructor(position, velocity, color, geometry = new THREE.SphereBufferGeometry(0.08, 5, 5)) {
         this.velocity = new THREE.Vector3().copy(velocity);
         this.dibujo = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({
             color,
@@ -48,14 +48,14 @@ class Bala {
         let velocity = new THREE.Vector3().copy(this.velocity);
         velocity.multiplyScalar(dt);
 
-        if (intersects.length > 0 && this.vida > 0.45) {
+        if (intersects.length > 0 && this.vida > 0.2) {
             this.vida = 0;
-            crash_object = intersects[0].object;
+            crash_object = intersects[0].object.parent;
         } else {
             this.dibujo.position.add(velocity);
             this.vida -= dt;
-        }
 
+        }
         if (this.vida <= 0) {
             game.scene.remove(this.dibujo);
         }
@@ -78,6 +78,6 @@ class Bala {
         vel_norm.normalize();
         let caster = new THREE.Raycaster(this.dibujo.position, vel_norm, 0, distance);
 
-        return caster.intersectObjects(targets, false);
+        return caster.intersectObjects(targets, true);
     }
 }
