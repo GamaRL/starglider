@@ -4,14 +4,14 @@
  * Author: undefined
  */
 
-// window.onload = init;
+
+
 let targets = [];
-// let planets = [];
-// let nave_img;
 let loader = new THREE.GLTFLoader();
 let models = [];
-let muertos = 0;
-var game;
+let destroy = 0;
+let game;
+
 loader.load('../statics/3Dmodels/nave.glb', function(gltf) {
     // models[1] = gltf.scene.children[2];
     let group = new THREE.Group();
@@ -20,9 +20,9 @@ loader.load('../statics/3Dmodels/nave.glb', function(gltf) {
     models[1].scale.set(0.2, 0.2, 0.2);
     // models[1].rotateX(Math.PI/2);
 
-    loader.load('../statics/3Dmodels/navebuena.glb', function (gltf) {
-        console.log(gltf.scene.children);
-        models[0] = gltf.scene.children[0];
+    loader.load('../statics/3Dmodels/navebuena.glb', function (gltf_) {
+        console.log(gltf_.scene.children);
+        models[0] = gltf_.scene.children[0];
         // models[0].scale.set(0.15, 0.15, 0.15);
         init();
     }, undefined, function (error) {
