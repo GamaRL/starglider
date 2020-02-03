@@ -27,8 +27,8 @@ class Nave {
     }
 
     disparar(velocity, balas) {
-        this.soni = new Sound("laser.mp3");
-        this.soni.sonido();
+        this.soundEffect = new Sound("laser.mp3");
+        this.soundEffect.sonido();
         balas.push(new Bala(this.nave_img.position, velocity, 0xBD000E, new THREE.SphereBufferGeometry(0.01, 32, 32)));
     }
 
@@ -57,7 +57,7 @@ class Nave {
         this.nave_img.rotateX(0.2);
         this.img_radar.position.copy(this.nave_img.position);
 
-        if (distance < 20 && distance > 2.5 && Math.random() > 0.9) {
+        if (distance < 20 && distance > 2.5 && Math.random() > 0.99) {
             let bala_velocity = new THREE.Vector3().copy(camera.position).sub(this.nave_img.position);
 
             bala_velocity.add(new THREE.Vector3(Math.random()-0.5,Math.random()-0.5,Math.random()-0.5).setLength(0.1));

@@ -123,8 +123,8 @@ class Juego {
              * al presionar la tecla de espacio
              ************************************************/
             if (evt.keyCode === 32) {
-                this.soni = new Sound("laser.mp3");
-                this.soni.sonido();
+                this.soundEffect = new Sound("laser.mp3");
+                this.soundEffect.sonido();
                 let disparador1 = new THREE.Vector3(1, 0, 0).unproject(this.camera);
                 let disparador2 = new THREE.Vector3(-1, 0, 0).unproject(this.camera);
 
@@ -144,7 +144,10 @@ class Juego {
         };
 
         document.onkeypress = (evt) => {
+
             if (evt.keyCode == 112 && this.escudo.life == 5) {
+                this.soundEffect = new Sound("escudo.mp3");
+                this.soundEffect.sonido();
                 if (!this.escudo.isActivated()) {
                     this.escudo.activate();
                 }
@@ -264,8 +267,8 @@ class Juego {
                             if (target.vida > 10) {
                                 target.vida -= 10;
                             } else {
-                                this.soni = new Sound("explosion.mp3");
-                                this.soni.sonido();
+                                this.soundEffect = new Sound("explosion.mp3");
+                                this.soundEffect.sonido();
                                 target.destroy(this.scene, this.radar);
                                 destroy++;
                                 console.log(destroy);
