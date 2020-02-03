@@ -117,7 +117,6 @@ class Juego {
         this.drawStars(0xffffff, 800);
 
 
-
         document.onkeydown = (evt) => {
             /************************************************
              * Se agrega un evento que nos permitirá disparar
@@ -240,12 +239,15 @@ class Juego {
             if (crash && !this.escudo.isActivated()) {
                 console.log("Te han dado");
                 this.player.vida -= 15;
+                if (this.player.vida <= 0) {
+                    this.player.vida = 0;
+                }
             }
         });
 
         this.escudo.update();
 
-        this.thiss_enemigas = this.balas_enemigas.filter(bala => bala.vida > 0);
+        this.balas_enemigas = this.balas_enemigas.filter(bala => bala.vida > 0);
 
         //Se ejecuta un update para cada bala del jugador
         for (let i = 0; i < this.player.balas.length; i++) {
