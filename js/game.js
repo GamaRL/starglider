@@ -10,7 +10,7 @@ let targets = [];
 let loader = new THREE.GLTFLoader();
 let models = [];
 let destroy = 0;
-let soundEfects = [];
+let soundEffects = [];
 let game;
 
 loader.load('../statics/3Dmodels/nave.glb', function(gltf) {

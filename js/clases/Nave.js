@@ -27,10 +27,8 @@ class Nave {
     }
 
     disparar(velocity, balas) {
-        if (Math.random() > 0.8) {
-            this.soni = new Sound("laser_enemigo.mp3");
-            this.soni.sonido();
-        }
+        this.soundEffect = new Sound("laser.mp3");
+        this.soundEffect.sonido();
         balas.push(new Bala(this.nave_img.position, velocity, 0xBD000E, new THREE.SphereBufferGeometry(0.01, 32, 32)));
     }
 
@@ -39,19 +37,18 @@ class Nave {
             .copy(this.nave_img.position)
             .sub(game.camera.position)
             .negate()
-            .setLength(2);
+            .setLength(1.5);
 
         let distance = new THREE.Vector3().copy(camera.position).sub(this.nave_img.position).length();
 
-        if (distance < 4) {
-            acc.multiplyScalar(-8);
+        if (distance < 2.5) {
+            acc.multiplyScalar(-2).cross(new THREE.Vector3(1, 1, 1));
         }
 
         this.nave_img.position.addScaledVector(this.velocidad, dt);
         this.velocidad.addScaledVector(acc, dt);
-        if (this.velocidad.length() > 8) {
-            // console.log(this.velocidad.length());
-            this.velocidad.setLength(8);
+        if (this.velocidad.length > 5) {
+            this.velocidad.length = 5;
         }
         this.nave_img.lookAt(camera.position);
         this.nave_img.rotateZ(this.desfase);
@@ -60,11 +57,11 @@ class Nave {
         this.nave_img.rotateX(0.2);
         this.img_radar.position.copy(this.nave_img.position);
 
-        if (distance < 20 && distance > 2.5 && Math.random() > 0.90) {
+        if (distance < 20 && distance > 2.5 && Math.random() > 0.99) {
             let bala_velocity = new THREE.Vector3().copy(camera.position).sub(this.nave_img.position);
 
             bala_velocity.add(new THREE.Vector3(Math.random()-0.5,Math.random()-0.5,Math.random()-0.5).setLength(0.1));
-            bala_velocity.setLength(300);
+            bala_velocity.setLength(75);
             this.disparar(bala_velocity, balas);
         }
     }
