@@ -25,10 +25,42 @@ class Escudo {
         this.soundEffect.sonido();
     }
 
+    changeClass(number) {
+        if (this.effect.classList.contains("activated"))
+            this.effect.classList.remove("activated")
+        else
+            this.effect.classList.add("activated");
+        if (number > 0)
+            setTimeout(this.changeClass, 200, --number)
+    }
+
+    makeAnimation() {
+
+        setTimeout(effect => {
+            if (effect.classList.contains("activated"))
+                effect.classList.remove("activated")
+            else
+                effect.classList.add("activated");
+            setTimeout(effect => {
+                if (effect.classList.contains("activated"))
+                    effect.classList.remove("activated")
+                else
+                    effect.classList.add("activated");
+                setTimeout(effect => {
+                    if (effect.classList.contains("activated"))
+                        effect.classList.remove("activated")
+                    else
+                        effect.classList.add("activated");
+                }, 200, effect);
+            }, 200, effect)
+        }, 200, this.effect);
+    }
+
     activate() {
         this.sound();
         this.activated = true;
-        this.effect.classList.add("activated");
+        // this.effect.classList.add("activated");
+        this.makeAnimation();
     }
 
     desactivate() {
@@ -38,7 +70,8 @@ class Escudo {
 
         this.sound();
         this.activated = false;
-        this.effect.classList.remove("activated");
+        // this.effect.classList.remove("activated");
+        this.makeAnimation();
     }
 
     update(dt) {

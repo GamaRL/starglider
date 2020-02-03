@@ -220,7 +220,6 @@ class Juego {
             Math.random() - 0.5);
         position.setLength(30 - Math.random() * 5);
         let new_target = new Nave(
-            // position.add(this.camera.position),
             position,
             this.models[0].clone(),
             this.radar
@@ -292,7 +291,6 @@ class Juego {
 
         for (let i = 0; i < this.targets.length; i++) {
             this.targets[i].update(delta, this.camera.clone(), this.balas_enemigas);
-
         }
 
         //Se eliminan las balas que ya no tengan tiempo de vida

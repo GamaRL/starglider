@@ -5,11 +5,6 @@
  * Class: Bala
  */
 
-/*
-*   Esta "clase" nos permite crear balas,
-*   estas se dispararan a través del espacio
-*   en el juego
-*/
 class Bala {
 
     /*************************************************************
