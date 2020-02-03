@@ -2,6 +2,7 @@
  * Project: starglider
  * Date: enero 2020
  * Author: undefined
+ * Class: Escudo
  */
 
 class Escudo {

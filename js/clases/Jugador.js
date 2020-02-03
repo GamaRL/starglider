@@ -6,6 +6,14 @@
  */
 
 class Jugador {
+
+    /**
+     * Método constructor
+     * -camera (Object): La cámara con la
+     *  que el jugador está observando
+     * -nave_img (Object): Group que contenga
+     *  el modelo 3D de la nave del jugador
+     */
     constructor(camera, nave_img) {
         this.vida = 500;
         this.balas = [];
@@ -17,6 +25,10 @@ class Jugador {
         document.getElementById("game_output").appendChild(this.barraVida);
     }
 
+    /**
+     * Método update
+     * Actualiza los atributos del jugador
+     */
     update() {
         let look = new THREE.Vector3();
         this.camera.getWorldDirection(look);
@@ -26,7 +38,7 @@ class Jugador {
 
         this.barraVida.style.width = (Math.floor(300 * this.vida / 500)) + "px";
         if (this.vida < 500)
-            this.vida += 0.1;
+            this.vida += 0.05;
 
         let r = (this.vida <= 250) ? 255 : Math.floor(255 * (1 - (this.vida - 250) / 250));
         let g = (this.vida >= 250) ? 255 : Math.floor(255 * ( this.vida / 250));
