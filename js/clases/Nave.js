@@ -39,18 +39,19 @@ class Nave {
             .copy(this.nave_img.position)
             .sub(game.camera.position)
             .negate()
-            .setLength(1.5);
+            .setLength(2);
 
         let distance = new THREE.Vector3().copy(camera.position).sub(this.nave_img.position).length();
 
-        if (distance < 2.5) {
-            acc.multiplyScalar(-2).cross(new THREE.Vector3(1, 1, 1));
+        if (distance < 4) {
+            acc.multiplyScalar(-8);
         }
 
         this.nave_img.position.addScaledVector(this.velocidad, dt);
         this.velocidad.addScaledVector(acc, dt);
-        if (this.velocidad.length > 5) {
-            this.velocidad.length = 5;
+        if (this.velocidad.length() > 8) {
+            // console.log(this.velocidad.length());
+            this.velocidad.setLength(8);
         }
         this.nave_img.lookAt(camera.position);
         this.nave_img.rotateZ(this.desfase);
@@ -59,11 +60,11 @@ class Nave {
         this.nave_img.rotateX(0.2);
         this.img_radar.position.copy(this.nave_img.position);
 
-        if (distance < 20 && distance > 2.5 && Math.random() > 0.9) {
+        if (distance < 20 && distance > 2.5 && Math.random() > 0.90) {
             let bala_velocity = new THREE.Vector3().copy(camera.position).sub(this.nave_img.position);
 
             bala_velocity.add(new THREE.Vector3(Math.random()-0.5,Math.random()-0.5,Math.random()-0.5).setLength(0.1));
-            bala_velocity.setLength(75);
+            bala_velocity.setLength(300);
             this.disparar(bala_velocity, balas);
         }
     }

@@ -6,11 +6,12 @@
 
 class Escudo {
     constructor() {
-        this.activated = false;
+        // this.activated = false;
         this.life = 5;
         this.effect = document.createElement("div");
         this.effect.setAttribute("id", "shield");
         document.getElementsByTagName("body")[0].appendChild(this.effect);
+        this.activate();
     }
 
     isActivated() {

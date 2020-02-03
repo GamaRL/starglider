@@ -7,6 +7,6 @@ class Sound {
     }
     sonido(){
         this.sound.play();
-        console.log("play");
+        // console.log("play");
     }
 }
