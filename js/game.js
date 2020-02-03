@@ -48,7 +48,7 @@ function init() {
         game.update();
 
 
-        if (game.targets.length < 15) {
+        if (game.targets.length < 4) {
             game.maketargets(target_number++);
         }
         game.radar.render(game.camera);

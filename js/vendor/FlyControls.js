@@ -12,7 +12,7 @@ THREE.FlyControls = function ( object, domElement ) {
 	}
 
 
-	this.soni = new Sound("Castle On The Hill.mp3");
+	this.soundEffect = new Sound("theme.mp3");
 
 	this.object = object;
 	this.domElement = domElement;
@@ -71,7 +71,7 @@ THREE.FlyControls = function ( object, domElement ) {
 			case 81: /*Q*/ this.moveState.rollLeft = 1; break;
 			case 69: /*E*/ this.moveState.rollRight = 1; break;
 
-			case 79: /*O*/ 	this.soni.sonido();
+			case 79: /*O*/ 	this.soundEffect.sonido();
 
 		}
 
