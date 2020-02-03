@@ -34,7 +34,7 @@ class Bala {
     }
 
     /********************************************************************
-     * Función update: Se encarga de actualizar los atributos del objeto.
+     * Método update: Se encarga de actualizar los atributos del objeto.
      * Parámetros:
      * -dt (number): Un "diferencial de tiempo" con el
      *   que se deberán hacer los cálculos para el movimiento
@@ -64,8 +64,9 @@ class Bala {
     }
 
     /**************************************************
-     * Se encarga de verificar si a cierta distancia
-     * hay algún objeto con el que pueda colisionar
+     * Método cast_objects: Se encarga de verificar si
+     * a cierta distancia hay algún objeto con el que
+     * pueda colisionar
      * Parámetros:
      * -distance (number): Máxima distancia a la que
      *   verificar

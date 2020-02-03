@@ -40,7 +40,7 @@ class Juego {
         ////flyControls nos permitira simular el movimiento permitiendonos girar y trasladarnos////
         this.flyControls = new THREE.FlyControls(this.camera, document.querySelector("#" + id_element));
         this.flyControls.movementSpeed = 1;
-        this.flyControls.rollSpeed = Math.PI / 11;
+        this.flyControls.rollSpeed = Math.PI / 10;
         this.flyControls.autoForward = true;
         this.flyControls.dragToLook = false;
 
@@ -113,7 +113,7 @@ class Juego {
         this.drawStars(0x4B93BD, 100);
         this.drawStars(0x0B46BD, 10);
         this.drawStars(0xBD6405, 100);
-        // this.drawStars(0x9C3ABD, 500);
+        this.drawStars(0x9C3ABD, 500);
         this.drawStars(0xffffff, 800);
 
 
@@ -217,7 +217,6 @@ class Juego {
         position.setLength(30 - Math.random() * 5);
         let new_target = new Nave(
             position.add(this.camera.position),
-            this.camera.position,
             this.models[0].clone(),
             this.radar
         );
@@ -241,15 +240,16 @@ class Juego {
         this.balas_enemigas.forEach(bala => {
             let crash = bala.update(delta, [this.player.nave_img]);
             if (crash && !this.escudo.isActivated()) {
-                console.log("Te han dado");
                 this.player.vida -= 10;
+                this.camera.rotation.z += (Math.random() / 2 + 0.5) / 20;
+                setTimeout(function (camera) {
+                    camera.rotation.z -= (Math.random() / 2 + 0.5) / 20;
+                }, 500, this.camera);
                 if (this.player.vida <= 0) {
                     this.player.vida = 0;
                 }
             } else if (crash) {
                 this.escudo.underFire();
-                console.log("Escudo");
-
             }
         });
 

@@ -14,7 +14,6 @@ class Escudo {
         this.effect.setAttribute("id", "shield");
         document.getElementsByTagName("body")[0].appendChild(this.effect);
         this.activate();
-        console.log(Escudo.max_life);
     }
 
     isActivated() {

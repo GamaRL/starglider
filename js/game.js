@@ -18,7 +18,7 @@ loader.load('../statics/3Dmodels/nave.glb', function(gltf) {
     let group = new THREE.Group();
     group.add(gltf.scene.children[2]);
     models[1] = group;
-    models[1].scale.set(0.2, 0.2, 0.2);
+    models[1].scale.set(0.3, 0.3, 0.3);
     // models[1].rotateX(Math.PI/2);
 
     loader.load('../statics/3Dmodels/navebuena.glb', function (gltf_) {
@@ -48,7 +48,7 @@ function init() {
         game.update();
 
 
-        if (game.targets.length < 15) {
+        if (game.targets.length < 10) {
             game.maketargets(target_number++);
         }
         game.radar.render(game.camera);
