@@ -9,7 +9,6 @@ class Escudo {
     static max_life = 10;
 
     constructor() {
-        // this.activated = false;
         this.life = Escudo.max_life;
         this.effect = document.createElement("div");
         this.effect.setAttribute("id", "shield");
@@ -62,8 +61,8 @@ class Escudo {
     underFire() {
         let newWave = document.createElement("div");
         newWave.classList.add("waveShield");
-        newWave.style.top = Math.random()*40+30 + "%";
-        newWave.style.left = Math.random()*40+30 + "%";
+        newWave.style.top = Math.random() * 40 + 30 + "%";
+        newWave.style.left = Math.random() * 40 + 30 + "%";
         this.effect.appendChild(newWave);
 
     }
