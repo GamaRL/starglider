@@ -6,11 +6,20 @@
  */
 
 class Nave {
-    constructor(position, grav_center, nave_img, radar) {
+
+    /**
+     * Método constructor
+     * Parámetros:
+     * -position
+     * -grav_center
+     * @param nave_img
+     * @param radar
+     */
+    constructor(position, nave_img, radar) {
         this.velocidad = new THREE.Vector3(
             Math.random() - 0.5,
             Math.random() - 0.5,
-            Math.random() - 0.5).normalize();
+            Math.random() - 0.5).setLength(6);
 
         this.vida = 100;
         this.nave_img = nave_img;
@@ -41,15 +50,17 @@ class Nave {
 
         let distance = new THREE.Vector3().copy(camera.position).sub(this.nave_img.position).length();
 
-        if (distance < 3) {
-            acc.multiplyScalar(-4);
+        if (distance < 4) {
+            acc.multiplyScalar(-5);
         }
 
         this.nave_img.position.addScaledVector(this.velocidad, dt);
         this.velocidad.addScaledVector(acc, dt);
-        if (this.velocidad.length() > 7) {
-            this.velocidad.setLength(7);
+
+        if (this.velocidad.length() > 6) {
+            this.velocidad.setLength(6);
         }
+
         this.nave_img.lookAt(camera.position);
         this.nave_img.rotateZ(this.desfase);
 
@@ -57,10 +68,10 @@ class Nave {
         this.nave_img.rotateX(0.2);
         this.img_radar.position.copy(this.nave_img.position);
 
-        if (distance < 20 && distance > 0.5 && Math.random() > 0.90) {
+        if (distance < 20 && distance > 0.1 && Math.random() > 0.95) {
             let bala_velocity = new THREE.Vector3().copy(camera.position).sub(this.nave_img.position);
 
-            bala_velocity.add(new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).setLength(0.01));
+            bala_velocity.add(new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).setLength(0.001));
             bala_velocity.setLength(300);
             this.disparar(bala_velocity, balas);
         }
