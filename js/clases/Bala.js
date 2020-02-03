@@ -29,12 +29,12 @@ class Bala {
             wireframe: true
         }));
         this.dibujo.position.copy(position);
-        this.vida = 0.5;
+        this.vida = 3;
         game.scene.add(this.dibujo);
     }
 
     /********************************************************************
-     * Función update: Se encarga de actualizar los atributos del objeto.
+     * Método update: Se encarga de actualizar los atributos del objeto.
      * Parámetros:
      * -dt (number): Un "diferencial de tiempo" con el
      *   que se deberán hacer los cálculos para el movimiento
@@ -48,13 +48,12 @@ class Bala {
         let velocity = new THREE.Vector3().copy(this.velocity);
         velocity.multiplyScalar(dt);
 
-        if (intersects.length > 0 && this.vida > 0.2) {
+        if (intersects.length > 0 && this.vida > 0) {
             this.vida = 0;
             crash_object = intersects[0].object.parent;
         } else {
             this.dibujo.position.add(velocity);
             this.vida -= dt;
-
         }
         if (this.vida <= 0) {
             game.scene.remove(this.dibujo);
@@ -64,8 +63,9 @@ class Bala {
     }
 
     /**************************************************
-     * Se encarga de verificar si a cierta distancia
-     * hay algún objeto con el que pueda colisionar
+     * Método cast_objects: Se encarga de verificar si
+     * a cierta distancia hay algún objeto con el que
+     * pueda colisionar
      * Parámetros:
      * -distance (number): Máxima distancia a la que
      *   verificar
