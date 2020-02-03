@@ -13,7 +13,7 @@ class Escudo {
         this.effect = document.createElement("div");
         this.effect.setAttribute("id", "shield");
         document.getElementsByTagName("body")[0].appendChild(this.effect);
-        this.activate();
+        // this.activate();
     }
 
     isActivated() {
@@ -49,7 +49,7 @@ class Escudo {
             }
         } else {
             if (this.life < Escudo.max_life)
-                this.life += dt / 2;
+                this.life += dt;
             else {
                 if (this.life > Escudo.max_life)
                     this.life = Escudo.max_life;

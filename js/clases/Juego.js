@@ -22,11 +22,12 @@ class Juego {
 
         ////Instanciamos una cámara y se configura su posición////
         this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
-        this.camera.position.set(0, 0, 0);
-        this.camera.lookAt(new THREE.Vector3(
-            Math.random() - 0.5,
-            Math.random() - 0.5,
-            Math.random() - 0.5).setLength(10));
+        this.camera.position.set(0, 10, 0);
+        this.camera.lookAt(new THREE.Vector3());
+        // this.camera.lookAt(new THREE.Vector3(
+        //     Math.random() - 0.5,
+        //     Math.random() - 0.5,
+        //     Math.random() - 0.5).setLength(10));
 
         ////Instanciamos un renderer que nos permite crear escenas en 3D, configuramos su tamaño////
         this.renderer = new THREE.WebGLRenderer();
@@ -103,6 +104,7 @@ class Juego {
         this.scene.add(neptune);
         this.scene.add(venus);
         this.player = new Jugador(this.camera, this.models[1]);
+        this.scene.add(this.player.nave_img);
 
         this.targets = []; //Guarda los enemigos que se van creando en el juego
         this.targets_objects = []; //Guarda el objeto Object3D correspondiente a los enemigos
@@ -149,6 +151,8 @@ class Juego {
 
                 if (!this.escudo.isActivated()) {
                     this.escudo.activate();
+                    console.log(this.player.nave_img.position);
+                    console.log(this.camera.position)
                 }
             }
         };
@@ -216,7 +220,8 @@ class Juego {
             Math.random() - 0.5);
         position.setLength(30 - Math.random() * 5);
         let new_target = new Nave(
-            position.add(this.camera.position),
+            // position.add(this.camera.position),
+            position,
             this.models[0].clone(),
             this.radar
         );
@@ -240,11 +245,11 @@ class Juego {
         this.balas_enemigas.forEach(bala => {
             let crash = bala.update(delta, [this.player.nave_img]);
             if (crash && !this.escudo.isActivated()) {
-                this.player.vida -= 10;
+                this.player.vida -= 5;
                 this.camera.rotation.z += (Math.random() / 2 + 0.5) / 20;
                 setTimeout(function (camera) {
                     camera.rotation.z -= (Math.random() / 2 + 0.5) / 20;
-                }, 500, this.camera);
+                }, 100, this.camera);
                 if (this.player.vida <= 0) {
                     this.player.vida = 0;
                 }
@@ -287,11 +292,11 @@ class Juego {
 
         for (let i = 0; i < this.targets.length; i++) {
             this.targets[i].update(delta, this.camera.clone(), this.balas_enemigas);
+
         }
 
         //Se eliminan las balas que ya no tengan tiempo de vida
         this.player.balas = this.player.balas.filter(bala => bala.vida > 0);
-
         this.player.update();
         this.flyControls.update(delta);
         this.renderer.render(this.scene, this.camera);

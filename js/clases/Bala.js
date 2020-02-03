@@ -29,7 +29,7 @@ class Bala {
             wireframe: true
         }));
         this.dibujo.position.copy(position);
-        this.vida = 0.5;
+        this.vida = 3;
         game.scene.add(this.dibujo);
     }
 
@@ -48,13 +48,12 @@ class Bala {
         let velocity = new THREE.Vector3().copy(this.velocity);
         velocity.multiplyScalar(dt);
 
-        if (intersects.length > 0 && this.vida > 0.2) {
+        if (intersects.length > 0 && this.vida > 0) {
             this.vida = 0;
             crash_object = intersects[0].object.parent;
         } else {
             this.dibujo.position.add(velocity);
             this.vida -= dt;
-
         }
         if (this.vida <= 0) {
             game.scene.remove(this.dibujo);

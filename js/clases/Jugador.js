@@ -19,6 +19,7 @@ class Jugador {
         this.balas = [];
         this.camera = camera;
         this.nave_img = nave_img;
+        this.nave_img.position.set(0,0,0);
 
         this.barraVida = document.createElement("div");
         this.barraVida.setAttribute("id", "barraVida");
@@ -47,10 +48,12 @@ class Jugador {
     update() {
         let look = new THREE.Vector3();
         this.camera.getWorldDirection(look);
-        look.unproject(this.camera);
+        // look.unproject(this.camera);
 
         this.nave_img.position.copy(this.camera.position);
-        this.nave_img.lookAt(look);
+        // this.nave_img.position.addScaledVector(look, 3);
+        // this.nave_img.position.addScaledVector(look, );
+        this.nave_img.lookAt(look.unproject(this.camera));
 
         this.barraVida.style.width = (Math.floor(300 * this.vida / 500)) + "px";
         if (this.vida < 500)
