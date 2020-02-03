@@ -238,7 +238,7 @@ class Juego {
             let crash = bala.update(delta, [this.player.nave_img]);
             if (crash && !this.escudo.isActivated()) {
                 console.log("Te han dado");
-                this.player.vida -= 15;
+                this.player.vida -= 5;
                 if (this.player.vida <= 0) {
                     this.player.vida = 0;
                 }
