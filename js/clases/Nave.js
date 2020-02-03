@@ -27,6 +27,7 @@ class Nave {
     }
 
     disparar(velocity, balas) {
+
         balas.push(new Bala(this.nave_img.position, velocity, 0xBD000E, new THREE.SphereBufferGeometry(0.01, 32, 32)));
     }
 

@@ -117,12 +117,15 @@ class Juego {
         this.drawStars(0xffffff, 800);
 
 
+
         document.onkeydown = (evt) => {
             /************************************************
              * Se agrega un evento que nos permitirá disparar
              * al presionar la tecla de espacio
              ************************************************/
             if (evt.keyCode === 32) {
+                this.soni = new Sound("laser.mp3");
+                this.soni.sonido();
                 let disparador1 = new THREE.Vector3(1, 0, 0).unproject(this.camera);
                 let disparador2 = new THREE.Vector3(-1, 0, 0).unproject(this.camera);
 
@@ -259,6 +262,8 @@ class Juego {
                             if (target.vida > 10) {
                                 target.vida -= 10;
                             } else {
+                                this.soni = new Sound("explosion.mp3");
+                                this.soni.sonido();
                                 target.destroy(this.scene, this.radar);
                                 destroy++;
                                 console.log(destroy);

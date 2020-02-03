@@ -10,6 +10,7 @@ let targets = [];
 let loader = new THREE.GLTFLoader();
 let models = [];
 let destroy = 0;
+let soundEfects = [];
 let game;
 
 loader.load('../statics/3Dmodels/nave.glb', function(gltf) {
@@ -50,6 +51,8 @@ function init() {
 
     function render() {
         game.update();
+
+
         if (game.targets.length < 15) {
             game.maketargets(target_number++);
         }
