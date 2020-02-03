@@ -7,6 +7,7 @@
 
 class Escudo {
     static max_life = 10;
+
     constructor() {
         // this.activated = false;
         this.life = Escudo.max_life;
@@ -50,7 +51,7 @@ class Escudo {
             }
         } else {
             if (this.life < Escudo.max_life)
-                this.life += dt/2;
+                this.life += dt / 2;
             else {
                 if (this.life > Escudo.max_life)
                     this.life = Escudo.max_life;
@@ -61,8 +62,8 @@ class Escudo {
     underFire() {
         let newWave = document.createElement("div");
         newWave.classList.add("waveShield");
-        newWave.style.right = Math.random() * 100 + "%";
-        newWave.style.top = Math.random() * 100 + "%";
+        newWave.style.top = Math.random()*40+30 + "%";
+        newWave.style.left = Math.random()*40+30 + "%";
         this.effect.appendChild(newWave);
 
     }

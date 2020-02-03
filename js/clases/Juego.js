@@ -210,8 +210,11 @@ class Juego {
     }
 
     async maketargets(target_number) {
-        let position = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
-        position.setLength(20 - Math.random() * 5);
+        let position = new THREE.Vector3(
+            Math.random() - 0.5,
+            Math.random() - 0.5,
+            Math.random() - 0.5);
+        position.setLength(30 - Math.random() * 5);
         let new_target = new Nave(
             position.add(this.camera.position),
             this.camera.position,

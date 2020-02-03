@@ -66,12 +66,13 @@ div.radar {
 #shield div.waveShield {
     border-radius: 50%;
     display: block;
-    width: 0;
-    height: 0;
+    width: 1px;
+    height: 1px;
     position: absolute;
     z-index: 25;
-    animation: waveEffect 2.5s 1;
+    animation: waveEffect 1.5s 1;
     animation-fill-mode: forwards;
+    transform: translate(-50%,-50%);
 
 }
 
@@ -80,11 +81,10 @@ div.radar {
     from {
         width: 0;
         height: 0;
-        border: 10px solid rgba(88, 202, 255, 0.5);
+        border: 30px solid rgba(88, 202, 255, 0.5);
     }
     to {
-        border: 30px solid rgba(88, 202, 255, 0.5);
-        left: -2000px;
+        border: 50px solid rgba(88, 202, 255, 0.5);
         width: 2000px;
         height: 2000px;
         opacity: 0.1;
