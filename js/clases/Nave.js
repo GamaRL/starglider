@@ -27,7 +27,8 @@ class Nave {
     }
 
     disparar(velocity, balas) {
-
+        this.soni = new Sound("laser.mp3");
+        this.soni.sonido();
         balas.push(new Bala(this.nave_img.position, velocity, 0xBD000E, new THREE.SphereBufferGeometry(0.01, 32, 32)));
     }
 
