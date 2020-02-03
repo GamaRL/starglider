@@ -36,7 +36,6 @@ class Escudo {
         while (this.effect.firstChild) {
             this.effect.removeChild(this.effect.firstChild);
         }
-
         this.sound();
         this.activated = false;
         this.effect.classList.remove("activated");

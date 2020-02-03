@@ -54,4 +54,6 @@ function init() {
         game.radar.render(game.camera);
         requestAnimationFrame(render);
     }
+
+
 }

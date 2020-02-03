@@ -214,7 +214,7 @@ class Juego {
             Math.random() - 0.5,
             Math.random() - 0.5,
             Math.random() - 0.5);
-        position.setLength(30 - Math.random() * 5);
+        position.setLength(50 - Math.random() * 5);
         let new_target = new Nave(
             position.add(this.camera.position),
             this.camera.position,
@@ -254,7 +254,7 @@ class Juego {
         });
 
         this.escudo.update(delta);
-
+        console.log(delta);
         this.balas_enemigas = this.balas_enemigas.filter(bala => bala.vida > 0);
 
         //Se ejecuta un update para cada bala del jugador
