@@ -145,9 +145,8 @@ class Juego {
 
         document.onkeypress = (evt) => {
 
-            if (evt.keyCode == 112 && this.escudo.life == 5) {
-                this.soundEffect = new Sound("escudo.mp3");
-                this.soundEffect.sonido();
+            if (evt.keyCode == 112 && this.escudo.life == Escudo.max_life) {
+
                 if (!this.escudo.isActivated()) {
                     this.escudo.activate();
                 }
@@ -244,10 +243,14 @@ class Juego {
                 if (this.player.vida <= 0) {
                     this.player.vida = 0;
                 }
+            } else if (crash) {
+                this.escudo.underFire();
+                console.log("Escudo");
+
             }
         });
 
-        this.escudo.update();
+        this.escudo.update(delta);
 
         this.balas_enemigas = this.balas_enemigas.filter(bala => bala.vida > 0);
 

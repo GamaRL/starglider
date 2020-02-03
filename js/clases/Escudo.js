@@ -6,42 +6,64 @@
  */
 
 class Escudo {
+    static max_life = 10;
     constructor() {
         // this.activated = false;
-        this.life = 5;
+        this.life = Escudo.max_life;
         this.effect = document.createElement("div");
         this.effect.setAttribute("id", "shield");
         document.getElementsByTagName("body")[0].appendChild(this.effect);
         this.activate();
+        console.log(Escudo.max_life);
     }
 
     isActivated() {
         return this.activated;
     }
 
+    sound() {
+        this.soundEffect = new Sound("escudo.mp3");
+        this.soundEffect.sonido();
+    }
+
     activate() {
+        this.sound();
         this.activated = true;
         this.effect.classList.add("activated");
     }
 
     desactivate() {
+        while (this.effect.firstChild) {
+            this.effect.removeChild(this.effect.firstChild);
+        }
+
+        this.sound();
         this.activated = false;
         this.effect.classList.remove("activated");
     }
 
-    update() {
+    update(dt) {
         if (this.activated) {
-            this.life -= 1 / 60;
+            this.life -= dt;
             if (this.life <= 0) {
                 this.desactivate();
             }
         } else {
-            if (this.life < 5)
-                this.life += 1 / 120;
+            if (this.life < Escudo.max_life)
+                this.life += dt/2;
             else {
-                if (this.life > 5)
-                    this.life = 5;
+                if (this.life > Escudo.max_life)
+                    this.life = Escudo.max_life;
             }
         }
+    }
+
+    underFire() {
+        let newWave = document.createElement("div");
+        newWave.classList.add("waveShield");
+        newWave.style.right = Math.random() * 100 + "%";
+        newWave.style.top = Math.random() * 100 + "%";
+        this.effect.appendChild(newWave);
+
     }
 }

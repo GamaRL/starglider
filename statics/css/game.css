@@ -62,3 +62,31 @@ div.radar {
 #shield.activated {
     background-color: rgba(88, 202, 255, 0.2);
 }
+
+#shield div.waveShield {
+    border-radius: 50%;
+    display: block;
+    width: 0;
+    height: 0;
+    position: absolute;
+    z-index: 25;
+    animation: waveEffect 2.5s 1;
+    animation-fill-mode: forwards;
+
+}
+
+
+@keyframes waveEffect {
+    from {
+        width: 0;
+        height: 0;
+        border: 10px solid rgba(88, 202, 255, 0.5);
+    }
+    to {
+        border: 30px solid rgba(88, 202, 255, 0.5);
+        left: -2000px;
+        width: 2000px;
+        height: 2000px;
+        opacity: 0.1;
+    }
+}

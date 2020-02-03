@@ -31,11 +31,6 @@ loader.load('../statics/3Dmodels/nave.glb', function(gltf) {
     });
 });
 
-
-
-
-
-
 function init() {
 
     game = new Juego("game_output", models);
