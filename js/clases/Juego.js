@@ -16,7 +16,7 @@ class Juego {
      *   (Por ejemplo, las naves)
      *********************************************/
 
-    constructor(id_element, models, arre) {
+    constructor(id_element, models, historyArray) {
         this.scene = new THREE.Scene();
 
         this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
@@ -40,7 +40,7 @@ class Juego {
         this.flyControls.autoForward = true;
         this.flyControls.dragToLook = true;
 
-        this.historia = new Historia(arre);
+        this.historia = new Historia(historyArray);
 
         this.maxSpeedActivated = false;
 
@@ -220,9 +220,8 @@ class Juego {
         });
 
         let delta = this.time.getDelta();
-        let absTime = this.time.getElapsedTime();
 
-        this.historia.update(absTime);
+        this.historia.update(delta);
 
         this.mira.update(this.targets_objects, this.camera);
 

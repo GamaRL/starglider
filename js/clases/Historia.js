@@ -1,31 +1,33 @@
 class Historia {
-    constructor(arre) {
-        this.historiaAux = 1;
-        this.text = [];
-        this.f =0;
-        for(this.i in arre){
-            this.text[this.i] = arre[this.i];
-        }
+    constructor(historyArray) {
+        this.counter = 0;
+        this.text = historyArray;
+        this.timeEllapsed = 10;
+        console.log(historyArray);
         this.historyBlock = document.createElement("div");
-        this.historyBlock.setAttribute("id", "historia");
+        this.historyBlock.setAttribute("id", "history");
+        this.lastChar = 0;
+        document.getElementsByTagName("body")[0].appendChild(this.historyBlock);
     }
 
-
-    update(abs){
-        if(abs > this.historiaAux *15 && this.text.length>this.historiaAux){
-            if(this.f < this.text[this.historiaAux].length){
-                this.historyBlock.innerHTML += this.text[this.historiaAux].charAt(this.f);
-                document.getElementsByTagName("body")[0].appendChild(this.historyBlock);
-                this.f++;
-            }else{
-                if(abs > ((this.historiaAux +1) * 15) -1){
-                    this.historiaAux++;
-                    this.historyBlock.innerHTML = '';
-                }
-            }
-        } else {
-            this.f = 0;
+    putText() {
+        if (this.lastChar < this.text[this.counter].length) {
+            this.historyBlock.innerHTML += this.text[this.counter].charAt(this.lastChar);
+            this.lastChar++;
         }
+    }
+
+    update(dt) {
+        this.timeEllapsed += dt;
+
+        if (this.timeEllapsed > 15) {
+            this.timeEllapsed = 0;
+            this.counter = (this.counter + 1) % this.text.length;
+            this.lastChar = 0;
+            this.historyBlock.innerText = "";
+        }
+
+        this.putText();
     }
 
 }
