@@ -117,8 +117,8 @@ div.radar {
         border: 30px solid rgba(88, 202, 255, 1);
     }
     to {
-        border: 50px solid rgba(88, 202, 255, 0.1);
-        width: 5000px;
-        height: 5000px;
+        border: 50px solid transparent;
+        width: 1500px;
+        height: 1500px;
     }
 }
