@@ -17,34 +17,28 @@ class Juego {
      *********************************************/
 
     constructor(id_element, models, arre) {
-        ////Instanciamos un nuevo objeto Scane////
         this.scene = new THREE.Scene();
-        ////Instanciamos una cámara y se configura su posición////
+
         this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
         this.camera.position.set(0, 10, 0);
-        // this.camera.lookAt(new THREE.Vector3());
+
         this.camera.lookAt(new THREE.Vector3(
             Math.random() - 0.5,
             Math.random() - 0.5,
             Math.random() - 0.5).setLength(10));
 
-        ////Instanciamos un renderer que nos permite crear escenas en 3D, configuramos su tamaño////
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.setClearColor(new THREE.Color(0x000000));
 
-        //Se crea un canvas dentro de "game_output para dibujar ahí las escenas
         document.getElementById(id_element).appendChild(this.renderer.domElement);
 
-        ////flyControls nos permitira simular el movimiento permitiendonos girar y trasladarnos////
         this.flyControls = new THREE.FlyControls(this.camera, document.querySelector("#" + id_element));
         this.flyControls.movementSpeed = 1;
         this.flyControls.rollSpeed = Math.PI / 8;
         this.flyControls.autoForward = true;
         this.flyControls.dragToLook = true;
-
-        this.escudo = new Escudo();
 
         this.historia = new Historia(arre);
 
@@ -105,16 +99,6 @@ class Juego {
             }
         };
 
-        document.onkeypress = (evt) => {
-
-            if (evt.keyCode == 112 && this.escudo.life == Escudo.max_life) {
-
-                if (!this.escudo.isActivated()) {
-                    this.escudo.activate();
-                }
-            }
-        };
-
         document.onkeyup = (evt) => {
             if (evt.keyCode === 87) {
                 this.flyControls.movementSpeed = 1;
@@ -143,8 +127,7 @@ class Juego {
                 folder + "/" + folder + chooseNumber() + ".png",
                 positions.pop(), Math.random() * 40 + 50, this.scene))
         });
-        console.log(planets);
-        return planets;
+        console.log(this.planets);
 
     }
 
@@ -194,24 +177,42 @@ class Juego {
         this.scene.add(cloud);
     }
 
+    chooseEnemyLevel() {
+        return 0;
+    }
+
     async maketargets(target_number) {
         let position = new THREE.Vector3(
             Math.random() - 0.5,
             Math.random() - 0.5,
             Math.random() - 0.5);
         position.setLength(50 - Math.random() * 5);
+
         let new_target = new Nave(
             position,
             this.models[0].clone(),
-            this.radar
+            this.radar,
+            "target" + target_number,
+            this.chooseEnemyLevel()
         );
 
         this.targets.push(new_target);
 
-        new_target.nave_img.name = "target" + target_number;
+        // new_target.nave_img.name = ;
+        this.scene.add(new_target.nave_img);
         this.targets_objects.push(new_target.nave_img);
     }
 
+    removeBalas(balas) {
+        balas = balas.filter(bala => {
+            if (bala.vida <= 0) {
+                this.scene.remove(bala.dibujo);
+                return false
+            } else {
+                return true
+            }
+        });
+    }
 
     update() {
         this.planets.forEach(planet => {
@@ -227,64 +228,43 @@ class Juego {
 
         this.balas_enemigas.forEach(bala => {
             let crash = bala.update(delta, [this.player.nave_img]);
-            if (crash && !this.escudo.isActivated()) {
-                this.soundCrash = new Sound("crash.mp3");
-                this.soundCrash.sonido();
-                this.player.vida -= 5;
-                this.escudo.effect.classList.add("attak");
+            this.player.crashed(crash);
+        });
 
-                let angle = (Math.random() / 2 + 0.5) / 20;
+        this.player.balas.forEach(bala => {
 
-                this.camera.rotation.z += angle;
-                setTimeout(function (camera, escudo) {
-                    camera.rotation.z -= angle;
-                    setTimeout(() => {
-                        escudo.effect.classList.remove("attak");
-                    }, 200, escudo)
-                }, 200, this.camera, this.escudo);
-                if (this.player.vida <= 0) {
-                    this.player.vida = 0;
-                }
-            } else if (crash) {
-                this.soundCrashShield = new Sound("shieldcrash.mp3");
-                this.soundCrashShield.sonido();
-                this.escudo.underFire();
+            var crash_object = bala.update(delta, this.targets_objects);
+
+            if (crash_object) {
+
+                this.targets = this.targets.filter(target => {
+                    let response = true;
+                    if (target.nave_img.name === crash_object.name) {
+                        if (target.vida > 10) {
+                            target.vida -= 10;
+                        } else {
+                            target.destroy();
+                            this.scene.remove(target.nave_img);
+                            this.radar.scene.remove(target.img_radar);
+                            destroy++;
+                            console.log(destroy);
+                            response = false;
+                        }
+                    }
+                    return response;
+                });
             }
         });
 
-        this.escudo.update(delta);
-        this.balas_enemigas = this.balas_enemigas.filter(bala => bala.vida > 0);
+        this.targets.forEach(target => {
+            target.update(delta, this.camera.position.clone(), this.balas_enemigas);
+        });
 
-        for (let i = 0; i < this.player.balas.length; i++) {
+        this.removeBalas(this.player.balas);
+        this.removeBalas(this.balas_enemigas);
 
-            var crash_object = this.player.balas[i].update(delta, this.targets_objects);
+        this.player.update(delta);
 
-            if (crash_object) {
-                this.targets = this.targets.filter(
-                    target => {
-                        let response = true;
-                        if (target.nave_img.name === crash_object.name) {
-                            if (target.vida > 10) {
-                                target.vida -= 10;
-                            } else {
-                                target.destroy(this.scene, this.radar);
-                                destroy++;
-                                console.log(destroy);
-                                response = false;
-                            }
-                        }
-                        return response;
-                    });
-            }
-        }
-
-        for (let i = 0; i < this.targets.length; i++) {
-            this.targets[i].update(delta, this.camera.clone(), this.balas_enemigas);
-        }
-
-        //Se eliminan las balas que ya no tengan tiempo de vida
-        this.player.balas = this.player.balas.filter(bala => bala.vida > 0);
-        this.player.update();
         this.flyControls.update(delta);
         this.renderer.render(this.scene, this.camera);
     }

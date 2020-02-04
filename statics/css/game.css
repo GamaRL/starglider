@@ -67,14 +67,20 @@ div.radar {
     top: 10px;
     left: 10px;
     color: white;
-    padding-left: 100px;
-    padding-top: 50px;
+    padding-left: 5%;
+    padding-top: 5%;
     font-family: 'Source Code Pro', monospace;
 
 }
 
+#shield {
+    display: none;
+}
+
 #shield.activated {
+    display: block;
     background-color: rgba(88, 202, 255, 0.2);
+    z-index: 20;
 }
 
 #shield div.waveShield {
@@ -84,13 +90,13 @@ div.radar {
     height: 1px;
     position: absolute;
     z-index: 25;
-    animation: waveEffect 1.5s 1;
+    animation: waveEffect 1s 1;
     animation-fill-mode: forwards;
     transform: translate(-50%, -50%);
-
 }
 
 #shield.attak {
+    display: block;
     background-image: radial-gradient(transparent 85%, #ff0000 100%);
     animation: attak 0.3s 1;
 }

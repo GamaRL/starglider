@@ -30,7 +30,7 @@ class Bala {
     /********************************************************************
      * Método update: Se encarga de actualizar los atributos del objeto.
      * Parámetros:
-     * -dt (number): Un "diferencial de tiempo" con el
+     * -dt (Number): Un "diferencial de tiempo" con el
      *   que se deberán hacer los cálculos para el movimiento
      * -targets (Array): Contiene a objetos Object3D con los
      *   que puede colisionar
@@ -39,18 +39,14 @@ class Bala {
         let intersects = this.cast_objects(this.velocity.length() * dt, targets);
         let crash_object;
 
-        let velocity = new THREE.Vector3().copy(this.velocity);
-        velocity.multiplyScalar(dt);
+        let velocity = this.velocity.clone();
 
         if (intersects.length > 0 && this.vida > 0) {
             this.vida = 0;
             crash_object = intersects[0].object.parent;
         } else {
-            this.dibujo.position.add(velocity);
+            this.dibujo.position.addScaledVector(velocity,dt);
             this.vida -= dt;
-        }
-        if (this.vida <= 0) {
-            game.scene.remove(this.dibujo);
         }
 
         return crash_object;

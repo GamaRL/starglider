@@ -20,11 +20,22 @@ class Jugador {
         this.camera = camera;
         this.nave_img = nave_img;
         this.nave_img.position.set(0, 0, 0);
+        this.escudo = new Escudo();
 
         this.barraVida = document.createElement("div");
         this.barraVida.setAttribute("id", "barraVida");
         this.misiles = [];
         document.getElementById("game_output").appendChild(this.barraVida);
+
+        document.onkeypress = (evt) => {
+
+            if (evt.keyCode === 112 && this.escudo.life === Escudo.max_life) {
+
+                if (!this.escudo.isActivated()) {
+                    this.escudo.activate();
+                }
+            }
+        };
     }
 
     disparar() {
@@ -56,7 +67,7 @@ class Jugador {
      * Método update
      * Actualiza los atributos del jugador
      **************************************/
-    update() {
+    update(dt) {
         let look = new THREE.Vector3();
         this.camera.getWorldDirection(look);
 
@@ -69,7 +80,35 @@ class Jugador {
 
         let r = (this.vida <= 250) ? 255 : Math.floor(255 * (1 - (this.vida - 250) / 250));
         let g = (this.vida >= 250) ? 255 : Math.floor(255 * (this.vida / 250));
+        this.escudo.update(dt);
 
         this.barraVida.style.backgroundColor = `rgb(${r}, ${g}, 0)`;
+    }
+
+    crashed(crash) {
+        if (crash && !this.escudo.isActivated()) {
+            let soundCrash = new Sound("crash.mp3");
+            soundCrash.sonido();
+            this.vida -= 5;
+            this.escudo.effect.classList.add("attak");
+
+            let angle = (Math.random() / 2 + 0.5) / 20;
+
+            this.camera.rotation.z += angle;
+            setTimeout(function (camera, escudo) {
+                camera.rotation.z -= angle;
+                setTimeout(() => {
+                    escudo.effect.classList.remove("attak");
+                }, 200, escudo)
+            }, 200, this.camera, this.escudo);
+
+            if (this.vida <= 0) {
+                this.vida = 0;
+            }
+        } else if (crash) {
+            let soundCrashShield = new Sound("shieldcrash.mp3");
+            soundCrashShield.sonido();
+            this.escudo.underFire();
+        }
     }
 }

@@ -82,6 +82,6 @@ class Escudo {
         newWave.style.top = Math.random() * 40 + 30 + "%";
         newWave.style.left = Math.random() * 40 + 30 + "%";
         this.effect.appendChild(newWave);
-
     }
+
 }
