@@ -260,6 +260,8 @@ class Juego {
                     this.player.vida = 0;
                 }
             } else if (crash) {
+                this.soundCrashShield = new Sound("shieldcrash.mp3");
+                this.soundCrashShield.sonido();
                 this.escudo.underFire();
             }
         });

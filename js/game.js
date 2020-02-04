@@ -58,7 +58,7 @@ function init() {
     function render() {
         game.update();
 
-        if (game.targets.length < 5) {
+        if (game.targets.length < 6) {
             game.maketargets(target_number++);
         }
         game.radar.render(game.camera);
