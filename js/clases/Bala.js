@@ -5,11 +5,6 @@
  * Class: Bala
  */
 
-/*
-*   Esta "clase" nos permite crear balas,
-*   estas se dispararan a través del espacio
-*   en el juego
-*/
 class Bala {
 
     /*************************************************************
@@ -21,7 +16,6 @@ class Bala {
      * -geometry (Geometry): Geometría de THREE.js que se usará
      *   para representar la bala
      *************************************************************/
-
     constructor(position, velocity, color, geometry = new THREE.SphereBufferGeometry(0.08, 5, 5)) {
         this.velocity = new THREE.Vector3().copy(velocity);
         this.dibujo = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({

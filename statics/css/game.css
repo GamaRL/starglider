@@ -45,7 +45,6 @@ div.radar {
     z-index: 30;
     bottom: 1em;
     left: 1em;
-    /*-webkit-transition: width 1s;*/
 }
 
 #shield {

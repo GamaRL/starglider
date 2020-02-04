@@ -19,26 +19,37 @@ class Jugador {
         this.balas = [];
         this.camera = camera;
         this.nave_img = nave_img;
-        this.nave_img.position.set(0,0,0);
+        this.nave_img.position.set(0, 0, 0);
 
         this.barraVida = document.createElement("div");
         this.barraVida.setAttribute("id", "barraVida");
-        this.soundEffect = new Sound("laser.mp3");
+        this.misiles = [];
         document.getElementById("game_output").appendChild(this.barraVida);
     }
 
     disparar() {
-        this.soundEffect.sonido();
-        let disparador1 = new THREE.Vector3(1, 0, 0).unproject(this.camera);
-        let disparador2 = new THREE.Vector3(-1, 0, 0).unproject(this.camera);
+        let soundShutEffect = new Sound("laser.mp3");
+        soundShutEffect.sonido();
 
-        //Las balas salen disparadas en la dirección en la que el jugador está jugando
         let velocity = new THREE.Vector3();
         this.camera.getWorldDirection(velocity);
         velocity.setLength(300);
 
-        this.player.balas.push(new Bala(disparador1, velocity, 0x0BBD20));
-        this.player.balas.push(new Bala(disparador2, velocity, 0x0BBD20));
+        this.balas.push(
+            new Bala(
+                new THREE.Vector3(1, 0, 0).unproject(this.camera),
+                velocity,
+                0x0BBD20),
+            new Bala(
+                new THREE.Vector3(-1, 0, 0).unproject(this.camera),
+                velocity,
+                0x0BBD20)
+        );
+    }
+
+    dispararMisil(target, model) {
+        this.misiles.push(new Misil(new THREE.Vector3().copy(this.camera.position), target, model));
+        game.scene.add(this.misiles.pop().img_misil);
     }
 
     /***************************************
@@ -48,11 +59,8 @@ class Jugador {
     update() {
         let look = new THREE.Vector3();
         this.camera.getWorldDirection(look);
-        // look.unproject(this.camera);
 
         this.nave_img.position.copy(this.camera.position);
-        // this.nave_img.position.addScaledVector(look, 3);
-        // this.nave_img.position.addScaledVector(look, );
         this.nave_img.lookAt(look.unproject(this.camera));
 
         this.barraVida.style.width = (Math.floor(300 * this.vida / 500)) + "px";

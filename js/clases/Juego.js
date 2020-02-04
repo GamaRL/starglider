@@ -22,11 +22,11 @@ class Juego {
         ////Instanciamos una cámara y se configura su posición////
         this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
         this.camera.position.set(0, 10, 0);
-        this.camera.lookAt(new THREE.Vector3());
-        // this.camera.lookAt(new THREE.Vector3(
-        //     Math.random() - 0.5,
-        //     Math.random() - 0.5,
-        //     Math.random() - 0.5).setLength(10));
+        // this.camera.lookAt(new THREE.Vector3());
+        this.camera.lookAt(new THREE.Vector3(
+            Math.random() - 0.5,
+            Math.random() - 0.5,
+            Math.random() - 0.5).setLength(10));
 
         ////Instanciamos un renderer que nos permite crear escenas en 3D, configuramos su tamaño////
         this.renderer = new THREE.WebGLRenderer();
@@ -40,16 +40,17 @@ class Juego {
         ////flyControls nos permitira simular el movimiento permitiendonos girar y trasladarnos////
         this.flyControls = new THREE.FlyControls(this.camera, document.querySelector("#" + id_element));
         this.flyControls.movementSpeed = 1;
-        this.flyControls.rollSpeed = Math.PI / 10;
+        this.flyControls.rollSpeed = Math.PI / 8;
         this.flyControls.autoForward = true;
-        this.flyControls.dragToLook = false;
+        this.flyControls.dragToLook = true;
 
         this.escudo = new Escudo();
 
         this.historia = new Historia(arre);
+
         this.maxSpeedActivated = false;
 
-        this.time = new THREE.Clock(); //Nos permite llevar la cuenta del tiempo en el juego
+        this.time = new THREE.Clock();
 
         let light1 = new THREE.PointLight(0xffffff, 1.5, 1200);
         light1.position.set(0, 0, 500);
@@ -124,20 +125,13 @@ class Juego {
              * al presionar la tecla de espacio
              ************************************************/
             if (evt.keyCode === 32) {
-                this.soundEffect = new Sound("laser.mp3");
-                this.soundEffect.sonido();
-                let disparador1 = new THREE.Vector3(1, 0, 0).unproject(this.camera);
-                let disparador2 = new THREE.Vector3(-1, 0, 0).unproject(this.camera);
-
-                //Las balas salen disparadas en la dirección en la que el jugador está jugando
-                let velocity = new THREE.Vector3();
-                this.camera.getWorldDirection(velocity);
-                velocity.setLength(200); //
-
-                this.player.balas.push(new Bala(disparador1, velocity, 0x0BBD20));
-                this.player.balas.push(new Bala(disparador2, velocity, 0x0BBD20));
+                this.player.disparar();
             }
 
+            if (evt.keyCode === 90) {
+                console.log(this.mira.pointing);
+                this.player.dispararMisil(this.mira.pointing, this.models[0]);
+            }
             if (evt.keyCode === 87) {
                 if (!this.maxSpeedActivated)
                     this.flyControls.movementSpeed = 10;
@@ -150,8 +144,6 @@ class Juego {
 
                 if (!this.escudo.isActivated()) {
                     this.escudo.activate();
-                    console.log(this.player.nave_img.position);
-                    console.log(this.camera.position)
                 }
             }
         };
@@ -219,7 +211,6 @@ class Juego {
             Math.random() - 0.5);
         position.setLength(50 - Math.random() * 5);
         let new_target = new Nave(
-            // position.add(this.camera.position),
             position,
             this.models[0].clone(),
             this.radar
@@ -265,14 +256,11 @@ class Juego {
         this.escudo.update(delta);
         this.balas_enemigas = this.balas_enemigas.filter(bala => bala.vida > 0);
 
-        //Se ejecuta un update para cada bala del jugador
         for (let i = 0; i < this.player.balas.length; i++) {
 
-            //El método update de balas devuelve un crash_object en caso de haber colisionado
             var crash_object = this.player.balas[i].update(delta, this.targets_objects);
 
             if (crash_object) {
-                //Se eliminan los objetivos que tengan vida menor a 0
                 this.targets = this.targets.filter(
                     target => {
                         let response = true;
@@ -280,8 +268,6 @@ class Juego {
                             if (target.vida > 10) {
                                 target.vida -= 10;
                             } else {
-                                this.soundEffect = new Sound("explosion.mp3");
-                                this.soundEffect.sonido();
                                 target.destroy(this.scene, this.radar);
                                 destroy++;
                                 console.log(destroy);
@@ -295,7 +281,6 @@ class Juego {
 
         for (let i = 0; i < this.targets.length; i++) {
             this.targets[i].update(delta, this.camera.clone(), this.balas_enemigas);
-
         }
 
         //Se eliminan las balas que ya no tengan tiempo de vida

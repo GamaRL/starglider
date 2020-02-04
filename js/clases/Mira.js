@@ -20,7 +20,12 @@ class Mira {
         camera.getWorldDirection(pointer);
         pointer.normalize();
         let caster = new THREE.Raycaster(camera.position, pointer, 0, 80);
-        return caster.intersectObjects(targets, true);
+
+        let intersects = caster.intersectObjects(targets, true);
+        if (intersects.length > 0)
+            return intersects[0].object.parent;
+        else
+            return undefined;
     }
 
     update(targets, camera) {
@@ -29,12 +34,12 @@ class Mira {
             this.rotation -= 360;
         this.rotation += 2;
 
-        if (targets.length > 0) {
-            if (this.checkTargets(targets, camera).length > 0) {
-                this.img.classList.add("shoot")
-            } else {
-                this.img.classList.remove("shoot");
-            }
+        let response = this.checkTargets(targets, camera);
+        if (response) {
+            this.img.classList.add("shoot");
+        } else {
+            this.img.classList.remove("shoot");
         }
+        this.pointing = response;
     }
 }
