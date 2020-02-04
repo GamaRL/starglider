@@ -18,13 +18,10 @@ loader.load('../statics/3Dmodels/nave.glb', function(gltf) {
     let group = new THREE.Group();
     group.add(gltf.scene.children[2]);
     models[1] = group;
-    models[1].scale.set(0.05, 0.05, 0.05);
-    // models[1].rotateX(Math.PI/2);
+    models[1].scale.set(0.03, 0.03, 0.03);
 
     loader.load('../statics/3Dmodels/navebuena.glb', function (gltf_) {
-        console.log(gltf_.scene.children);
         models[0] = gltf_.scene.children[0];
-        // models[0].scale.set(0.15, 0.15, 0.15);
         init();
     }, undefined, function (error) {
         console.error(error);
@@ -47,8 +44,6 @@ function init() {
 
     function render() {
         game.update();
-
-
 
         if (game.targets.length < 5) {
             game.maketargets(target_number++);

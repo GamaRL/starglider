@@ -35,6 +35,7 @@ class Nave {
         this.img_radar.position.copy(position);
         radar.scene.add(this.img_radar);
         this.soundEffect = new Sound("laser_enemigo.mp3");
+        this.soundDestroyEffect = new Sound("explosion.mp3");
     }
 
     /**
@@ -53,7 +54,7 @@ class Nave {
                 Math.random() - 0.5,
                 Math.random() - 0.5,
                 Math.random() - 0.5
-            ).setLength(0.1));
+            ).setLength(0.5));
 
         balas.push(new Bala(
             this.nave_img.position,
@@ -89,12 +90,13 @@ class Nave {
         this.nave_img.rotateX(0.2);
         this.img_radar.position.copy(this.nave_img.position);
 
-        if (distance < 15 && distance > 0.1 && Math.random() > 0.99) {
+        if (distance < 15 && distance > 0.1 && Math.random() > 0.98) {
             this.disparar(balas, camera);
         }
     }
 
     destroy(scene, radar) {
+        this.soundDestroyEffect.sonido();
         scene.remove(this.nave_img);
         radar.scene.remove(this.img_radar);
     }

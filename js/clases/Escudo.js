@@ -13,29 +13,15 @@ class Escudo {
         this.effect = document.createElement("div");
         this.effect.setAttribute("id", "shield");
         document.getElementsByTagName("body")[0].appendChild(this.effect);
-        // this.activate();
+        this.soundEffect = new Sound("escudo.mp3");
+        this.activate();
     }
 
     isActivated() {
         return this.activated;
     }
 
-    sound() {
-        this.soundEffect = new Sound("escudo.mp3");
-        this.soundEffect.sonido();
-    }
-
-    changeClass(number) {
-        if (this.effect.classList.contains("activated"))
-            this.effect.classList.remove("activated")
-        else
-            this.effect.classList.add("activated");
-        if (number > 0)
-            setTimeout(this.changeClass, 200, --number)
-    }
-
     makeAnimation() {
-
         setTimeout(effect => {
             if (effect.classList.contains("activated"))
                 effect.classList.remove("activated")
@@ -57,9 +43,8 @@ class Escudo {
     }
 
     activate() {
-        this.sound();
+        this.soundEffect.sonido();
         this.activated = true;
-        // this.effect.classList.add("activated");
         this.makeAnimation();
     }
 
@@ -68,9 +53,8 @@ class Escudo {
             this.effect.removeChild(this.effect.firstChild);
         }
 
-        this.sound();
+        this.soundEffect.sonido();
         this.activated = false;
-        // this.effect.classList.remove("activated");
         this.makeAnimation();
     }
 
