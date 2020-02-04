@@ -66,43 +66,8 @@ class Juego {
 
         this.models = models;
 
-        function createMesh(geom, imageFile) {
-            let texture = new THREE.TextureLoader().load("../statics/images/" + imageFile);
-            let mat = new THREE.MeshLambertMaterial({opacity: 0.8});
-            mat.map = texture;
-            return new THREE.Mesh(geom, mat);
-        }
+        this.choosePlanets();
 
-        let planet = createMesh(new THREE.SphereGeometry(100, 40, 40), "planetAmap.jpg");
-
-        planet.position.set(0, -200, 200);
-
-        let mars = createMesh(new THREE.SphereGeometry(70, 40, 40), "planetBmap.png");
-
-        mars.position.set(0, 200, 200);
-
-        let neptune = createMesh(new THREE.SphereGeometry(52, 42, 42), "neptunemap.jpg");
-
-        neptune.position.set(-250, -0, -50);
-
-        let venus = createMesh(new THREE.SphereGeometry(40, 42, 42), "planetCmap.jpg");
-
-        venus.position.set(100, -100, -100);
-
-        //let planetA = createMesh(new THREE.SphereGeometry(70, 42, 42), "planetAmap.jpg");
-
-        //planetA.position.set(150, -30, 200);
-
-        this.planets = [];
-
-        this.planets.push(planet);
-        this.planets.push(mars);
-        this.planets.push(neptune);
-        this.planets.push(venus);
-        this.scene.add(planet);
-        this.scene.add(mars);
-        this.scene.add(neptune);
-        this.scene.add(venus);
         this.player = new Jugador(this.camera, this.models[1]);
         this.scene.add(this.player.nave_img);
 
@@ -159,6 +124,29 @@ class Juego {
         window.addEventListener('resize', this.onResize, false)
     };
 
+    async choosePlanets() {
+        function chooseNumber() {
+            return Math.ceil(Math.random() * 4);
+        }
+
+        let folders = ["Clouds", "Gaseous", "Habitable", "Inhospitable", "Terrestrial"];
+        let positions = [
+            new THREE.Vector3(200, -100, 200),
+            new THREE.Vector3(200, -100, -200),
+            new THREE.Vector3(-200, -100, 200),
+            new THREE.Vector3(-200, -100, -200),
+            new THREE.Vector3(0, 250, 0)
+        ];
+        this.planets = [];
+        folders.forEach(folder => {
+            this.planets.push(new Planeta(
+                folder + "/" + folder + chooseNumber() + ".png",
+                positions.pop(), Math.random() * 40 + 50, this.scene))
+        });
+        console.log(planets);
+        return planets;
+
+    }
 
     async drawStars(color, number) {
         function generateSprite() {
@@ -226,16 +214,14 @@ class Juego {
 
 
     update() {
-        for (let i = 0; i < this.planets.length; i++) {
-            this.planets[i].rotation.y += 0.001;
-        }
-        //Se obtiene el tempo que ha pasado desde la ultima ejecución de update()
+        this.planets.forEach(planet => {
+            planet.update();
+        });
+
         let delta = this.time.getDelta();
         let absTime = this.time.getElapsedTime();
 
         this.historia.update(absTime);
-
-
 
         this.mira.update(this.targets_objects, this.camera);
 
@@ -252,7 +238,7 @@ class Juego {
                 this.camera.rotation.z += angle;
                 setTimeout(function (camera, escudo) {
                     camera.rotation.z -= angle;
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         escudo.effect.classList.remove("attak");
                     }, 200, escudo)
                 }, 200, this.camera, this.escudo);
