@@ -14,7 +14,7 @@ class Escudo {
         this.effect.setAttribute("id", "shield");
         document.getElementsByTagName("body")[0].appendChild(this.effect);
         this.soundEffect = new Sound("escudo.mp3");
-        // this.activate();
+        this.activate();
     }
 
     isActivated() {

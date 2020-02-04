@@ -90,7 +90,7 @@ class Nave {
         this.nave_img.rotateX(0.2);
         this.img_radar.position.copy(this.nave_img.position);
 
-        if (distance < 15 && distance > 0.1 && Math.random() > 0.975) {
+        if (distance < 15 && distance > 0.05 && Math.random() > 0.975) {
             this.disparar(balas, camera);
         }
     }

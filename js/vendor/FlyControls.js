@@ -13,7 +13,6 @@ THREE.FlyControls = function ( object, domElement ) {
 
 
 	this.soundEffect = new Sound("theme.mp3");
-
 	this.object = object;
 	this.domElement = domElement;
 
