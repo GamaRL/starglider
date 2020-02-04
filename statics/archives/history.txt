@@ -1,7 +1,6 @@
 {
   "text": [
   "",
-  "Pulsa la tecla O",
   "Roy, las flotas de Govén están en camino, tú eres nuestra única esperanza",
   "Utiliza la tecla P para activar tus defensas",
   "Prepárate para enfrentarlas, sé que puedes lograrlo",

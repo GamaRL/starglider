@@ -118,6 +118,7 @@ class Juego {
         this.drawStars(0x9C3ABD, 500);
         this.drawStars(0xffffff, 800);
 
+        this.soundTheme = new Sound("theme.mp3");
 
         document.onkeydown = (evt) => {
             /************************************************
@@ -125,6 +126,7 @@ class Juego {
              * al presionar la tecla de espacio
              ************************************************/
             if (evt.keyCode === 32) {
+                this.soundTheme.sonido();
                 this.player.disparar();
             }
 
@@ -231,7 +233,7 @@ class Juego {
         let delta = this.time.getDelta();
         let absTime = this.time.getElapsedTime();
 
-        this.historia.update(absTime, delta);
+        this.historia.update(absTime);
 
 
 
