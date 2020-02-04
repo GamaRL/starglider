@@ -16,10 +16,9 @@ class Juego {
      *   (Por ejemplo, las naves)
      *********************************************/
 
-    constructor(id_element, models) {
+    constructor(id_element, models, arre) {
         ////Instanciamos un nuevo objeto Scane////
         this.scene = new THREE.Scene();
-
         ////Instanciamos una cámara y se configura su posición////
         this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
         this.camera.position.set(0, 10, 0);
@@ -47,7 +46,7 @@ class Juego {
 
         this.escudo = new Escudo();
 
-
+        this.historia = new Historia(arre);
         this.maxSpeedActivated = false;
 
         this.time = new THREE.Clock(); //Nos permite llevar la cuenta del tiempo en el juego
@@ -239,6 +238,11 @@ class Juego {
         }
         //Se obtiene el tempo que ha pasado desde la ultima ejecución de update()
         let delta = this.time.getDelta();
+        let absTime = this.time.getElapsedTime();
+
+        this.historia.update(absTime, delta);
+
+
 
         this.mira.update(this.targets_objects, this.camera);
 
@@ -259,7 +263,6 @@ class Juego {
         });
 
         this.escudo.update(delta);
-        console.log(delta);
         this.balas_enemigas = this.balas_enemigas.filter(bala => bala.vida > 0);
 
         //Se ejecuta un update para cada bala del jugador
