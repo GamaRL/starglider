@@ -241,10 +241,17 @@ class Juego {
             let crash = bala.update(delta, [this.player.nave_img]);
             if (crash && !this.escudo.isActivated()) {
                 this.player.vida -= 5;
-                this.camera.rotation.z += (Math.random() / 2 + 0.5) / 10;
-                setTimeout(function (camera) {
-                    camera.rotation.z -= (Math.random() / 2 + 0.5) / 10;
-                }, 100, this.camera);
+                this.escudo.effect.classList.add("attak");
+
+                let angle = (Math.random() / 2 + 0.5) / 20;
+
+                this.camera.rotation.z += angle;
+                setTimeout(function (camera, escudo) {
+                    camera.rotation.z -= angle;
+                    setTimeout(()=>{
+                        escudo.effect.classList.remove("attak");
+                    }, 200, escudo)
+                }, 200, this.camera, this.escudo);
                 if (this.player.vida <= 0) {
                     this.player.vida = 0;
                 }
