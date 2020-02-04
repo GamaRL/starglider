@@ -60,7 +60,7 @@ class Nave {
             this.nave_img.position,
             velocity,
             0xBD000E,
-            new THREE.SphereBufferGeometry(0.01, 32, 32)));
+            new THREE.SphereBufferGeometry(0.05, 32, 32)));
     }
 
     update(dt, camera, balas) {
@@ -90,7 +90,7 @@ class Nave {
         this.nave_img.rotateX(0.2);
         this.img_radar.position.copy(this.nave_img.position);
 
-        if (distance < 15 && distance > 0.1 && Math.random() > 0.98) {
+        if (distance < 15 && distance > 0.1 && Math.random() > 0.975) {
             this.disparar(balas, camera);
         }
     }

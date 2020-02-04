@@ -52,7 +52,7 @@ class Escudo {
         while (this.effect.firstChild) {
             this.effect.removeChild(this.effect.firstChild);
         }
-        this.sound();
+        this.soundEffect.sonido();
 
 
         this.soundEffect.sonido();
