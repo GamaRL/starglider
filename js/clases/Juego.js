@@ -242,6 +242,8 @@ class Juego {
         this.balas_enemigas.forEach(bala => {
             let crash = bala.update(delta, [this.player.nave_img]);
             if (crash && !this.escudo.isActivated()) {
+                this.soundCrash = new Sound("crash.mp3");
+                this.soundCrash.sonido();
                 this.player.vida -= 5;
                 this.camera.rotation.z += (Math.random() / 2 + 0.5) / 10;
                 setTimeout(function (camera) {
