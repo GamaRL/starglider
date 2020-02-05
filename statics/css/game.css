@@ -64,10 +64,10 @@ div.radar {
     display: block;
     z-index: 2;
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 10%;
+    left: 10%;
     color: white;
-    padding-left: 5%;
+    padding-left: 10%;
     padding-top: 5%;
     font-family: 'Source Code Pro', monospace;
 
@@ -101,6 +101,36 @@ div.radar {
     animation: attak 0.3s 1;
 }
 
+#shieldCharge {
+    display: none;
+    z-index: 30;
+    position: absolute;
+    top: 15%;
+    left: 7%;
+    transform: translate(-50%, -50%);
+    opacity: 0.8;
+    border-radius: 50%;
+}
+
+#shieldCharge.ready {
+    display: block;
+    animation: shieldCharged 0.5s infinite;
+}
+
+
+@keyframes shieldCharged {
+    from {
+        width: 100px;
+        height: 100px;
+        border: 30px solid rgba(88, 202, 255, 1);
+    }
+    to {
+        border: 50px solid transparent;
+        width: 110px;
+        height: 110px;
+    }
+}
+
 @keyframes attak {
     0% {
         width: 110%;
@@ -123,7 +153,7 @@ div.radar {
         border: 30px solid rgba(88, 202, 255, 1);
     }
     to {
-        border: 50px solid transparent;
+        border: 150px solid transparent;
         width: 1500px;
         height: 1500px;
     }
