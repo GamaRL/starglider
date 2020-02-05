@@ -34,11 +34,11 @@ class Nave {
     /***************************************************
      * Método constructor
      * Parámetros:
-     * -position (Object): Posición inicial de la nave
-     * -nave_img (Object): Modelo 3D que representará
-     *  la nave en la escena
-     * -radar (Object): Objeto radar con el que se
-     *  monitoriará la posición de la nave
+     * - position (Object): Posición inicial de la nave
+     * - nave_img (Object): Modelo 3D que representará
+     *    la nave en la escena
+     * - radar (Object): Objeto radar con el que se
+     *    monitoriará la posición de la nave
      ***************************************************/
     constructor(position, nave_img, radar, id, level) {
         this.velocidad = new THREE.Vector3(
@@ -64,12 +64,15 @@ class Nave {
         this.level = level;
     }
 
-    /**
-     * Método disparar:
-     * @param velocity
-     * @param balas
-     */
-
+    /*******************************************************
+     * Método disparar
+     *   Genera una nueva bala que apunta hacia el jugador
+     * Parámetros:
+     * - balas (Array): Arreglo de balas a las que se agregará
+     *    la nueva bala generada
+     * -player_position (Object): Vector que contiene la
+     *   posición del jugador (A quien se busca disparar)
+     ********************************************************/
     disparar(balas, player_position) {
         this.soundEffect.sonido();
         let velocity = new THREE.Vector3()
@@ -122,7 +125,11 @@ class Nave {
         }
     }
 
-    destroy(scene, radar) {
+    /**********************************
+     * Método destroy
+     * Simula la destrucción de la nave
+     **********************************/
+    destroy() {
         this.soundDestroyEffect.sonido();
     }
 }

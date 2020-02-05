@@ -7,15 +7,15 @@
 
 class Juego {
     /*********************************************
+     *  Método constructor
      *  Parámetros:
-     * -id_element (String): Nos indica el id del
-     *   elemento html div en donde se va a crear
-     *   la escena.
-     * -models (Array): Contiene los modelos 3D que
-     *   se necesitan para jugar el juego.
-     *   (Por ejemplo, las naves)
+     * - id_element (String): Nos indica el id del
+     *    elemento html div en donde se va a crear
+     *    la escena.
+     * - models (Array): Contiene los modelos 3D que
+     *    se necesitan para jugar el juego.
+     *    (Por ejemplo, las naves)
      *********************************************/
-
     constructor(id_element, models, historyArray) {
         this.scene = new THREE.Scene();
 
@@ -108,6 +108,12 @@ class Juego {
         window.addEventListener('resize', this.onResize, false)
     };
 
+    /*******************************************
+     * Método choosePlanets
+     *   Nos permite elegir texturas aleatorias
+     *   y posisciona los cuatro planetas en la
+     *   escena.
+     *******************************************/
     async choosePlanets() {
         function chooseNumber() {
             return Math.ceil(Math.random() * 4);
@@ -131,6 +137,13 @@ class Juego {
 
     }
 
+    /*******************************************************************
+     * Método drawStars
+     *   Hace un sprite con estrellas aleatorias y lo agrega a la escena
+     * Parámetros:
+     * - color (Number): Valor del color en hexadecimal
+     * - number (Number): Número de estrellas a dibujar
+     *******************************************************************/
     async drawStars(color, number) {
         function generateSprite() {
             let canvas = document.createElement('canvas');
@@ -177,10 +190,24 @@ class Juego {
         this.scene.add(cloud);
     }
 
+    /****************************************************
+     * Método chooseEnemyLevel
+     *   Elige el nivel de los enemigos de tal manera que
+     *   con el tiempo vaya aumentando
+     * Return:
+     * - level (Number)
+     ****************************************************/
     chooseEnemyLevel() {
         return 0;
     }
 
+    /*************************************************************
+     * Método makeTargets
+     *   Genera un nuevo enemigo una posición aleatoria
+     * Parámetros:
+     * - target_number (Number): Número de naves enemigas generadas
+     *    a través del juego ingrementado en una unidad
+     **************************************************************/
     async maketargets(target_number) {
         let position = new THREE.Vector3(
             Math.random() - 0.5,
@@ -198,11 +225,17 @@ class Juego {
 
         this.targets.push(new_target);
 
-        // new_target.nave_img.name = ;
         this.scene.add(new_target.nave_img);
         this.targets_objects.push(new_target.nave_img);
     }
 
+    /*********************************************
+     * Método removeBalas: Elimina todas aquellas
+     *   balas que no tengan más vida
+     * Parámetros:
+     * - balas (Array): Arreglo con las las balas
+     *    que deseamos "purgar"
+     *********************************************/
     removeBalas(balas) {
         balas = balas.filter(bala => {
             if (bala.vida <= 0) {
