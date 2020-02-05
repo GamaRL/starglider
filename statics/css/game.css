@@ -108,13 +108,12 @@ div.radar {
     top: 15%;
     left: 7%;
     transform: translate(-50%, -50%);
-    opacity: 0.8;
     border-radius: 50%;
 }
 
 #shieldCharge.ready {
     display: block;
-    animation: shieldCharged 0.5s infinite;
+    animation: shieldCharged 0.5s infinite alternate;
 }
 
 
