@@ -10,7 +10,7 @@ xmlhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
         let history = JSON.parse(this.responseText);
         history.text.forEach(phrase => {
-            historyArray.push (phrase);
+            historyArray.push(phrase);
         });
     }
 };
@@ -25,20 +25,31 @@ let destroy = 0;
 let text = [];
 let game;
 
-loader.load('../statics/3Dmodels/nave.glb', function (gltf) {
-    // models[1] = gltf.scene.children[2];
-    let group = new THREE.Group();
-    group.add(gltf.scene.children[2]);
-    models[1] = group;
-    models[1].scale.set(0.02, 0.02, 0.02);
+loader.load('../statics/3Dmodels/nave1.glb', model => {
+    models.push(model.scene.children[0]);
+    loader.load('../statics/3Dmodels/nave.glb', model => {
+        models.push(model.scene.children[2]);
+        loader.load('../statics/3Dmodels/met1.glb', model => {
+            models.push(new THREE.Group().add(model.scene.children[0]));
+            loader.load('../statics/3Dmodels/met2.glb', model => {
+                models.push(new THREE.Group().add(model.scene.children[0]));
+                loader.load('../statics/3Dmodels/met3.glb', model => {
+                    models.push(new THREE.Group().add(model.scene.children[0]));
+                    loader.load('../statics/3Dmodels/met4.glb', model => {
+                        models.push(new THREE.Group().add(model.scene.children[0]));
+                        init();
 
-    loader.load('../statics/3Dmodels/navebuena.glb', function (gltf_) {
-        models[0] = gltf_.scene.children[0];
-        init();
-    }, undefined, function (error) {
-        console.error(error);
-    });
-});
+                    }, undefined, error => console.log(error));
+
+                }, undefined, error => console.log(error));
+
+            }, undefined, error => console.log(error));
+
+        }, undefined, error => console.log(error));
+
+    }, undefined, error => console.log(error));
+
+}, undefined, error => console.log(error));
 
 function init() {
 
@@ -60,7 +71,12 @@ function init() {
         game.update();
 
         if (game.targets.length < 6) {
-            game.maketargets(target_number++);
+            console.log(Math.floor(game.time.getElapsedTime()) );
+            game.maketargets(target_number++, game.models[2 + Math.floor((Math.random() - 0.01) * 4)].clone(), Meteoro);
+        }
+
+        if (game.time.getElapsedTime() % 15 === 0) {
+            // game.maketargets(target_number++, game.models[0].clone(), Nave);
         }
         game.radar.render(game.camera);
         requestAnimationFrame(render);

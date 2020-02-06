@@ -3,7 +3,6 @@ class Historia {
         this.counter = 0;
         this.text = historyArray;
         this.timeEllapsed = 10;
-        console.log(historyArray);
         this.historyBlock = document.createElement("div");
         this.historyBlock.setAttribute("id", "history");
         this.lastChar = 0;

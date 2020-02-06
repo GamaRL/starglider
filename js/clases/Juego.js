@@ -90,7 +90,6 @@ class Juego {
             }
 
             if (evt.keyCode === 90) {
-                console.log(this.mira.pointing);
                 this.player.dispararMisil(this.mira.pointing, this.models[0]);
             }
             if (evt.keyCode === 87) {
@@ -133,7 +132,6 @@ class Juego {
                 folder + "/" + folder + chooseNumber() + ".png",
                 positions.pop(), Math.random() * 40 + 50, this.scene))
         });
-        console.log(this.planets);
 
     }
 
@@ -208,25 +206,18 @@ class Juego {
      * - target_number (Number): Número de naves enemigas generadas
      *    a través del juego ingrementado en una unidad
      **************************************************************/
-    async maketargets(target_number) {
-        let position = new THREE.Vector3(
-            Math.random() - 0.5,
-            Math.random() - 0.5,
-            Math.random() - 0.5);
-        position.setLength(50 - Math.random() * 5);
-
-        let new_target = new Nave(
-            position,
-            this.models[0].clone(),
-            this.radar,
+    async maketargets(target_number, img, constructor) {
+        let new_target = new constructor(
+            img,
             "target" + target_number,
             this.chooseEnemyLevel()
         );
 
         this.targets.push(new_target);
+        this.targets_objects.push(new_target.img);
 
-        this.scene.add(new_target.nave_img);
-        this.targets_objects.push(new_target.nave_img);
+        this.scene.add(new_target.img);
+        this.radar.scene.add(new_target.img_radar);
     }
 
     /*********************************************
@@ -271,12 +262,12 @@ class Juego {
 
                 this.targets = this.targets.filter(target => {
                     let response = true;
-                    if (target.nave_img.name === crash_object.name) {
+                    if (target.img.name === crash_object.name) {
                         if (target.vida > 10) {
                             target.vida -= 10;
                         } else {
                             target.destroy();
-                            this.scene.remove(target.nave_img);
+                            this.scene.remove(target.img);
                             this.radar.scene.remove(target.img_radar);
                             destroy++;
                             console.log(destroy);
