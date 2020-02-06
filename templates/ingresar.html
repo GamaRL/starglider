@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="sp" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>Registro</title>
+    <link href="https://fonts.googleapis.com/css?family=Carter+One|Dokdo|Pacifico" rel="stylesheet">
+    <link rel="stylesheet" href="../statics/css/registro.css">
+</head>
+<body>
+<h1>Ingresar Usuario</h1>
+<form method="post" action="../php/ingreso.php">
+    <ul class="menu">
+        <li class="form">
+            <span>Usuario</span>
+            <input type="text" name="nick" minlength="5" maxlength="10" placeholder="Su nombre de usuario" required pattern="[A-Za-z0-9]+">
+        </li>
+
+        <li class="form">
+            <span>Contraseña</span>
+            <input type="password" name="pws" minlength="5" placeholder="Contraseña" required pattern="[A-Za-z0-9]+">
+        </li>
+
+        <li id="env">
+            <input type="submit" value="Enviar">
+        </li>
+    </ul>
+</form>
+</body>
+</html>
