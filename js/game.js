@@ -28,17 +28,27 @@ let timeMeteoro = -20;
 
 loader.load('../statics/3Dmodels/nave1.glb', model => {
     models.push(model.scene.children[0]);
-    loader.load('../statics/3Dmodels/nave.glb', model => {
-        models.push(model.scene.children[2]);
-        loader.load('../statics/3Dmodels/met1.glb', model => {
+
+
+
+
+    loader.load('../statics/3Dmodels/nave2.glb', model => {
+        models.push(new THREE.Group().add(model.scene.children[0]));
+        loader.load('../statics/3Dmodels/nave3.glb', model => {
             models.push(new THREE.Group().add(model.scene.children[0]));
-            loader.load('../statics/3Dmodels/met2.glb', model => {
-                models.push(new THREE.Group().add(model.scene.children[0]));
-                loader.load('../statics/3Dmodels/met3.glb', model => {
+            loader.load('../statics/3Dmodels/nave.glb', model => {
+                models.push(model.scene.children[2]);
+                loader.load('../statics/3Dmodels/met1.glb', model => {
                     models.push(new THREE.Group().add(model.scene.children[0]));
-                    loader.load('../statics/3Dmodels/met4.glb', model => {
+                    loader.load('../statics/3Dmodels/met2.glb', model => {
                         models.push(new THREE.Group().add(model.scene.children[0]));
-                        init();
+                        loader.load('../statics/3Dmodels/met3.glb', model => {
+                            models.push(new THREE.Group().add(model.scene.children[0]));
+                            loader.load('../statics/3Dmodels/met4.glb', model => {
+                                models.push(new THREE.Group().add(model.scene.children[0]));
+                                init();
+                            }, undefined, error => console.log(error));
+                        }, undefined, error => console.log(error));
 
                     }, undefined, error => console.log(error));
 
@@ -75,7 +85,7 @@ function init() {
             game.maketargets(target_number++, game.models[0].clone(), Nave, 0);
         }
         if (game.time.getElapsedTime() - timeMeteoro > 20) {
-            game.maketargets(target_number++, game.models[2 + Math.floor((Math.random() - 0.01) * 4)].clone(), Meteoro, 1);
+            game.maketargets(target_number++, game.models[4 + Math.floor((Math.random() - 0.01) * 4)].clone(), Meteoro, 1);
             timeMeteoro += 20;
         }
         game.radar.render(game.camera);
