@@ -1,38 +1,24 @@
 <?php
-include ('functions.php');
 
-function acceder_usuario($usuario,$password)
-{
-    $cond=0;
-    $file=fopen('../statics/archives/registro.txt','r');
-    while (!feof($file) && $cond==0) {
-        $arr=fgets($file);
-        $arr=explode('*',$arr);
-        if ($arr[1]==$usuario)
-        {
-            if ($arr[2]!=$password)
-            {
-                echo 'Usuario encontrado, pero contraseña icorrecta: <br>';
-                echo $arr[0].'........'.$arr[1];
-                $cond=1;
-            }
-            else
-            {
-                echo 'Acceso concedido';
-                if (isset($_COOKIE['usuario']))
-                    setcookie('usuario',' ',time()-1);
-                setcookie('usuario',$arr[1]);
-                if (isset($_COOKIE['nivel']))
-                    setcookie('nivel',' ',time()-1);
-                setcookie('nivel',str_alpha($arr[3]));
-                $cond=2;
-            }
-        }
+include ("fx.php");
+
+$arr_usuarios = getUsersData();
+
+$data = array(
+    'nick' => $_POST['nick'],
+    'psw' => $_POST['psw']
+);
+
+
+if (isset($arr_usuarios[$data["nick"]])) {
+    if (password_verify($data['psw'],$arr_usuarios[$data["nick"]]["psw"])) {
+        echo "Bienvenido";
+        if (isset($_COOKIE['nick']))
+            setcookie('nick',' ',time()-1);
+        setcookie('nick',$data["nick"]);
+    } else {
+        echo "Contraseña inválida";
     }
-    fclose($file);
-    if ($cond==0)
-        echo "El usuario no existe";
+} else {
+    echo "El nombre de usuario no existe";
 }
-
-acceder_usuario($_POST['nick'],$_POST['pws']);
-?>
