@@ -65,8 +65,8 @@ class Juego {
         this.player = new Jugador(this.camera, this.models[1]);
         this.scene.add(this.player.nave_img);
 
-        this.targets = []; //Guarda los enemigos que se van creando en el juego
-        this.targets_objects = []; //Guarda el objeto Object3D correspondiente a los enemigos
+        this.targets = [[], []]; //Guarda los enemigos que se van creando en el juego
+        this.targets_objects = [[], []]; //Guarda el objeto Object3D correspondiente a los enemigos
         this.balas_enemigas = []; //Guarda todas las balas enemigas
 
         this.drawStars(0xBD3673, 50);
@@ -206,15 +206,15 @@ class Juego {
      * - target_number (Number): Número de naves enemigas generadas
      *    a través del juego ingrementado en una unidad
      **************************************************************/
-    async maketargets(target_number, img, constructor) {
+    async maketargets(target_number, img, constructor, arrayIndex) {
         let new_target = new constructor(
             img,
             "target" + target_number,
             this.chooseEnemyLevel()
         );
 
-        this.targets.push(new_target);
-        this.targets_objects.push(new_target.img);
+        this.targets[arrayIndex].push(new_target);
+        this.targets_objects[arrayIndex].push(new_target.img);
 
         this.scene.add(new_target.img);
         this.radar.scene.add(new_target.img_radar);
@@ -247,8 +247,6 @@ class Juego {
 
         this.historia.update(delta);
 
-        this.mira.update(this.targets_objects, this.camera);
-
         this.balas_enemigas.forEach(bala => {
             let crash = bala.update(delta, [this.player.nave_img]);
             this.player.crashed(crash);
@@ -256,32 +254,48 @@ class Juego {
 
         this.player.balas.forEach(bala => {
 
-            var crash_object = bala.update(delta, this.targets_objects);
+            var crash_object = bala.update(delta, this.targets_objects[0]);
+            crash_object = (!crash_object) ? bala.update(delta, this.targets_objects[1]) : crash_object;
 
             if (crash_object) {
-
-                this.targets = this.targets.filter(target => {
-                    let response = true;
-                    if (target.img.name === crash_object.name) {
-                        if (target.vida > 10) {
-                            target.vida -= 10;
-                        } else {
-                            target.destroy();
-                            this.scene.remove(target.img);
-                            this.radar.scene.remove(target.img_radar);
-                            destroy++;
-                            console.log(destroy);
-                            response = false;
+                this.targets.forEach(target_array => {
+                    target_array = target_array.filter(target => {
+                        let response = true;
+                        if (target.img.name === crash_object.name) {
+                            if (target.vida > 10) {
+                                target.vida -= 10;
+                            } else if (!target.isDestroy) {
+                                target.destroy();
+                                destroy++;
+                                console.log(destroy);
+                                response = false;
+                            }
                         }
-                    }
-                    return response;
-                });
+                        return response;
+                    });
+                })
             }
         });
 
-        this.targets.forEach(target => {
-            target.update(delta, this.camera.position.clone(), this.balas_enemigas);
+        this.mira.update(this.targets_objects[0].concat(this.targets_objects[1]), this.camera);
+
+        let targetsUpdate = [];
+        this.targets.forEach(targetArray => {
+            targetArray.forEach(target => {
+                target.update(delta, this.camera.position.clone(), this.balas_enemigas);
+            });
+
+            targetsUpdate.push(targetArray.filter(target =>  {
+                if(target.isDestroy) {
+                    this.scene.remove(target.img);
+                    this.radar.scene.remove(target.img_radar);
+                    return false;
+                } else {
+                    return true;
+                }
+            }));
         });
+        this.targets = targetsUpdate;
 
         this.removeBalas(this.player.balas);
         this.removeBalas(this.balas_enemigas);

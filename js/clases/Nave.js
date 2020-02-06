@@ -46,7 +46,7 @@ class Nave {
             Math.random() - 0.5,
             Math.random() - 0.5).normalize();
 
-        this.vida = 50;
+        this.vida = 100;
 
         this.img = nave_img;
         this.img.position.copy(new THREE.Vector3(
@@ -137,5 +137,7 @@ class Nave {
      **********************************/
     destroy() {
         this.soundDestroyEffect.sonido();
+        this.vida = 0;
+        this.isDestroy = true;
     }
 }
