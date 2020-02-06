@@ -8,7 +8,7 @@
 
 class Radar {
     /*******************************************
-     * Función constructor()
+     * Método constructor
      * Parámetros:
      * -id_container (String): Nos dice en qué
      *  elemento html se pondrá la imagen

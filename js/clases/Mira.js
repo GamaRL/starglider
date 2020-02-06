@@ -6,6 +6,12 @@
  */
 
 class Mira {
+
+    /*******************************************
+     * Método constructor
+     * -id_container (String): Nombre del id del
+     *   elemento HTML que fungirá como mira
+     ********************************************/
     constructor(id_container) {
         this.img = document.createElement("img");
         this.img.setAttribute("id", "mira");
@@ -15,6 +21,16 @@ class Mira {
         container.appendChild(this.img);
     }
 
+    /**
+     * Método checkTargets
+     *   Verifica si en la dirección en la que apunta
+     *   la cámara está algún objetivo
+     * Parámetros:
+     * - targets
+     * - camera
+     * Return:
+     * -
+     */
     checkTargets(targets, camera) {
         let pointer = new THREE.Vector3();
         camera.getWorldDirection(pointer);

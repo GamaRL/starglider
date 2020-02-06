@@ -57,6 +57,7 @@ div.radar {
     right: 0;
 
 }
+<<<<<<< HEAD
 #shieldBlock{
     width: 200px;
     display: block;
@@ -66,22 +67,31 @@ div.radar {
     right: 0;
 }
 #historia {
+=======
+
+#history {
+>>>>>>> ba907e518702c83b87927c680a69a8d81c913fb5
     width: 100%;
     height: 100vh;
     display: block;
     z-index: 2;
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 10%;
     color: white;
-    padding-left: 100px;
-    padding-top: 50px;
+    padding-top: 5%;
     font-family: 'Source Code Pro', monospace;
+    text-align: center;
 
 }
 
+#shield {
+    display: none;
+}
+
 #shield.activated {
+    display: block;
     background-color: rgba(88, 202, 255, 0.2);
+    z-index: 20;
 }
 
 #shield div.waveShield {
@@ -91,15 +101,44 @@ div.radar {
     height: 1px;
     position: absolute;
     z-index: 25;
-    animation: waveEffect 1.5s 1;
+    animation: waveEffect 1s 1;
     animation-fill-mode: forwards;
     transform: translate(-50%, -50%);
-
 }
 
 #shield.attak {
+    display: block;
     background-image: radial-gradient(transparent 85%, #ff0000 100%);
     animation: attak 0.3s 1;
+}
+
+#shieldCharge {
+    display: none;
+    z-index: 30;
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+}
+
+#shieldCharge.ready {
+    display: block;
+    animation: shieldCharged 0.5s infinite alternate;
+}
+
+
+@keyframes shieldCharged {
+    from {
+        width: 100px;
+        height: 100px;
+        border: 30px solid rgba(88, 202, 255, 1);
+    }
+    to {
+        border: 50px solid transparent;
+        width: 110px;
+        height: 110px;
+    }
 }
 
 @keyframes attak {
@@ -124,7 +163,7 @@ div.radar {
         border: 30px solid rgba(88, 202, 255, 1);
     }
     to {
-        border: 50px solid transparent;
+        border: 150px solid transparent;
         width: 1500px;
         height: 1500px;
     }
