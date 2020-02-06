@@ -62,7 +62,7 @@ class Juego {
 
         this.choosePlanets();
 
-        this.player = new Jugador(this.camera, this.models[1]);
+        this.player = new Jugador(this.camera, this.models[3]);
         this.scene.add(this.player.nave_img);
 
         this.targets = [[], []]; //Guarda los enemigos que se van creando en el juego
@@ -89,9 +89,6 @@ class Juego {
                 this.player.disparar();
             }
 
-            if (evt.keyCode === 90) {
-                this.player.dispararMisil(this.mira.pointing, this.models[0]);
-            }
             if (evt.keyCode === 87) {
                 if (!this.maxSpeedActivated)
                     this.flyControls.movementSpeed = 10;
