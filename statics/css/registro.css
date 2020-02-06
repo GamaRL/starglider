@@ -16,17 +16,17 @@ body h1 {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-body ul.menu {
+body ul {
     display: block;
     list-style-type: none;
     padding: 0;
-    margin: 10px auto;
+    margin: 60px auto;
     width: 60%;
     text-align: center;
 }
 
-body ul.menu li.menu-item {
-    margin: auto;
+body ul.menu li {
+    margin: 10px;
     background-color: rgba(110, 159, 189, 0.5);
     line-height: 3;
     text-align: center;
@@ -41,15 +41,8 @@ body ul.menu li.menu-item {
     display: inline-block;
 }
 
-body ul.menu li.menu-item span {
+body ul.menu li span {
     color: #060b4b;
     width: 70%;
-}
-
-body ul.menu li.menu-item:hover {
-    cursor: pointer;
-    width: 60%;
-    -webkit-box-shadow: 5px 5px 2px rgba(168, 206, 181, 0.7);
-    box-shadow: 5px 5px 2px rgba(168, 206, 181, 0.7);
 }
 
