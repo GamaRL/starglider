@@ -66,11 +66,8 @@ div.radar {
     bottom: 0;
     right: 0;
 }
-#historia {
-=======
 
 #history {
->>>>>>> ba907e518702c83b87927c680a69a8d81c913fb5
     width: 100%;
     height: 100vh;
     display: block;

@@ -76,7 +76,7 @@ function init() {
         }
         if (game.time.getElapsedTime() - timeMeteoro > 20) {
             game.maketargets(target_number++, game.models[2 + Math.floor((Math.random() - 0.01) * 4)].clone(), Meteoro, 1);
-            timeMeteoro +=20;
+            timeMeteoro += 20;
         }
         game.radar.render(game.camera);
         requestAnimationFrame(render);
