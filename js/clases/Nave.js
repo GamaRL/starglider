@@ -11,23 +11,29 @@ class Nave {
         {
             max_speed: 6,
             color: 0xFF6A09,
-            trigger_probability: 0.99,
+            trigger_probability: 0.98,
             bullet_speed: 50,
-            bullet_damage: 5
+            bullet_damage: 5,
+            score: 10,
+            distance_target: 15
         },
         {
             max_speed: 10,
             color: 0xFF124F,
-            trigger_probability: 0.995,
+            trigger_probability: 0.985,
             bullet_speed: 60,
-            bullet_damage: 10
+            bullet_damage: 5,
+            score: 15,
+            distance_target: 20
         },
         {
-            max_speed: 15,
+            max_speed: 65,
             color: 0xFF0000,
-            trigger_probability: 0.9975,
-            bullet_speed: 65,
-            bullet_damage: 12
+            trigger_probability: 0.99,
+            bullet_speed: 50,
+            bullet_damage: 10,
+            score: 25,
+            distance_target: 50
         }
     ];
 
@@ -44,7 +50,7 @@ class Nave {
         this.velocidad = new THREE.Vector3(
             Math.random() - 0.5,
             Math.random() - 0.5,
-            Math.random() - 0.5).normalize();
+            Math.random() - 0.5).setLength(5);
 
         this.vida = 100;
 
@@ -52,22 +58,23 @@ class Nave {
         this.img.position.copy(new THREE.Vector3(
             Math.random() - 0.5,
             Math.random() - 0.5,
-            Math.random() - 0.5).setLength(25 - Math.random() * 5));
+            Math.random() - 0.5).setLength(35 - Math.random() * 5 * level));
 
         this.desfase = Math.random() * Math.PI * 2;
         this.desfase_vel = (Math.random() - 0.5) * 0.02;
         this.img.name = id;
 
+        this.level = level;
+
         this.img_radar = new THREE.Mesh(
             new THREE.SphereGeometry(0.2, 32, 32),
-            new THREE.MeshBasicMaterial({color: 0xff00ff})
+            new THREE.MeshBasicMaterial({color: Nave.level_info[this.level].color})
         );
 
         this.img_radar.position.copy(this.img.position);
 
         this.soundEffect = new Sound("laser_enemigo.mp3");
         this.soundDestroyEffect = new Sound("explosion.mp3");
-        this.level = level;
     }
 
     /*******************************************************
@@ -89,14 +96,15 @@ class Nave {
                 Math.random() - 0.5,
                 Math.random() - 0.5,
                 Math.random() - 0.5
-            ).setLength(5));
+            ).setLength(1));
 
         balas.push(new Bala(
             this.img.position,
             velocity,
             0xBD000E,
-            new THREE.SphereBufferGeometry(0.02, 32, 32))
-        );
+            new THREE.SphereBufferGeometry(0.02, 32, 32),
+            Nave.level_info[this.level].bullet_damage
+        ));
     }
 
     update(dt, player_position, balas) {
@@ -109,7 +117,7 @@ class Nave {
         let distance = new THREE.Vector3().copy(player_position).sub(this.img.position).length();
 
         if (distance < 4) {
-            acc.multiplyScalar(-5);
+            acc.multiplyScalar(-7);
         }
 
         this.img.position.addScaledVector(this.velocidad, dt);
@@ -126,7 +134,7 @@ class Nave {
         this.img.rotateX(0.2);
         this.img_radar.position.copy(this.img.position);
 
-        if (distance < 20 && distance > 0.05 && Math.random() > Nave.level_info[this.level].trigger_probability) {
+        if (distance < Nave.level_info[this.level].distance_target && distance > 0.05 && Math.random() > Nave.level_info[this.level].trigger_probability) {
             this.disparar(balas, player_position);
         }
     }

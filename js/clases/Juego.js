@@ -20,7 +20,7 @@ class Juego {
         this.scene = new THREE.Scene();
 
         this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
-        this.camera.position.set(0, 10, 0);
+        this.camera.position.set(0, 0, 0);
 
         this.camera.lookAt(new THREE.Vector3(
             Math.random() - 0.5,
@@ -193,7 +193,13 @@ class Juego {
      * - level (Number)
      ****************************************************/
     chooseEnemyLevel() {
-        return 0;
+        let fx = ((Math.E ** (this.player.puntaje / 80)) + 100) * Math.random();
+        if (fx > 200)
+            return 2;
+        if (fx > 100)
+            return 1;
+        if (fx > 0)
+            return 0;
     }
 
     /*************************************************************
@@ -203,11 +209,20 @@ class Juego {
      * - target_number (Number): Número de naves enemigas generadas
      *    a través del juego ingrementado en una unidad
      **************************************************************/
-    async maketargets(target_number, img, constructor, arrayIndex) {
+    async maketargets(target_number, constructor, arrayIndex) {
+        let img;
+        let level;
+        if (arrayIndex === 1) {
+            img = this.models[4 + Math.floor((Math.random() - 0.01) * 4)].clone();
+        } else {
+            level = this.chooseEnemyLevel();
+            img = this.models[level].clone();
+        }
+
         let new_target = new constructor(
             img,
             "target" + target_number,
-            this.chooseEnemyLevel()
+            level
         );
 
         this.targets[arrayIndex].push(new_target);
@@ -225,7 +240,7 @@ class Juego {
      *    que deseamos "purgar"
      *********************************************/
     removeBalas(balas) {
-        balas = balas.filter(bala => {
+        return balas.filter(bala => {
             if (bala.vida <= 0) {
                 this.scene.remove(bala.dibujo);
                 return false
@@ -246,29 +261,29 @@ class Juego {
 
         this.balas_enemigas.forEach(bala => {
             let crash = bala.update(delta, [this.player.nave_img]);
-            this.player.crashed(crash);
+            this.player.crashed(crash, bala.damage);
         });
 
         this.player.balas.forEach(bala => {
 
-            var crash_object = bala.update(delta, this.targets_objects[0]);
+            let crash_object = bala.update(delta, this.targets_objects[0]);
             crash_object = (!crash_object) ? bala.update(delta, this.targets_objects[1]) : crash_object;
 
             if (crash_object) {
                 this.targets.forEach(target_array => {
-                    target_array = target_array.filter(target => {
-                        let response = true;
+                    target_array.forEach(target => {
                         if (target.img.name === crash_object.name) {
                             if (target.vida > 10) {
-                                target.vida -= 10;
+                                target.vida -= bala.damage;
                             } else if (!target.isDestroy) {
                                 target.destroy();
-                                destroy++;
-                                console.log(destroy);
-                                response = false;
+                                if (target.level !== undefined)
+                                    this.player.puntaje += Nave.level_info[target.level].score;
+                                else
+                                    this.player.puntaje += target.score;
+                                console.log(this.player.puntaje);
                             }
                         }
-                        return response;
                     });
                 })
             }
@@ -282,8 +297,8 @@ class Juego {
                 target.update(delta, this.camera.position.clone(), this.balas_enemigas);
             });
 
-            targetsUpdate.push(targetArray.filter(target =>  {
-                if(target.isDestroy) {
+            targetsUpdate.push(targetArray.filter(target => {
+                if (target.isDestroy) {
                     this.scene.remove(target.img);
                     this.radar.scene.remove(target.img_radar);
                     return false;
@@ -292,10 +307,11 @@ class Juego {
                 }
             }));
         });
+
         this.targets = targetsUpdate;
 
-        this.removeBalas(this.player.balas);
-        this.removeBalas(this.balas_enemigas);
+        this.player.balas = this.removeBalas(this.player.balas);
+        this.balas_enemigas = this.removeBalas(this.balas_enemigas);
 
         this.player.update(delta);
 

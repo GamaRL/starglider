@@ -15,7 +15,8 @@ class Jugador {
      *  el modelo 3D de la nave del jugador
      ****************************************/
     constructor(camera, nave_img) {
-        this.vida = 500;
+        this.vida = 1000;
+        this.puntaje = 0;
         this.balas = [];
         this.camera = camera;
         this.nave_img = nave_img;
@@ -50,17 +51,12 @@ class Jugador {
             new Bala(
                 new THREE.Vector3(1, 0, 0).unproject(this.camera),
                 velocity,
-                0x0BBD20),
+                0x0BBD20, ),
             new Bala(
                 new THREE.Vector3(-1, 0, 0).unproject(this.camera),
                 velocity,
-                0x0BBD20)
+                0x0BBD20, )
         );
-    }
-
-    dispararMisil(target, model) {
-        this.misiles.push(new Misil(new THREE.Vector3().copy(this.camera.position), target, model));
-        game.scene.add(this.misiles.pop().img_misil);
     }
 
     /***************************************
@@ -74,22 +70,22 @@ class Jugador {
         this.nave_img.position.copy(this.camera.position);
         this.nave_img.lookAt(look.unproject(this.camera));
 
-        this.barraVida.style.width = (Math.floor(300 * this.vida / 500)) + "px";
-        if (this.vida < 500)
-            this.vida += 0.05;
+        this.barraVida.style.width = (Math.floor(400 * this.vida / 1000)) + "px";
+        if (this.vida < 1000)
+            this.vida += 0.1;
 
-        let r = (this.vida <= 250) ? 255 : Math.floor(255 * (1 - (this.vida - 250) / 250));
-        let g = (this.vida >= 250) ? 255 : Math.floor(255 * (this.vida / 250));
+        let r = (this.vida <= 500) ? 255 : Math.floor(255 * (1 - (this.vida - 500) / 500));
+        let g = (this.vida >= 500) ? 255 : Math.floor(255 * (this.vida / 500));
         this.escudo.update(dt);
 
         this.barraVida.style.backgroundColor = `rgb(${r}, ${g}, 0)`;
     }
 
-    crashed(crash) {
+    crashed(crash, damage) {
         if (crash && !this.escudo.isActivated()) {
             let soundCrash = new Sound("crash.mp3");
             soundCrash.sonido();
-            this.vida -= 5;
+            this.vida -= damage;
             this.escudo.effect.classList.add("attak");
 
             let angle = (Math.random() / 2 + 0.5) / 20;

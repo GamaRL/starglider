@@ -9,6 +9,7 @@
 class Meteoro {
     constructor(img, id) {
         this.img = img;
+        this.score = Math.floor(100 * Math.random());
         this.vida = 500;
         this.img.position.copy(new THREE.Vector3(
             Math.random() - 0.5,

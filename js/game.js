@@ -27,13 +27,11 @@ let game;
 let timeMeteoro = -20;
 
 loader.load('../statics/3Dmodels/nave1.glb', model => {
-    models.push(model.scene.children[0]);
-
-
+    models.push(new THREE.Group().add(model.scene.children[0]));
 
 
     loader.load('../statics/3Dmodels/nave2.glb', model => {
-        models.push(new THREE.Group().add(model.scene.children[0]));
+        models.push(model.scene.children[0]);
         loader.load('../statics/3Dmodels/nave3.glb', model => {
             models.push(new THREE.Group().add(model.scene.children[0]));
             loader.load('../statics/3Dmodels/nave.glb', model => {
@@ -81,11 +79,11 @@ function init() {
     function render() {
         game.update();
 
-        if (game.targets[0].length < 6) {
-            game.maketargets(target_number++, game.models[0].clone(), Nave, 0);
+        if (game.targets[0].length < 5) {
+            game.maketargets(target_number++, Nave, 0);
         }
         if (game.time.getElapsedTime() - timeMeteoro > 20) {
-            game.maketargets(target_number++, game.models[4 + Math.floor((Math.random() - 0.01) * 4)].clone(), Meteoro, 1);
+            game.maketargets(target_number++, Meteoro, 1);
             timeMeteoro += 20;
         }
         game.radar.render(game.camera);
