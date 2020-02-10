@@ -107,6 +107,18 @@ class Nave {
         ));
     }
 
+
+    /*******************************************************
+     * Método update: Actualiza la posición de la nave,
+     *   así como su velocidad. De la misma manera,
+     *   determina si la nave puede disparar o no
+     * Parámetros:
+     *  -dt (Number): Un diferencial de tiempo con base en el
+     *   cual se determinan las variaciones del movimiento
+     *  -player_position (Object): El vector de posición
+     *   del jugador
+     *  -balas (Array): Contiene las balas enemigas
+     *********************************************************/
     update(dt, player_position, balas) {
         let acc = new THREE.Vector3()
             .copy(this.img.position)

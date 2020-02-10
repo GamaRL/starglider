@@ -125,9 +125,11 @@ class Juego {
         ];
         this.planets = [];
         folders.forEach(folder => {
-            this.planets.push(new Planeta(
+            let newPlanet = new Planeta(
                 folder + "/" + folder + chooseNumber() + ".png",
-                positions.pop(), Math.random() * 40 + 50, this.scene))
+                positions.pop());
+            this.planets.push(newPlanet);
+            this.scene.add(newPlanet.figure);
         });
 
     }
@@ -250,6 +252,11 @@ class Juego {
         });
     }
 
+
+    /**
+     * Método update: se encarga de actualizar todos
+     *   los componentes del juego cada vez que se ejecuta
+     */
     update() {
         this.planets.forEach(planet => {
             planet.update();

@@ -21,16 +21,19 @@ class Mira {
         container.appendChild(this.img);
     }
 
-    /**
+    /*************************************************
      * Método checkTargets
      *   Verifica si en la dirección en la que apunta
      *   la cámara está algún objetivo
      * Parámetros:
-     * - targets
-     * - camera
+     * - targets (Array): Contiene los posibles objetivos
+     *   del jugador
+     * - camera (Object): Cámara con la que está viendo
+     *   el jugador
      * Return:
-     * -
-     */
+     * - Objetivo colisionado o undafined si no ha
+     *   ocurrido una colisión
+     **************************************************/
     checkTargets(targets, camera) {
         let pointer = new THREE.Vector3();
         camera.getWorldDirection(pointer);
@@ -44,6 +47,13 @@ class Mira {
             return undefined;
     }
 
+    /******************************************************
+     * Método update: Actualiza las propiedades de la mira.
+     * Parámetros:
+     * - targets: Posibles objetivos del jugador.
+     * - camera: Cámara con la que el jugador está
+     *   observando.
+     *******************************************************/
     update(targets, camera) {
         this.img.style.transform = "rotate(" + this.rotation + "deg)";
         if (this.rotation >= 360)

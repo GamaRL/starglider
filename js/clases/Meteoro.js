@@ -7,6 +7,13 @@
 
 
 class Meteoro {
+    /*********************************************
+     * Método constructor
+     *  -img (Object): Modelo 3D que representará
+     *   al metorito en la escena
+     *  -id (Number): Número de objetivo que
+     *   ha sido creado
+     *********************************************/
     constructor(img, id) {
         this.img = img;
         this.score = Math.floor(100 * Math.random());
@@ -31,6 +38,18 @@ class Meteoro {
         this.img_radar.position.copy(this.img.position);
     }
 
+
+    /***************************************************
+     * Método update: Actualiza las variables de
+     *   posición y velocidad del meteorito. De
+     *   igual manera detecta si el objeto se ha
+     *   alejado demasiado del jugador para que
+     *   desaparezca.
+     * Parámetros:
+     *  -dt (Number): Diferencial de tiempo con base en
+     *   el que se calcularán las variaciones.
+     *  -player_position (Object): Posición del jugador
+     ****************************************************/
     update(dt, player_position) {
         this.img.position.addScaledVector(this.velocity, dt);
         this.img_radar.position.copy(this.img.position);
@@ -39,6 +58,10 @@ class Meteoro {
         }
     }
 
+    /*******************************************
+     * Método destroy: Debe invocarse cuando el
+     * meterito haya sido destruido
+     *******************************************/
     destroy() {
         this.vida = 0;
         this.isDestroy = true;

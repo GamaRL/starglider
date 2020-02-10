@@ -25,7 +25,7 @@ class Jugador {
 
         this.barraVida = document.createElement("div");
         this.barraVida.setAttribute("id", "barraVida");
-        this.misiles = [];
+        // this.misiles = [];
         document.getElementById("game_output").appendChild(this.barraVida);
 
         document.onkeypress = (evt) => {
@@ -39,6 +39,10 @@ class Jugador {
         };
     }
 
+    /**
+     * Método disparar: Ejecuta el disparo del jugador. Genera dos
+     *   balas que se mueven en la direción en la que ve el jugador
+     */
     disparar() {
         let soundShutEffect = new Sound("laser.mp3");
         soundShutEffect.sonido();
@@ -81,6 +85,14 @@ class Jugador {
         this.barraVida.style.backgroundColor = `rgb(${r}, ${g}, 0)`;
     }
 
+    /*****************************************************
+     * Método crashed: Determina si una bala enemiga ha
+     *   colisionado con la nave del jugador.
+     * Parámetros:
+     *  -crash (Object): Cuerpo con el que ha colisionado.
+     *  -damage (Number): Cantidad de vida que
+     *    disminuirá del jugador
+     *****************************************************/
     crashed(crash, damage) {
         if (crash && !this.escudo.isActivated()) {
             let soundCrash = new Sound("crash.mp3");
