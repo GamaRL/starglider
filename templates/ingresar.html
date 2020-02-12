@@ -9,24 +9,25 @@
 </head>
 
 <body>
-    <h1>Inico de Sesión</h1>
-    <form method="post" action="../php/ingreso.php">
-        <ul class="menu">
-            <li class="form">
-                <span>Usuario</span>
-                <input type="text" name="nick" minlength="5" maxlength="10" placeholder="Su nombre de usuario" required pattern="[A-Za-z0-9]+">
-            </li>
+<h1>Inico de Sesión</h1>
+<ul class="form">
+    <div class="status"></div>
+    <li>
+        <span>Usuario:</span>
+        <input type="text" name="nick" maxlength="10" placeholder="Su nombre de usuario" class="user">
+    </li>
 
-            <li class="form">
-                <span>Contraseña</span>
-                <input type="password" name="psw" minlength="5" placeholder="Contraseña" required pattern="[A-Za-z0-9]+">
-            </li>
+    <li>
+        <span>Contraseña:</span>
+        <input type="password" name="psw" placeholder="Contraseña" required class="psw">
+    </li>
 
-            <li id="env">
-                Ingresar
-            </li>
-        </ul>
-    </form>
+    <li id="env">
+        Ingresar
+    </li>
+</ul>
 </body>
 
 </html>
+<script src="../js/vendor/jquery.min.js"></script>
+<script src="../js/ingreso.js"></script>

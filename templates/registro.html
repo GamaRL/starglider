@@ -11,35 +11,35 @@
 
 <body>
 <h1>Crear Usuario</h1>
-<form method="post" action="../php/registro.php">
-    <ul class="menu">
-        <li class="">
-            <span class="menu-span">Nombre: </span>
-            <input type="text" name="name" minlength="10" maxlength="40" placeholder="Su nombre completo" required
-                   pattern=".{10,40}">
-        </li>
 
-        <li class="">
-            <span class="menu-span">Usuario: </span>
-            <input type="text" name="nick" minlength="5" maxlength="10" placeholder="Su nombre de usuario" required
-                   pattern="[A-Za-z0-9]{5,}">
-        </li>
+<ul class="form">
+    <li>
+        <span>Nombre: </span>
+        <input type="text" name="name" maxlength="40" placeholder="Su nombre completo" class="nombre">
+    </li>
 
-        <li class="">
-            <span class="menu-span">Contraseña: </span>
-            <input type="password" name="psw" minlength="5" placeholder="Contraseña" required pattern="[A-Za-z0-9]+">
-        </li>
+    <li>
+        <span>Usuario: </span>
+        <input type="text" name="nick" maxlength="10" placeholder="Su nombre de usuario" class="nick">
+    </li>
 
-        <li class="">
-            <span class="menu-span">Confirmar Contraseña: </span>
-            <input type="password" name="cpsw" minlength="5" placeholder="Confirmar" required pattern="[A-Za-z0-9]+">
-        </li>
+    <li>
+        <span>Contraseña: </span>
+        <input type="password" name="psw" placeholder="Contraseña" class="psw">
+    </li>
 
-        <li class="" id="env">
-            Enviar
-        </li>
-    </ul>
-</form>
+    <li>
+        <span>Confirmar Contraseña: </span>
+        <input type="password" name="cpsw" placeholder="Confirmar" class="cpsw">
+    </li>
+
+    <div class="status"></div>
+    <li id="env">
+        Enviar
+    </li>
+</ul>
 </body>
 
 </html>
+<script src="../js/vendor/jquery.min.js"></script>
+<script src="../js/registro.js"></script>

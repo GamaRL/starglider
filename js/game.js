@@ -26,7 +26,7 @@ let text = [];
 let game;
 let timeMeteoro = -20;
 
-loader.load('../statics/3Dmodels/naverojaaa.glb', model => {
+loader.load('../statics/3Dmodels/nave1.glb', model => {
     console.log(model.scene.children);
     models.push(new THREE.Group().add(model.scene.children[0]));
 

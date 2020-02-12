@@ -1,6 +1,7 @@
 <?php
 include("fx.php");
 
+$return = array(false, "Las contraseñas no coinciden");
 
 if (strcmp($_POST['psw'], $_POST['cpsw']) == 0) {
 
@@ -13,16 +14,17 @@ if (strcmp($_POST['psw'], $_POST['cpsw']) == 0) {
 		'level' => 0
 	);
 
-	if (isset($arr_usuarios[$data['nick']]))
-		echo "El nombre de usuario ya fue registrado";
-	else {
+	if (isset($arr_usuarios[$data['nick']])) {
+		$return[1] = "El nombre de usuario ya fue registrado";
+	} else {
 		$arr_usuarios[$data['nick']] = $data;
-		echo "Te has regitrado exitosamente";
+		$return[0] = true;
+		$return[1] = "Te has regitrado exitosamente";
 	}
 
 	$json_string = json_encode($arr_usuarios);
 	$file = "../statics/archives/registro.json";
 	file_put_contents($file, $json_string);
-} else {
-	echo "Las contraseñas no coinciden";
 }
+
+echo json_encode($return);
