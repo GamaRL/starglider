@@ -11,6 +11,7 @@ class Nave {
         {
             max_speed: 6,
             color: 0xFF6A09,
+            acc_length: 2,
             trigger_probability: 0.98,
             bullet_speed: 50,
             bullet_damage: 5,
@@ -20,6 +21,7 @@ class Nave {
         {
             max_speed: 10,
             color: 0xFF124F,
+            acc_length: 2.5,
             trigger_probability: 0.985,
             bullet_speed: 60,
             bullet_damage: 5,
@@ -29,6 +31,7 @@ class Nave {
         {
             max_speed: 65,
             color: 0xFF0000,
+            acc_length: 5,
             trigger_probability: 0.99,
             bullet_speed: 50,
             bullet_damage: 10,
@@ -46,7 +49,7 @@ class Nave {
      *    la nave
      * - level (Number): Nivel de la nave
      ****************************************************/
-    constructor(nave_img, id, level) {
+    constructor(nave_img, id, level, player_position) {
         this.velocidad = new THREE.Vector3(
             Math.random() - 0.5,
             Math.random() - 0.5,
@@ -58,7 +61,8 @@ class Nave {
         this.img.position.copy(new THREE.Vector3(
             Math.random() - 0.5,
             Math.random() - 0.5,
-            Math.random() - 0.5).setLength(35 - Math.random() * 5 * level));
+            Math.random() - 0.5).setLength(50 - Math.random() * 5)
+            .add(player_position));
 
         this.desfase = Math.random() * Math.PI * 2;
         this.desfase_vel = (Math.random() - 0.5) * 0.02;
@@ -124,7 +128,7 @@ class Nave {
             .copy(this.img.position)
             .sub(player_position)
             .negate()
-            .setLength(2);
+            .setLength(Nave.level_info[this.level].acc_length);
 
         let distance = new THREE.Vector3().copy(player_position).sub(this.img.position).length();
 

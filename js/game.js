@@ -27,7 +27,6 @@ let game;
 let timeMeteoro = -20;
 
 loader.load('../statics/3Dmodels/nave1.glb', model => {
-    console.log(model.scene.children);
     models.push(new THREE.Group().add(model.scene.children[0]));
 
 
@@ -80,7 +79,7 @@ function init() {
     function render() {
         game.update();
 
-        if (game.targets[0].length < 5) {
+        if (game.targets[0].length < 5 + Math.floor(game.player.puntaje/100)) {
             game.maketargets(target_number++, Nave, 0);
         }
         if (game.time.getElapsedTime() - timeMeteoro > 20) {

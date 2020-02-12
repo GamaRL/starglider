@@ -35,8 +35,8 @@ class Juego {
         document.getElementById(id_element).appendChild(this.renderer.domElement);
 
         this.flyControls = new THREE.FlyControls(this.camera, document.querySelector("#" + id_element));
-        this.flyControls.movementSpeed = 1;
-        this.flyControls.rollSpeed = Math.PI / 8;
+        this.flyControls.movementSpeed = 1.5;
+        this.flyControls.rollSpeed = Math.PI / 6;
         this.flyControls.autoForward = true;
         this.flyControls.dragToLook = true;
 
@@ -97,7 +97,7 @@ class Juego {
 
         document.onkeyup = (evt) => {
             if (evt.keyCode === 87) {
-                this.flyControls.movementSpeed = 1;
+                this.flyControls.movementSpeed = 1.5;
             }
         };
 
@@ -196,7 +196,7 @@ class Juego {
      ****************************************************/
     chooseEnemyLevel() {
         let fx = ((Math.E ** (this.player.puntaje / 80)) + 100) * Math.random();
-        if (fx > 200)
+        if (fx > 150)
             return 2;
         if (fx > 100)
             return 1;
@@ -224,7 +224,8 @@ class Juego {
         let new_target = new constructor(
             img,
             "target" + target_number,
-            level
+            level,
+            this.player.nave_img.position.clone()
         );
 
         this.targets[arrayIndex].push(new_target);
@@ -285,9 +286,9 @@ class Juego {
                             } else if (!target.isDestroy) {
                                 target.destroy();
                                 if (target.level !== undefined)
-                                    this.player.puntaje += Nave.level_info[target.level].score;
+                                    this.player.addScore(Nave.level_info[target.level].score);
                                 else
-                                    this.player.puntaje += target.score;
+                                    this.player.addScore(target.score);
                                 console.log(this.player.puntaje);
                             }
                         }
