@@ -39,10 +39,10 @@ class Jugador {
         };
     }
 
-    /**
+    /**************************************************************
      * Método disparar: Ejecuta el disparo del jugador. Genera dos
      *   balas que se mueven en la direción en la que ve el jugador
-     */
+     **************************************************************/
     disparar() {
         let soundShutEffect = new Sound("laser.mp3");
         soundShutEffect.sonido();

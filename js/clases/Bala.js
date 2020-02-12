@@ -16,7 +16,7 @@ class Bala {
      * -geometry (Geometry): Geometría de THREE.js que se usará
      *   para representar la bala
      *************************************************************/
-    constructor(position, velocity, color, geometry = new THREE.SphereBufferGeometry(0.08, 5, 5), damage=10) {
+    constructor(position, velocity, color, geometry = new THREE.SphereBufferGeometry(0.08, 5, 5), damage = 10) {
         this.velocity = new THREE.Vector3().copy(velocity);
         this.dibujo = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({
             color,
@@ -46,7 +46,7 @@ class Bala {
             this.vida = 0;
             crash_object = intersects[0].object.parent;
         } else {
-            this.dibujo.position.addScaledVector(velocity,dt);
+            this.dibujo.position.addScaledVector(velocity, dt);
             this.vida -= dt;
         }
 

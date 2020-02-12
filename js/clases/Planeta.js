@@ -8,7 +8,7 @@
 
 class Planeta {
     /**********************************************************
-     * Métod constructor
+     * Método constructor
      * Parámetros:
      *  -img_file (Object): Modelo 3D que representará
      *   al planeta en la escena
