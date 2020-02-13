@@ -29,7 +29,6 @@ let timeMeteoro = -20;
 loader.load('../statics/3Dmodels/nave1.glb', model => {
     models.push(new THREE.Group().add(model.scene.children[0]));
 
-
     loader.load('../statics/3Dmodels/nave2.glb', model => {
         models.push(model.scene.children[0]);
         loader.load('../statics/3Dmodels/nave3.glb', model => {
@@ -77,17 +76,21 @@ function init() {
     render();
 
     function render() {
-        game.update();
+        if (game.playerIsLive()) {
+            game.update();
 
-        if (game.targets[0].length < 5 + Math.floor(game.player.puntaje/100)) {
-            game.maketargets(target_number++, Nave, 0);
+            if (game.targets[0].length < 5 + Math.floor(game.player.puntaje / 100)) {
+                game.maketargets(target_number++, Nave, 0);
+            }
+            if (game.time.getElapsedTime() - timeMeteoro > 20) {
+                game.maketargets(target_number++, Meteoro, 1);
+                timeMeteoro += 20;
+            }
+            game.radar.render(game.camera);
+            requestAnimationFrame(render);
+        } else {
+            game.endGame();
         }
-        if (game.time.getElapsedTime() - timeMeteoro > 20) {
-            game.maketargets(target_number++, Meteoro, 1);
-            timeMeteoro += 20;
-        }
-        game.radar.render(game.camera);
-        requestAnimationFrame(render);
     }
 
 

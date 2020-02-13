@@ -47,7 +47,7 @@ function sendInformation() {
         $.ajax({
             data,
             url: "../php/registro.php",
-            method: "post",
+            type: "post",
             dataType: "json",
             success: response => {
                 changeStatus(response);

@@ -9,14 +9,14 @@ class Nave {
 
     static level_info = [
         {
-            max_speed: 6,
+            max_speed: 10,
             color: 0xFF6A09,
-            acc_length: 2,
-            trigger_probability: 0.98,
+            acc_length: 3,
+            trigger_probability: 0.975,
             bullet_speed: 50,
             bullet_damage: 5,
             score: 10,
-            distance_target: 15
+            distance_target: 20
         },
         {
             max_speed: 10,
@@ -26,14 +26,14 @@ class Nave {
             bullet_speed: 60,
             bullet_damage: 5,
             score: 15,
-            distance_target: 20
+            distance_target: 15
         },
         {
             max_speed: 65,
             color: 0xFF0000,
             acc_length: 5,
             trigger_probability: 0.99,
-            bullet_speed: 50,
+            bullet_speed: 60,
             bullet_damage: 10,
             score: 25,
             distance_target: 50
@@ -53,7 +53,7 @@ class Nave {
         this.velocidad = new THREE.Vector3(
             Math.random() - 0.5,
             Math.random() - 0.5,
-            Math.random() - 0.5).setLength(5);
+            Math.random() - 0.5).setLength(Nave.level_info[level].max_speed);
 
         this.vida = 100;
 

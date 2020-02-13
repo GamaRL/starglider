@@ -33,15 +33,14 @@ body ul.menu li.menu-item {
     font-size: 20px;
     border-radius: 0 1.5em;
     -webkit-transition: width 0.4s ease-in-out, -webkit-box-shadow 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out, -webkit-box-shadow 0.4s ease-in-out;
     transition: width 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out, box-shadow 0.4s ease-in-out, -webkit-box-shadow 0.4s ease-in-out;
-    font-family: Arial, Helvetica, sans-serif;
+
     width: 50%;
     display: inline-block;
 }
 
 body ul.menu li.menu-item span {
+    font-family: Arial, Helvetica, sans-serif;
     color: #060b4b;
     width: 70%;
 }

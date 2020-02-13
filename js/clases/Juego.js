@@ -198,7 +198,7 @@ class Juego {
         let fx = ((Math.E ** (this.player.puntaje / 80)) + 100) * Math.random();
         if (fx > 150)
             return 2;
-        if (fx > 100)
+        if (fx > 75)
             return 1;
         if (fx > 0)
             return 0;
@@ -325,6 +325,31 @@ class Juego {
 
         this.flyControls.update(delta);
         this.renderer.render(this.scene, this.camera);
+    }
+
+    playerIsLive() {
+        return this.player.vida > 0;
+    }
+
+    endGame() {
+        let modal = document.getElementById("modal");
+        modal.style.display = "block";
+
+        let data = {puntaje: this.player.puntaje};
+        $.ajax({
+            url: "../php/puntajeInfo.php",
+            data,
+            type: "post",
+            dataType: "json",
+            success: response => {
+                console.log(response);
+                $(".n_resultado").html(`<span>${response[0][0]}</span>${response[0][1]}`);
+                $(".b_resultado").html(`<span>${response[1][0]}</span>${response[1][1]}`);
+            },
+            error: error=> {
+                console.log(error);
+            }
+        })
     }
 }
 

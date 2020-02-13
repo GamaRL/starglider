@@ -39,7 +39,7 @@ function sendInformation() {
         $.ajax({
             data,
             url: "../php/ingreso.php",
-            method: "post",
+            type: "post",
             dataType: "json",
             success: response => {
                 changeStatus(response);
