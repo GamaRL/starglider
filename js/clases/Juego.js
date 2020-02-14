@@ -85,7 +85,7 @@ class Juego {
              * al presionar la tecla de espacio
              ************************************************/
             if (evt.keyCode === 32) {
-                this.soundTheme.sonido();
+                this.soundTheme.play();
                 this.player.disparar();
             }
 
@@ -254,10 +254,10 @@ class Juego {
     }
 
 
-    /**
+    /*****************************************************
      * Método update: se encarga de actualizar todos
      *   los componentes del juego cada vez que se ejecuta
-     */
+     *****************************************************/
     update() {
         this.planets.forEach(planet => {
             planet.update();
@@ -327,7 +327,7 @@ class Juego {
         this.renderer.render(this.scene, this.camera);
     }
 
-    playerIsLive() {
+    playerIsAlive() {
         return this.player.vida > 0;
     }
 

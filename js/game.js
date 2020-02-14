@@ -76,7 +76,7 @@ function init() {
     render();
 
     function render() {
-        if (game.playerIsLive()) {
+        if (game.playerIsAlive()) {
             game.update();
 
             if (game.targets[0].length < 5 + Math.floor(game.player.puntaje / 100)) {

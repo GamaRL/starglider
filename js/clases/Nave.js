@@ -91,7 +91,7 @@ class Nave {
      *   posición del jugador (A quien se busca disparar)
      ********************************************************/
     disparar(balas, player_position) {
-        this.soundEffect.sonido();
+        this.soundEffect.play();
         let velocity = new THREE.Vector3()
             .copy(this.img.position)
             .sub(player_position)
@@ -160,7 +160,7 @@ class Nave {
      * Simula la destrucción de la nave
      **********************************/
     destroy() {
-        this.soundDestroyEffect.sonido();
+        this.soundDestroyEffect.play();
         this.vida = 0;
         this.isDestroy = true;
     }

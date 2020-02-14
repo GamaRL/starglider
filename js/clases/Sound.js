@@ -1,12 +1,12 @@
 class Sound {
     constructor(nombres) {
-        this.listener = new THREE.AudioListener();
-        this.audio = new THREE.Audio(this.listener);
-        this.sound = new Audio('../statics/media/' + nombres);
-        this.sound.loop = false;
+        let listener = new THREE.AudioListener();
+        let audio = new THREE.Audio(listener);
+        this.soundEffect = new Audio('../statics/media/' + nombres);
+        this.soundEffect.loop = false;
     }
 
-    sonido() {
-        this.sound.play();
+    play() {
+        this.soundEffect.play();
     }
 }
