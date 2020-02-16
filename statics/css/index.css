@@ -13,6 +13,7 @@ body h1 {
     text-shadow: 3px 3px 3px #a8ceb5,
     0 0 3px white;
     border: aliceblue;
+    margin-top: 1.5em;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -26,7 +27,7 @@ body ul.menu {
 }
 
 body ul.menu li.menu-item {
-    margin: auto;
+    margin: 0 auto 1em;
     background-color: rgba(110, 159, 189, 0.5);
     line-height: 3;
     text-align: center;

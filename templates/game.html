@@ -1,7 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Game</title>
 
     <!--  Stylesheets  -->
@@ -20,11 +23,9 @@
     <script src="../js/clases/Sound.js"></script>
     <script src="../js/clases/Escudo.js"></script>
     <script src="../js/clases/Historia.js"></script>
-    <script src="../js/clases/Juego.js"></script>
-    <script src="../js/clases/Misil.js"></script>
     <script src="../js/clases/Planeta.js"></script>
     <script src="../js/clases/Meteoro.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <script src="../js/clases/Juego.js"></script>
 
 </head>
 <body>
@@ -35,8 +36,8 @@
 <div id="modal">
     <div class="content">
         <h2>El Juego Ha Terminado</h2>
-        <button href="game.html">Menú</button>
-        <button href="index.html">Reintentar</button>
+        <button> <a href="game.html">Reintentar</a></button>
+        <button> <a href="index.html">Menú</a></button>
         <div class="n_resultado">
         </div>
         <div class="b_resultado">

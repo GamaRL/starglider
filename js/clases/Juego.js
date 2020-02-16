@@ -195,10 +195,12 @@ class Juego {
      * - level (Number)
      ****************************************************/
     chooseEnemyLevel() {
-        let fx = ((Math.E ** (this.player.puntaje / 80)) + 100) * Math.random();
-        if (fx > 150)
+        // let fx = ((Math.E ** ((this.player.puntaje + 300) / 130)) + 75) * Math.random();
+        let fx = this.player.puntaje * 2 + 20;
+        console.log(fx);
+        if (fx > 200)
             return 2;
-        if (fx > 75)
+        if (fx > 100)
             return 1;
         if (fx > 0)
             return 0;
@@ -346,7 +348,7 @@ class Juego {
                 $(".n_resultado").html(`<span>${response[0][0]}</span>${response[0][1]}`);
                 $(".b_resultado").html(`<span>${response[1][0]}</span>${response[1][1]}`);
             },
-            error: error=> {
+            error: error => {
                 console.log(error);
             }
         })

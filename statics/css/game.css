@@ -249,6 +249,13 @@ div.radar {
     width: 35%;
 }
 
+#modal div.content button a {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    color: #060b4b;
+}
+
 #modal div.content div.n_resultado, #modal div.content div.b_resultado {
     font-family: 'Source Code Pro', monospace;
     font-size: 20px;

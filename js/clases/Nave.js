@@ -9,7 +9,7 @@ class Nave {
 
     static level_info = [
         {
-            max_speed: 10,
+            max_speed: 8,
             color: 0xFF6A09,
             acc_length: 3,
             trigger_probability: 0.975,
@@ -19,9 +19,9 @@ class Nave {
             distance_target: 20
         },
         {
-            max_speed: 10,
+            max_speed: 15,
             color: 0xFF124F,
-            acc_length: 2.5,
+            acc_length: 6,
             trigger_probability: 0.985,
             bullet_speed: 60,
             bullet_damage: 5,
@@ -29,9 +29,9 @@ class Nave {
             distance_target: 15
         },
         {
-            max_speed: 65,
+            max_speed: 20,
             color: 0xFF0000,
-            acc_length: 5,
+            acc_length: 7,
             trigger_probability: 0.99,
             bullet_speed: 60,
             bullet_damage: 10,
@@ -74,7 +74,7 @@ class Nave {
             new THREE.SphereGeometry(0.2, 32, 32),
             new THREE.MeshBasicMaterial({color: Nave.level_info[this.level].color})
         );
-
+60
         this.img_radar.position.copy(this.img.position);
 
         this.soundEffect = new Sound("laser_enemigo.mp3");
@@ -144,10 +144,10 @@ class Nave {
         }
 
         this.img.lookAt(player_position);
-        this.img.rotateZ(this.desfase);
-
+        // this.img.rotateX(-this.desfase);
+        this.img.rotateX(-0.3);
         this.desfase += this.desfase_vel;
-        this.img.rotateX(0.2);
+        // this.img.rotateX(1);
         this.img_radar.position.copy(this.img.position);
 
         if (distance < Nave.level_info[this.level].distance_target && distance > 0.05 && Math.random() > Nave.level_info[this.level].trigger_probability) {
