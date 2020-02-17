@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Game</title>
 
-    <!--  Stylesheets  -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
     <link rel="stylesheet" href="../statics/css/game.css">
@@ -37,7 +36,7 @@
     <div class="content">
         <h2>El Juego Ha Terminado</h2>
         <button> <a href="game.html">Reintentar</a></button>
-        <button> <a href="index.html">Menú</a></button>
+        <button> <a href="index.php">Menú</a></button>
         <div class="n_resultado">
         </div>
         <div class="b_resultado">
