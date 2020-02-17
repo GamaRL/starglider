@@ -1,0 +1,64 @@
+body {
+    background-image: url("../images/planet.jpeg");
+    background-repeat: no-repeat no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    margin: 0;
+}
+
+body h1 {
+    color: #060b4b;
+    text-align: center;
+    font-size: 4em;
+    text-shadow: 3px 3px 3px #a8ceb5,
+    0 0 3px white;
+    border: aliceblue;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+table {
+    background-color: rgba(110, 159, 189, 0.5);
+    margin: auto;
+    width: 50%;
+    border-collapse: collapse;
+}
+
+table tr td {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    text-align: center;
+    line-height: 1.5;
+    border: aliceblue;
+    text-shadow: 2px 2px 3px aliceblue, 0 0 1px white;
+}
+
+table tr td:hover {
+    text-shadow: 0 0 3px aliceblue, 0 0 1px white;;
+    cursor: pointer;
+}
+
+table tr.oro td {
+    color: yellow;
+    font-weight: bolder;
+}
+
+table tr.plata td {
+    color: lightslategrey;
+    font-weight: bolder;
+}
+
+table tr.bronce td {
+    color: #B07D44;
+    font-weight: bolder;
+}
+
+table tr th {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #060b4b;
+    text-shadow: 3px 3px 3px #a8ceb5,
+    0 0 3px white;
+    font-size: 20px;
+    font-weight: bolder;
+    background-color: rgba(110, 159, 189, 0.2);
+    line-height: 2;;
+}

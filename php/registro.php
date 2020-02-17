@@ -26,9 +26,7 @@ if (strcmp($_POST['psw'], $_POST['cpsw']) == 0) {
 	$file = "../statics/archives/registro.json";
 	file_put_contents($file, $json_string);
 
-	if (isset($_COOKIE['nick']))
-        setcookie('nick',' ',time()-1, "/");
-    setcookie('nick',$data["nick"], time()+60*60*24*30, "/");
+	setNickCookie($data['nick']);
 }
 
 echo json_encode($return);

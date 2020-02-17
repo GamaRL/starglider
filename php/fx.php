@@ -9,4 +9,19 @@ function getUsersData() {
     }
 }
 
+function setNickCookie($nick) {
+    if (isset($_COOKIE['nick']))
+        setcookie('nick',' ',time()-1, "/");
+    setcookie('nick',$nick, time()+60*60*24*30, "/");
+}
+
+function getOrderData() {
+    $data = getUsersData();
+
+    foreach ($data as $key => $row) {
+        $level[$key] = $row['level'];
+    }
+    array_multisort($level, SORT_DESC, $data);
+    return $data;
+}
 ?>

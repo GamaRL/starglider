@@ -23,7 +23,7 @@
     <a href="instrucciones.html"><span class="menu-span"></span>
         <li class="menu-item 3_"><span>Instrucciones</span></li>
     </a>
-    <a href="../php/resultados.php"><span class="menu-span"></span>
+    <a href="puntajes.php"><span class="menu-span"></span>
         <li class="menu-item 4_"><span>Resultados</span></li>
     </a>
     <a href="game.php"><span class="menu-span"></span>

@@ -16,10 +16,8 @@ if (isset($arr_usuarios[$data["nick"]])) {
     if (password_verify($data['psw'],$arr_usuarios[$data["nick"]]["psw"])) {
         $return[0] = true;
         $return[1] = "Bienvenido";
+        setNickCookie($data["nick"]);
 
-        if (isset($_COOKIE['nick']))
-            setcookie('nick',' ',time()-1, "/");
-        setcookie('nick',$data["nick"], time()+60*60*24*30, "/");
     } else {
         $return[1] = "Contraseña inválida";
     }
