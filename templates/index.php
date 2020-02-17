@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<h1>Starglider</h1>
+<h1>Roy's Resistance</h1>
 
 <ul class="menu">
     <a href="registro.html"><span class="menu-span"></span>
