@@ -29,7 +29,7 @@ table tr td {
     text-align: center;
     line-height: 2.5;
     border: aliceblue;
-    text-shadow: 2px 2px 3px aliceblue, 0 0 1px white;
+    text-shadow: 0 0 3px #060b4b, 2px 2px 3px aliceblue;
 }
 
 table tr td:hover {
