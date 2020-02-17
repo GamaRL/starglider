@@ -27,14 +27,18 @@ table tr td {
     font-family: Arial, Helvetica, sans-serif;
     color: white;
     text-align: center;
-    line-height: 1.5;
+    line-height: 2.5;
     border: aliceblue;
     text-shadow: 2px 2px 3px aliceblue, 0 0 1px white;
 }
 
 table tr td:hover {
-    text-shadow: 0 0 3px aliceblue, 0 0 1px white;;
+    text-shadow: 0 0 3px aliceblue, 0 0 1px white;
     cursor: pointer;
+}
+
+table tr:hover {
+    background-color: rgba(110, 159, 189, 0.2);
 }
 
 table tr.oro td {
@@ -52,6 +56,10 @@ table tr.bronce td {
     font-weight: bolder;
 }
 
+table tr.user {
+    background-color: aliceblue;
+}
+
 table tr th {
     font-family: Arial, Helvetica, sans-serif;
     color: #060b4b;
@@ -60,5 +68,5 @@ table tr th {
     font-size: 20px;
     font-weight: bolder;
     background-color: rgba(110, 159, 189, 0.2);
-    line-height: 2;;
+    line-height: 2;
 }

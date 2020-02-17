@@ -1,3 +1,8 @@
+
+<?php
+if (isset($_COOKIE['nick']))
+        $user = $_COOKIE['nick'];
+?>
 <!doctype html>
 <html lang="es">
 <head>
@@ -38,6 +43,10 @@
                 break;
         default: $class = "";
                 break;
+        }
+
+        if (strcmp($row['nick'],$user) == 0) {
+            $class .= " user";
         }
 
         echo "<tr class='$class'>";
