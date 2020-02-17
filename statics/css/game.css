@@ -269,7 +269,6 @@ div.radar {
 #modal div.content div.n_resultado span, #modal div.content div.b_resultado span{
     font-family: Arial, Helvetica, sans-serif;
     color: #060b4b;
-    text-shadow: 3px 3px 3px #a8ceb5,
     0 0 3px white;
     font-weight: bolder;
 }
