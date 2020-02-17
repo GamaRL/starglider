@@ -53,7 +53,7 @@ function sendInformation() {
                 changeStatus(response);
                 if (response[0]) {
                     setTimeout(() => {
-                        window.location = "index.html"
+                        window.location = "index.php"
                     }, 1500);
                 }
                 console.log(response);

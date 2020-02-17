@@ -53,3 +53,58 @@ body ul.menu li.menu-item:hover {
     box-shadow: 5px 5px 2px rgba(168, 206, 181, 0.7);
 }
 
+div.info_user {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: lighter;
+    display: block;
+    position: absolute;
+    width: 15%;
+    top: 1em;
+    right: 1em;
+    padding: 1em;
+    background-color: rgba(110, 159, 189, 0.5);
+}
+
+div.info_user span {
+    color: #a8ceb5;
+    font-weight: bolder;
+}
+
+div.info_user button {
+    display: block;
+    margin: 1em auto 0;
+
+    border: aliceblue;
+    background-color: rgba(168,206,181,0.5);
+    width: 60%;
+
+    border: none;
+    text-align: center;
+
+    border-radius: 0 1.5em;
+    -webkit-transition: width 0.4s ease-in-out, -webkit-box-shadow 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+}
+
+div.info_user button a {
+    display: block;
+    width: 100%;
+    text-shadow: 3px 3px 3px #a8ceb5,
+    0 0 3px white;
+    color: #060b4b;
+    line-height: 2.5;
+    font-size: 13px;
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+div.info_user button:hover {
+    cursor: pointer;
+    width: 70%;
+}
+
+button:focus {
+    outline: none;
+}
+

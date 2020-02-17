@@ -18,8 +18,8 @@ if (isset($arr_usuarios[$data["nick"]])) {
         $return[1] = "Bienvenido";
 
         if (isset($_COOKIE['nick']))
-            setcookie('nick',' ',time()-1);
-        setcookie('nick',$data["nick"]);
+            setcookie('nick',' ',time()-1, "/");
+        setcookie('nick',$data["nick"], time()+60*60*24*30, "/");
     } else {
         $return[1] = "Contraseña inválida";
     }

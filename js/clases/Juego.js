@@ -195,8 +195,7 @@ class Juego {
      * - level (Number)
      ****************************************************/
     chooseEnemyLevel() {
-        // let fx = ((Math.E ** ((this.player.puntaje + 300) / 130)) + 75) * Math.random();
-        let fx = this.player.puntaje * 2 + 20;
+        let fx = this.player.puntaje * 1.5 + 20;
         console.log(fx);
         if (fx > 200)
             return 2;

@@ -26,12 +26,17 @@
     <a href="../php/resultados.php"><span class="menu-span"></span>
         <li class="menu-item 4_"><span>Resultados</span></li>
     </a>
-    <a href="game.html"><span class="menu-span"></span>
+    <a href="game.php"><span class="menu-span"></span>
         <li class="menu-item 5_"><span>Jugar</span></li>
     </a>
 </ul>
 <?php
-    if (isset($_COOKIE['nick']))
-        echo '<button>Cerrar Sesión</button>'';?>
+    if (isset($_COOKIE['nick'])) {
+        echo "<div class='info_user'><span>Bienvenido:</span> $_COOKIE[nick] <button><a href='../php/close.php'>Cerrar Sesión</a></button></div>";
+    }
+?>
 </body>
 </html>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="../js/index.js"></script>

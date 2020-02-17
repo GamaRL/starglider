@@ -1,3 +1,8 @@
+<?php
+if (!isset($_COOKIE['nick'])) {
+    header('Location: index.php');
+}
+?>
 <!doctype html>
 <html lang="es">
 <head>
@@ -35,7 +40,7 @@
 <div id="modal">
     <div class="content">
         <h2>El Juego Ha Terminado</h2>
-        <button> <a href="game.html">Reintentar</a></button>
+        <button> <a href="game.php">Reintentar</a></button>
         <button> <a href="index.php">Menú</a></button>
         <div class="n_resultado">
         </div>

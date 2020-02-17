@@ -29,12 +29,11 @@ let timeMeteoro = -20;
 loader.load('../statics/3Dmodels/nave11.glb', model => {
     model.scene.children[0].rotateX(Math.PI);
     models.push(new THREE.Group().add(model.scene.children[0]));
-    console.log(model.scene.children);
 
     loader.load('../statics/3Dmodels/nave2.glb', model => {
         models.push(model.scene.children[0]);
         loader.load('../statics/3Dmodels/nave3.glb', model => {
-            models.push(new THREE.Group().add(model.scene.children[0]));
+            models.push(model.scene.children[0]);
             loader.load('../statics/3Dmodels/nave.glb', model => {
                 models.push(model.scene.children[2]);
                 loader.load('../statics/3Dmodels/met1.glb', model => {

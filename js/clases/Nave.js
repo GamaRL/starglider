@@ -16,27 +16,30 @@ class Nave {
             bullet_speed: 50,
             bullet_damage: 5,
             score: 10,
-            distance_target: 20
+            distance_target: 20,
+            vida: 100
         },
         {
-            max_speed: 15,
+            max_speed: 10,
             color: 0xFF124F,
-            acc_length: 6,
-            trigger_probability: 0.985,
+            acc_length: 4,
+            trigger_probability: 0.97,
             bullet_speed: 60,
             bullet_damage: 5,
             score: 15,
-            distance_target: 15
+            distance_target: 15,
+            vida: 150
         },
         {
-            max_speed: 20,
+            max_speed: 15,
             color: 0xFF0000,
             acc_length: 7,
-            trigger_probability: 0.99,
+            trigger_probability: 0.98,
             bullet_speed: 60,
             bullet_damage: 10,
             score: 25,
-            distance_target: 50
+            distance_target: 50,
+            vida: 50
         }
     ];
 
@@ -55,7 +58,7 @@ class Nave {
             Math.random() - 0.5,
             Math.random() - 0.5).setLength(Nave.level_info[level].max_speed);
 
-        this.vida = 100;
+        this.vida = Nave.level_info[level].vida;
 
         this.img = nave_img;
         this.img.position.copy(new THREE.Vector3(
@@ -64,8 +67,7 @@ class Nave {
             Math.random() - 0.5).setLength(50 - Math.random() * 5)
             .add(player_position));
 
-        this.desfase = Math.random() * Math.PI * 2;
-        this.desfase_vel = (Math.random() - 0.5) * 0.02;
+        this.desfase = Math.random() * Math.PI / 2;
         this.img.name = id;
 
         this.level = level;
@@ -74,7 +76,7 @@ class Nave {
             new THREE.SphereGeometry(0.2, 32, 32),
             new THREE.MeshBasicMaterial({color: Nave.level_info[this.level].color})
         );
-60
+        60
         this.img_radar.position.copy(this.img.position);
 
         this.soundEffect = new Sound("laser_enemigo.mp3");
@@ -144,10 +146,13 @@ class Nave {
         }
 
         this.img.lookAt(player_position);
-        // this.img.rotateX(-this.desfase);
-        this.img.rotateX(-0.3);
-        this.desfase += this.desfase_vel;
-        // this.img.rotateX(1);
+        if (this.level === 2) {
+            this.img.rotateY(-1.5);
+            // this.img.rotateY(this.desfase);
+        } else {
+            this.img.rotateX(-0.3);
+            // this.img.rotateX(-this.desfase);
+        }
         this.img_radar.position.copy(this.img.position);
 
         if (distance < Nave.level_info[this.level].distance_target && distance > 0.05 && Math.random() > Nave.level_info[this.level].trigger_probability) {
