@@ -90,3 +90,18 @@ div.status {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bolder;
 }
+
+div.regresar{
+    text-align: center;
+    border-radius: 0 1.5em;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: lighter;
+    display: block;
+    position: absolute;
+    width: 10%;
+    top: 1em;
+    left: 1em;
+    padding: 1em;
+    background-color: rgba(110, 159, 189, 0.5);
+}

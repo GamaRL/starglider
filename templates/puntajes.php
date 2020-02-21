@@ -14,6 +14,11 @@ if (isset($_COOKIE['nick']))
     <title>Puntajes</title>
 </head>
 <body>
+<a href="index.php">
+    <div class="regresar">
+        Regresar
+    </div>
+</a>
 <h1>Puntajes</h1>
 <?php
     include("../php/fx.php");
