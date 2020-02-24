@@ -116,7 +116,7 @@ class Jugador {
             }, 200, this.camera, this.escudo);
 
         } else if (crash) {
-            let  CrashShield = new Sound("shieldcrash.mp3");
+            let  soundCrashShield = new Sound("shieldcrash.mp3");
             soundCrashShield.play();
             this.escudo.underFire();
         }
