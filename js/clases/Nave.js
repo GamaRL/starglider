@@ -165,7 +165,7 @@ class Nave {
      * Simula la destrucción de la nave
      **********************************/
     destroy() {
-        this.soundDestroyEffect.play();
+        this.soundDestroyEffect.play(0.3);
         this.vida = 0;
         this.isDestroy = true;
     }

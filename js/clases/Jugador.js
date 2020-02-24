@@ -50,7 +50,7 @@ class Jugador {
      **************************************************************/
     disparar() {
         let soundShutEffect = new Sound("laser.mp3");
-        soundShutEffect.play();
+        soundShutEffect.play(0.3);
 
         let velocity = new THREE.Vector3();
         this.camera.getWorldDirection(velocity);
@@ -101,7 +101,7 @@ class Jugador {
     crashed(crash, damage) {
         if (crash && !this.escudo.isActivated()) {
             let soundCrash = new Sound("crash.mp3");
-            soundCrash.play();
+            soundCrash.play(0.3);
             this.vida -= damage;
             this.escudo.effect.classList.add("attak");
 
@@ -116,7 +116,7 @@ class Jugador {
             }, 200, this.camera, this.escudo);
 
         } else if (crash) {
-            let soundCrashShield = new Sound("shieldcrash.mp3");
+            let  CrashShield = new Sound("shieldcrash.mp3");
             soundCrashShield.play();
             this.escudo.underFire();
         }
