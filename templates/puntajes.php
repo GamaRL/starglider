@@ -1,7 +1,6 @@
 
 <?php
-if (isset($_COOKIE['nick']))
-        $user = $_COOKIE['nick'];
+    $user = (isset($_COOKIE['nick'])) ? $_COOKIE['nick'] : "";
 ?>
 <!doctype html>
 <html lang="es">

@@ -16,7 +16,7 @@ class Escudo {
 
         this.icon = document.createElement("img");
         this.icon.setAttribute("src", "../statics/images/shield.png");
-        this.icon.setAttribute("id", "shieldCharge")
+        this.icon.setAttribute("id", "shieldCharge");
         document.getElementsByTagName("body")[0].appendChild(this.icon);
 
         this.soundEffect = new Sound("escudo.mp3");
@@ -85,8 +85,10 @@ class Escudo {
     }
 
     underFire() {
-        let newWave = document.createElement("div");
+        let newWave = document.createElement("img");
+        newWave.setAttribute("src", "../statics/images/shieldblock.png");
         newWave.classList.add("waveShield");
+        // newWave.style.position = "absolute";
         newWave.style.top = Math.random() * 40 + 30 + "%";
         newWave.style.left = Math.random() * 40 + 30 + "%";
 

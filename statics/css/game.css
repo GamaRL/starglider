@@ -79,7 +79,6 @@ div.radar {
     padding-top: 5%;
     font-family: 'Source Code Pro', monospace;
     text-align: center;
-
 }
 
 
@@ -89,14 +88,14 @@ div.radar {
     z-index: 20;
 }
 
-#shield div.waveShield {
+#shield img.waveShield {
     border-radius: 50%;
     display: block;
     width: 1px;
     height: 1px;
     position: absolute;
     z-index: 25;
-    animation: waveEffect 1s 1;
+    animation: waveEffect 0.7s 1;
     animation-fill-mode: forwards;
     transform: translate(-50%, -50%);
 }
@@ -166,12 +165,15 @@ div.radar {
     from {
         width: 0;
         height: 0;
-        border: 30px solid rgba(88, 202, 255, 1);
+        opacity: 1;
+        /*border: 5px solid;*/
     }
     to {
-        border: 150px solid transparent;
-        width: 1500px;
-        height: 1500px;
+        /*border: 100px solid transparent;*/
+        /*border: 100px solid;*/
+        opacity: 0;
+        width: 700px;
+        height: 700px;
     }
 }
 
@@ -269,7 +271,6 @@ div.radar {
 #modal div.content div.n_resultado span, #modal div.content div.b_resultado span{
     font-family: Arial, Helvetica, sans-serif;
     color: #060b4b;
-    0 0 3px white;
     font-weight: bolder;
 }
 

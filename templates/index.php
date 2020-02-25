@@ -14,21 +14,26 @@
 <h1>Roy's Resistance</h1>
 
 <ul class="menu">
-    <a href="registro.html"><span class="menu-span"></span>
-        <li class="menu-item 1_"><span>Registrarse</span></li>
-    </a>
-    <a href="ingresar.html"><span class="menu-span"></span>
+    <?php
+    if (!isset($_COOKIE['nick']))
+    echo '<a href="registro.html"><span class="menu-span"></span>
+                  <li class="menu-item 1_"><span>Registrarse</span></li>
+              </a><a href="ingresar.html"><span class="menu-span"></span>
         <li class="menu-item 2_"><span>Ingresar</span></li>
-    </a>
+    </a>';
+    ?>
     <a href="instrucciones.html"><span class="menu-span"></span>
         <li class="menu-item 3_"><span>Instrucciones</span></li>
     </a>
     <a href="puntajes.php"><span class="menu-span"></span>
         <li class="menu-item 4_"><span>Resultados</span></li>
     </a>
-    <a href="game.php"><span class="menu-span"></span>
+    <?php
+    if (isset($_COOKIE['nick']))
+    echo '<a href="game.php"><span class="menu-span"></span>
         <li class="menu-item 5_"><span>Jugar</span></li>
-    </a>
+    </a>';
+    ?>
 </ul>
 <?php
     if (isset($_COOKIE['nick'])) {
