@@ -81,7 +81,7 @@ class Jugador {
 
         this.barraVida.style.width = (Math.floor(400 * this.vida / 1000)) + "px";
         if (this.vida < 1000)
-            this.vida += 0.1;
+            this.vida += 10;
 
         let r = (this.vida <= 500) ? 255 : Math.floor(255 * (1 - (this.vida - 500) / 500));
         let g = (this.vida >= 500) ? 255 : Math.floor(255 * (this.vida / 500));

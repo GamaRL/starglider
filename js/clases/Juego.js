@@ -55,6 +55,28 @@ class Juego {
         this.scene.add(light1);
         this.scene.add(light2);
 
+
+
+        let lightSun = new THREE.PointLight( 0xffffff, 1.5, 1000 );
+        lightSun.position.set(400,0,0);
+        let textureLoader = new THREE.TextureLoader();
+        let textureFlare0 = textureLoader.load( "../statics/images/stars/sun.png" );
+        let textureFlare2 = textureLoader.load( "../statics/images/stars/sun3.png" );
+        let textureFlare3 = textureLoader.load( "../statics/images/stars/sun3.png" );
+        let textureFlare4 = textureLoader.load( "../statics/images/stars/sun3.png" );
+        let textureFlare5 = textureLoader.load( "../statics/images/stars/sun4.png" );
+
+        var lensflare = new THREE.Lensflare();
+        lensflare.addElement( new THREE.LensflareElement( textureFlare0, 312, 0 ) );
+        lensflare.addElement( new THREE.LensflareElement( textureFlare2, 52, 0.6 ) );
+        lensflare.addElement( new THREE.LensflareElement( textureFlare3, 22, 0.75 ) );
+        lensflare.addElement( new THREE.LensflareElement( textureFlare4, 72, 0.7 ) );
+        lensflare.addElement( new THREE.LensflareElement( textureFlare5, 50, 0.2 ) );
+
+        lightSun.add( lensflare );
+        this.scene.add(lightSun);
+
+
         this.mira = new Mira(id_element);
         this.radar = new Radar(id_element);
 
@@ -85,7 +107,7 @@ class Juego {
              * al presionar la tecla de espacio
              ************************************************/
             if (evt.keyCode === 32) {
-                this.soundTheme.play();
+                this.soundTheme.play(0.8);
                 this.player.disparar();
             }
 
@@ -127,10 +149,10 @@ class Juego {
 
         let folders = ["Clouds", "Gaseous", "Habitable", "Inhospitable", "Terrestrial"];
         let positions = [
-            new THREE.Vector3(300, -200, 300),
-            new THREE.Vector3(300, -200, -300),
-            new THREE.Vector3(-300, -200, 300),
-            new THREE.Vector3(-300, -200, -300),
+            new THREE.Vector3(400, -300, 400),
+            new THREE.Vector3(400, -300, -400),
+            new THREE.Vector3(-400, -300, 400),
+            new THREE.Vector3(-400, -300, -400),
             new THREE.Vector3(0, 250, 0)
         ];
         this.planets = [];

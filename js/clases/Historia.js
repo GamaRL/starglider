@@ -20,6 +20,8 @@ class Historia {
         this.timeEllapsed += dt;
 
         if (this.timeEllapsed > 15) {
+            this.soundEffect = new Sound("historia/output"+this.counter+".mp3");
+            this.soundEffect.play();
             this.timeEllapsed = 0;
             this.counter = (this.counter + 1) % this.text.length;
             this.lastChar = 0;
