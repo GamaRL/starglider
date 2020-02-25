@@ -95,7 +95,10 @@ class Juego {
             }
 
             if (evt.keyCode === 13) {
-                this.player.dispararMisil(this.models[3], this.mira.pointing);
+                if (this.mira.pointing)
+                    this.player.dispararMisil(this.models[3], this.mira.pointing);
+                else
+                    console.log("Ho hya objetivo");
             }
         };
 
