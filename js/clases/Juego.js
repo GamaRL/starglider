@@ -93,6 +93,10 @@ class Juego {
                 if (!this.maxSpeedActivated)
                     this.flyControls.movementSpeed = 10;
             }
+
+            if (evt.keyCode === 13) {
+                this.player.dispararMisil(this.models[3], this.mira.pointing);
+            }
         };
 
         document.onkeyup = (evt) => {

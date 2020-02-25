@@ -96,7 +96,7 @@ div.radar {
     height: 1px;
     position: absolute;
     z-index: 25;
-    animation: waveEffect 1s 1;
+    animation: waveEffect 0.5s 1;
     animation-fill-mode: forwards;
     transform: translate(-50%, -50%);
 }
@@ -166,12 +166,12 @@ div.radar {
     from {
         width: 0;
         height: 0;
-        border: 30px solid rgba(88, 202, 255, 1);
+        border: 5px solid rgba(88, 202, 255, .9);
     }
     to {
-        border: 150px solid transparent;
-        width: 1500px;
-        height: 1500px;
+        border: 100px solid transparent;
+        width: 700px;
+        height: 700px;
     }
 }
 
@@ -269,7 +269,6 @@ div.radar {
 #modal div.content div.n_resultado span, #modal div.content div.b_resultado span{
     font-family: Arial, Helvetica, sans-serif;
     color: #060b4b;
-    0 0 3px white;
     font-weight: bolder;
 }
 

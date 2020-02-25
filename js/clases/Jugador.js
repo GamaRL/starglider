@@ -14,7 +14,7 @@ class Jugador {
      * -nave_img (Object): Group que contenga
      *  el modelo 3D de la nave del jugador
      ****************************************/
-    constructor(camera, nave_img) {
+    constructor(camera, nave_img, mira_element) {
         this.vida = 1000;
         this.puntaje = 0;
         this.balas = [];
@@ -41,10 +41,6 @@ class Jugador {
                     this.escudo.activate();
                 }
             }
-
-            if (evt.keyCode === 13) {
-                let newMisil = new Misil();
-            }
         };
     }
 
@@ -58,7 +54,7 @@ class Jugador {
 
         let velocity = new THREE.Vector3();
         this.camera.getWorldDirection(velocity);
-        velocity.setLength(300);
+        velocity.setLength(100);
 
         this.balas.push(
             new Bala(
@@ -125,6 +121,14 @@ class Jugador {
 
             this.escudo.underFire();
         }
+    }
+
+    /**
+     * Método dispararMisil: Genera un nuevo misil
+     * Parámetros:
+     */
+    dispararMisil(img, pointing) {
+        let newMisil = new Misil(this.nave_img.position.clone(), pointing, img);
     }
 
     addScore(extraScore) {
