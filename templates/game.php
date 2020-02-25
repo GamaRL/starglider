@@ -17,6 +17,8 @@ if (!isset($_COOKIE['nick'])) {
     <link rel="stylesheet" href="../statics/css/game.css">
     <script src="../js/vendor/three.min.js"></script>
     <script src="../js/vendor/FlyControls.js"></script>
+    <script src="../js/vendor/Lensflare.js"></script>
+
     <script src="../js/vendor/GLTFLoader.js"></script>
     <script src="../js/game.js"></script>
     <script src="../js/clases/Radar.js"></script>

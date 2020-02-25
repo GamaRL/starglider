@@ -6,6 +6,10 @@
  * @author Don McCurdy / https://www.donmccurdy.com
  */
 
+
+
+
+
 THREE.SceneUtils = {
 
 	createMultiMaterialObject: function ( geometry, materials ) {
