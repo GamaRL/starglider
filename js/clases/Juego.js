@@ -77,7 +77,7 @@ class Juego {
         this.drawStars(0x9C3ABD, 500);
         this.drawStars(0xffffff, 800);
 
-        this.soundTheme = new Sound("theme.mp3");
+        this.soundTheme = new Sound("theme1.mp3");
 
         document.onkeydown = (evt) => {
             /************************************************
@@ -117,19 +117,21 @@ class Juego {
 
         let folders = ["Clouds", "Gaseous", "Habitable", "Inhospitable", "Terrestrial"];
         let positions = [
-            new THREE.Vector3(200, -100, 200),
-            new THREE.Vector3(200, -100, -200),
-            new THREE.Vector3(-200, -100, 200),
-            new THREE.Vector3(-200, -100, -200),
+            new THREE.Vector3(300, -200, 300),
+            new THREE.Vector3(300, -200, -300),
+            new THREE.Vector3(-300, -200, 300),
+            new THREE.Vector3(-300, -200, -300),
             new THREE.Vector3(0, 250, 0)
         ];
         this.planets = [];
         folders.forEach(folder => {
             let newPlanet = new Planeta(
                 folder + "/" + folder + chooseNumber() + ".png",
-                positions.pop());
+                positions.pop(), "Clouds/cloudsmask.png");
             this.planets.push(newPlanet);
             this.scene.add(newPlanet.figure);
+            this.scene.add(newPlanet.cloud);
+            this.scene.add(newPlanet.backcloud);
         });
 
     }
@@ -180,7 +182,7 @@ class Juego {
                 Math.random() - 0.5,
                 Math.random() - 0.5,
                 Math.random() - 0.5
-            ).setLength(250 + Math.random() * 750);
+            ).setLength(350 + Math.random() * 750);
             geom.vertices.push(particle);
         }
         let cloud = new THREE.Points(geom, material);
