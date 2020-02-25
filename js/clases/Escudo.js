@@ -88,7 +88,6 @@ class Escudo {
         let newWave = document.createElement("img");
         newWave.setAttribute("src", "../statics/images/shieldblock.png");
         newWave.classList.add("waveShield");
-        // newWave.style.position = "absolute";
         newWave.style.top = Math.random() * 40 + 30 + "%";
         newWave.style.left = Math.random() * 40 + 30 + "%";
 

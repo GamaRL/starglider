@@ -94,11 +94,14 @@ class Juego {
                     this.flyControls.movementSpeed = 10;
             }
 
-            if (evt.keyCode === 13) {
-                if (this.mira.pointing)
-                    this.player.dispararMisil(this.models[3], this.mira.pointing);
-                else
-                    console.log("Ho hya objetivo");
+            if (evt.keyCode === 77) {
+                if (this.mira.pointing) {
+                    this.player.dispararMisil(this.models[4].clone(), this.mira.pointing);
+                    let newMisil = this.player.misiles[this.player.misiles.length - 1];
+                    console.log(newMisil);
+                    this.scene.add(newMisil.img_misil);
+                }
+
             }
         };
 

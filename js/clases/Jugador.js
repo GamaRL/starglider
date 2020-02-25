@@ -14,12 +14,12 @@ class Jugador {
      * -nave_img (Object): Group que contenga
      *  el modelo 3D de la nave del jugador
      ****************************************/
-    constructor(camera, nave_img, mira_element) {
+    constructor(camera, nave_img) {
         this.vida = 1000;
         this.puntaje = 0;
         this.balas = [];
         this.camera = camera;
-        this.nave_img = nave_img;
+        this.nave_img = nave_img.clone();
         this.nave_img.position.set(0, 0, 0);
         this.escudo = new Escudo();
 
@@ -30,7 +30,7 @@ class Jugador {
         this.puntajeContador = document.createElement("div");
         this.puntajeContador.setAttribute("id", "puntajeContador");
         document.getElementById("game_output").appendChild(this.puntajeContador);
-        this.addScore(0);
+
         this.misiles = [];
 
         document.onkeypress = (evt) => {
@@ -87,6 +87,10 @@ class Jugador {
         let g = (this.vida >= 500) ? 255 : Math.floor(255 * (this.vida / 500));
         this.escudo.update(dt);
 
+        for (let i=0; i<this.misiles.length; i++) {
+            this.misiles[i].update(dt);
+        }
+
         this.barraVida.style.backgroundColor = `rgb(${r}, ${g}, 0)`;
     }
 
@@ -123,12 +127,13 @@ class Jugador {
         }
     }
 
-    /**
+    /***********************************************
      * Método dispararMisil: Genera un nuevo misil
      * Parámetros:
-     */
+     ***********************************************/
     dispararMisil(img, pointing) {
         let newMisil = new Misil(this.nave_img.position.clone(), pointing, img);
+        this.misiles.push(newMisil);
     }
 
     addScore(extraScore) {
