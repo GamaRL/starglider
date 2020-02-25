@@ -28,9 +28,12 @@
     <a href="puntajes.php"><span class="menu-span"></span>
         <li class="menu-item 4_"><span>Resultados</span></li>
     </a>
-    <a href="game.php"><span class="menu-span"></span>
+    <?php
+    if (isset($_COOKIE['nick']))
+    echo '<a href="game.php"><span class="menu-span"></span>
         <li class="menu-item 5_"><span>Jugar</span></li>
-    </a>
+    </a>';
+    ?>
 </ul>
 <?php
     if (isset($_COOKIE['nick'])) {

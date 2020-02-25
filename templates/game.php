@@ -23,6 +23,7 @@ if (!isset($_COOKIE['nick'])) {
     <script src="../js/clases/Jugador.js"></script>
     <script src="../js/clases/Bala.js"></script>
     <script src="../js/clases/Mira.js"></script>
+    <script src="../js/clases/Misiles.js"></script>
     <script src="../js/clases/Nave.js"></script>
     <script src="../js/clases/Sound.js"></script>
     <script src="../js/clases/Escudo.js"></script>

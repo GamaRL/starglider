@@ -31,7 +31,7 @@ class Jugador {
         this.puntajeContador.setAttribute("id", "puntajeContador");
         document.getElementById("game_output").appendChild(this.puntajeContador);
         this.addScore(0);
-        // this.misiles = [];
+        this.misiles = [];
 
         document.onkeypress = (evt) => {
 
@@ -40,6 +40,10 @@ class Jugador {
                 if (!this.escudo.isActivated()) {
                     this.escudo.activate();
                 }
+            }
+
+            if (evt.keyCode === 13) {
+                let newMisil = new Misil();
             }
         };
     }
