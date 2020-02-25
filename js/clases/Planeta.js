@@ -33,9 +33,7 @@ class Planeta {
                 var mesh = THREE.SceneUtils.createMultiMaterialObject(geom, [planetMaterial]);
 
             }
-
             return mesh;
-
         }
         let random = Math.random();
         this.cloud = createMesh(new THREE.SphereGeometry( random * 60 + 140, 40, 40), img_effect, true, false);
