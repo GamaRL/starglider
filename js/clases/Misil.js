@@ -47,7 +47,7 @@ class Misil {
      * - true o false
      *********************************************/
     isNear() {
-        return this.target.position.clone().sub(this.img_misil.position).length() < 0.3;
+        return this.target.position.clone().sub(this.img_misil.position).length() < 0.5;
     }
 
     /************************************************

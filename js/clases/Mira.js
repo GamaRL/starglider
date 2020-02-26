@@ -38,7 +38,7 @@ class Mira {
         let pointer = new THREE.Vector3();
         camera.getWorldDirection(pointer);
         pointer.normalize();
-        let caster = new THREE.Raycaster(camera.position, pointer, 0, 80);
+        let caster = new THREE.Raycaster(camera.position, pointer, 0, 150);
 
         let intersects = caster.intersectObjects(targets, true);
         if (intersects.length > 0)

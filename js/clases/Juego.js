@@ -83,7 +83,7 @@ class Juego {
 
         this.choosePlanets();
 
-        this.player = new Jugador(this.camera, this.models[3]);
+        this.player = new Jugador(this.camera, this.models[3].clone());
         this.scene.add(this.player.nave_img);
 
         this.targets = []; //Guarda los enemigos que se van creando en el juego
@@ -116,10 +116,11 @@ class Juego {
             }
 
             if (evt.keyCode === 77) {
-                if (this.mira.pointing) {
+                if (this.mira.pointing && this.player.hasMisiles()) {
                     this.player.dispararMisil(this.models[8].clone(), this.mira.pointing);
                     let newMisil = this.player.misiles[this.player.misiles.length - 1];
                     this.scene.add(newMisil.img_misil);
+                    this.player.addMisilDispon(-1);
                 }
             }
         };
@@ -130,7 +131,7 @@ class Juego {
             }
         };
 
-        window.addEventListener('resize', this.onResize, false)
+        window.addEventListener('resize', this.onResize, false);
     };
 
     /*******************************************
@@ -247,7 +248,7 @@ class Juego {
         let img;
         let level;
         if (constructor === Meteoro) {
-            img = this.models[4 + Math.floor((Math.random() - 0.01) * 4)].clone();
+            img = this.models[4 + Math.floor(Math.random() * 4)].clone();
         } else {
             level = this.chooseEnemyLevel();
             img = this.models[level].clone();
@@ -285,12 +286,12 @@ class Juego {
         });
     }
 
-    /**
+    /************************************************
      * Método countEnemys: Cuenta las naves enamigas
      *   que hay en el juego
      * Return:
      * - Cantidad de enemigos (Number)
-     */
+     *************************************************/
     countEnemys() {
         let enemys = 0;
         for (let i = 0; i < this.targets.length; i++) {
