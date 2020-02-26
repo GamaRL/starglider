@@ -21,6 +21,8 @@ class Misil {
         this.img_misil.position.copy(position);
         this.target = target;
         this.live = true;
+        this.soundEffect = new Sound("misile.mp3");
+        this.soundEffect.play(0.6);
     }
 
     /**************************************************
