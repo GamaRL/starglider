@@ -112,7 +112,6 @@ class Nave {
         ));
     }
 
-
     /*******************************************************
      * Método update: Actualiza la posición de la nave,
      *   así como su velocidad. De la misma manera,

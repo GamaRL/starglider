@@ -117,7 +117,7 @@ class Juego {
 
             if (evt.keyCode === 77) {
                 if (this.mira.pointing) {
-                    this.player.dispararMisil(this.models[4].clone(), this.mira.pointing);
+                    this.player.dispararMisil(this.models[8].clone(), this.mira.pointing);
                     let newMisil = this.player.misiles[this.player.misiles.length - 1];
                     this.scene.add(newMisil.img_misil);
                 }
@@ -285,6 +285,12 @@ class Juego {
         });
     }
 
+    /**
+     * Método countEnemys: Cuenta las naves enamigas
+     *   que hay en el juego
+     * Return:
+     * - Cantidad de enemigos (Number)
+     */
     countEnemys() {
         let enemys = 0;
         for (let i = 0; i < this.targets.length; i++) {
@@ -383,10 +389,21 @@ class Juego {
         this.renderer.render(this.scene, this.camera);
     }
 
+    /***************************************************
+     * Método playerIsAlive: Pregunta si el jugador aún
+     *   puede juegar.
+     * Return:
+     * - true si el jugador tiene vida o false si ya
+     *     no está vivo (Booleans)
+     ***************************************************/
     playerIsAlive() {
         return this.player.vida > 0;
     }
 
+    /**************************************************
+     * Método endGame: Se encarga de terminar el juego
+     *   mostrando el puntaje
+     **************************************************/
     endGame() {
         let modal = document.getElementById("modal");
         modal.style.display = "block";
