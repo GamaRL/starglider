@@ -80,7 +80,7 @@ function init() {
         if (game.playerIsAlive()) {
             game.update();
 
-            if (game.targets[0].length < 5 + Math.floor(game.player.puntaje / 100)) {
+            if (game.countEnemys() < 5 + Math.floor(game.player.puntaje / 100)) {
                 game.maketargets(target_number++, Nave, 0);
             }
             if (game.time.getElapsedTime() - timeMeteoro > 20) {

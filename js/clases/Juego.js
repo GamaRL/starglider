@@ -86,8 +86,8 @@ class Juego {
         this.player = new Jugador(this.camera, this.models[3]);
         this.scene.add(this.player.nave_img);
 
-        this.targets = [[], []]; //Guarda los enemigos que se van creando en el juego
-        this.targets_objects = [[], []]; //Guarda el objeto Object3D correspondiente a los enemigos
+        this.targets = []; //Guarda los enemigos que se van creando en el juego
+        this.targets_objects = []; //Guarda el objeto Object3D correspondiente a los enemigos
         this.balas_enemigas = []; //Guarda todas las balas enemigas
 
         this.drawStars(0xBD3673, 50);
@@ -108,6 +108,7 @@ class Juego {
             if (evt.keyCode === 32) {
                 this.soundTheme.play(0.8);
                 this.player.disparar();
+                console.log(this.targets, this.targets_objects);
             }
 
             if (evt.keyCode === 87) {
@@ -247,7 +248,7 @@ class Juego {
     async maketargets(target_number, constructor, arrayIndex) {
         let img;
         let level;
-        if (arrayIndex === 1) {
+        if (constructor === Meteoro) {
             img = this.models[4 + Math.floor((Math.random() - 0.01) * 4)].clone();
         } else {
             level = this.chooseEnemyLevel();
@@ -261,8 +262,9 @@ class Juego {
             this.player.nave_img.position.clone()
         );
 
-        this.targets[arrayIndex].push(new_target);
-        this.targets_objects[arrayIndex].push(new_target.img);
+        this.targets.push(new_target);
+        this.targets_objects.push(new_target.img);
+        console.log(this.targets, this.targets_objects);
 
         this.scene.add(new_target.img);
         this.radar.scene.add(new_target.img_radar);
@@ -287,8 +289,8 @@ class Juego {
     }
 
     countEnemys() {
-        let enemys=0;
-        for (let i=0; i<this.targets.length; i++) {
+        let enemys = 0;
+        for (let i = 0; i < this.targets.length; i++) {
             if (this.targets[i] instanceof Nave) enemys++;
         }
         return enemys;
@@ -315,82 +317,70 @@ class Juego {
 
         this.player.balas.forEach(bala => {
 
-            let crash_object = bala.update(delta, this.targets_objects[0]);
-            crash_object = (!crash_object) ? bala.update(delta, this.targets_objects[1]) : crash_object;
+            let crash_object = bala.update(delta, this.targets_objects);
 
             if (crash_object) {
-                this.targets.forEach(target_array => {
-                    target_array.forEach(target => {
-                        if (target.img.name === crash_object.name) {
-                            if (target.vida > 10) {
-                                target.vida -= bala.damage;
-                            } else if (!target.isDestroy) {
-                                target.destroy();
-                                if (target.level !== undefined)
-                                    this.player.addScore(Nave.level_info[target.level].score);
-                                else
-                                    this.player.addScore(target.score);
-                            }
+                this.targets.forEach(target => {
+                    if (target.img.name === crash_object.name) {
+                        if (target.vida > 10) {
+                            target.vida -= bala.damage;
+                        } else if (!target.isDestroy) {
+                            target.destroy();
+                            if (target.level !== undefined)
+                                this.player.addScore(Nave.level_info[target.level].score);
+                            else
+                                this.player.addScore(target.score);
                         }
-                    });
-                })
+                    }
+                });
             }
         });
 
-        this.mira.update(this.targets_objects[0].concat(this.targets_objects[1]), this.camera);
+        this.mira.update(this.targets_objects, this.camera);
 
-        let targetsUpdate = [];
-        this.targets.forEach(targetArray => {
-            targetArray.forEach(target => {
-                target.update(delta, this.camera.position.clone(), this.balas_enemigas);
-            });
-
-            targetsUpdate.push(targetArray.filter(target => {
-                if (target.isDestroy) {
-                    this.scene.remove(target.img);
-                    this.radar.scene.remove(target.img_radar);
-                    for (let i = 0; i < 2; i++)
-                        this.targets_objects[i] = this.targets_objects[i].filter(target_obj => {
-                            return target.img.name === target_obj.name;
-                        });
-                    return false;
-                } else {
-                    return true;
-                }
-            }));
+        this.targets.forEach(target => {
+            target.update(delta, this.camera.position.clone(), this.balas_enemigas);
         });
 
-        this.targets = targetsUpdate;
+        this.targets = this.targets.filter(target => {
+            if (target.isDestroy) {
+                this.scene.remove(target.img);
+                this.radar.scene.remove(target.img_radar);
+
+                this.targets_objects = this.targets_objects.filter(target_obj => {
+                    return target.img.name !== target_obj.name;
+                });
+
+                return false;
+            } else {
+                return true;
+            }
+        });
 
         this.player.balas = this.removeBalas(this.player.balas);
         this.balas_enemigas = this.removeBalas(this.balas_enemigas);
 
         this.player.update(delta);
 
-        for (let i = 0; i < this.player.misiles.length; i++) {
+        for (let i = 0; i < this.player.misiles.length; i++)
             if (this.player.misiles[i].update(delta)) {
-                for (let j = 0; j < 2; j++) {
-                    for (let k = 0; k < this.targets[j].length; k++) {
-                        if (this.player.misiles[i].target.name === this.targets[j][k].img.name) {
-                            this.scene.remove(this.targets[j][k].img);
-                            this.targets[j][k].destroy();
-                            this.targets_objects = this.targets_objects.filter(target => {
-                                return (target.name !== this.targets[j][k]);
-                            });
-                            this.scene.remove(this.player.misiles[i].img_misil);
-                            this.player.misiles[i].destroy();
-                            if (this.targets[j][k].level !== undefined)
-                                this.player.addScore(Nave.level_info[this.targets[j][k].level].score);
-                            else
-                                this.player.addScore(this.targets[j][k].score);
-                            console.log(this.targets_objects, this.targets);
-                        }
+                for (let j = 0; j < this.targets.length; j++)
+                    if (this.player.misiles[i].target.name === this.targets[j].img.name) {
+                        this.scene.remove(this.targets[j].img);
+                        this.targets[j].destroy();
+                        this.targets_objects = this.targets_objects.filter(target => {
+                            return (target.name !== this.targets[j].name);
+                        });
+                        this.scene.remove(this.player.misiles[i].img_misil);
+                        this.player.misiles[i].destroy();
+                        if (this.targets[j].level !== undefined)
+                            this.player.addScore(Nave.level_info[this.targets[j].level].score);
+                        else
+                            this.player.addScore(this.targets[j].score);
                     }
-                }
             }
-        }
 
-        this.player.clearMisiles(this.targets_objects[0]);
+        this.player.clearMisiles(this.targets_objects);
 
         this.flyControls.update(delta);
         this.renderer.render(this.scene, this.camera);
