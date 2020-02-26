@@ -46,11 +46,11 @@ class Juego {
 
         this.time = new THREE.Clock();
 
-        let light1 = new THREE.PointLight(0xffffff, 1.5, 1200);
-        light1.position.set(0, 0, 500);
+        let light1 = new THREE.PointLight(0xffffff, 1, 2000);
+        light1.position.set(0, 0, 1000);
 
-        let light2 = new THREE.PointLight(0xffffff, 1.5, 1200);
-        light2.position.set(0, 0, -500);
+        let light2 = new THREE.PointLight(0xffffff, 1, 2000);
+        light2.position.set(0, 0, -1000);
 
         this.scene.add(light1);
         this.scene.add(light2);
@@ -74,6 +74,7 @@ class Juego {
 
         lightSun.add(lensflare);
         this.scene.add(lightSun);
+
 
 
         this.mira = new Mira(id_element);
@@ -147,11 +148,12 @@ class Juego {
 
         let folders = ["Clouds", "Gaseous", "Habitable", "Inhospitable", "Terrestrial"];
         let positions = [
-            new THREE.Vector3(400, -300, 400),
-            new THREE.Vector3(400, -300, -400),
-            new THREE.Vector3(-400, -300, 400),
-            new THREE.Vector3(-400, -300, -400),
-            new THREE.Vector3(0, 250, 0)
+            new THREE.Vector3(500, -500, -600),
+            new THREE.Vector3(-500, -600, 400),
+            new THREE.Vector3(400, 250, 0),
+            new THREE.Vector3(500, -500, 600),
+
+            new THREE.Vector3(-500, -600, -1000)
         ];
         this.planets = [];
         folders.forEach(folder => {
