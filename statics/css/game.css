@@ -136,7 +136,7 @@ div.radar {
     position: absolute;
     bottom: 15%;
     left: 0;
-    z-index: 50;
+    z-index: 30;
     width: 20vh;
     height: 20vh;
 }
@@ -155,7 +155,6 @@ div.radar {
     top: 4vh;
     left: 100%;
 }
-
 
 #modal {
     display: none;
