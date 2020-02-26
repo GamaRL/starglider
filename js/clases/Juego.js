@@ -122,7 +122,6 @@ class Juego {
                     console.log(newMisil);
                     this.scene.add(newMisil.img_misil);
                 }
-
             }
         };
 
@@ -287,6 +286,14 @@ class Juego {
         });
     }
 
+    countEnemys() {
+        let enemys=0;
+        for (let i=0; i<this.targets.length; i++) {
+            if (this.targets[i] instanceof Nave) enemys++;
+        }
+        return enemys;
+    }
+
 
     /*****************************************************
      * Método update: se encarga de actualizar todos
@@ -342,6 +349,10 @@ class Juego {
                 if (target.isDestroy) {
                     this.scene.remove(target.img);
                     this.radar.scene.remove(target.img_radar);
+                    for (let i = 0; i < 2; i++)
+                        this.targets_objects[i] = this.targets_objects[i].filter(target_obj => {
+                            return target.img.name === target_obj.name;
+                        });
                     return false;
                 } else {
                     return true;
@@ -366,23 +377,20 @@ class Juego {
                             this.targets_objects = this.targets_objects.filter(target => {
                                 return (target.name !== this.targets[j][k]);
                             });
-                            // this.targets = this.targets.filter(target => {
-                            //     return (target.name !== this.targets[j][k]);
-                            // });
                             this.scene.remove(this.player.misiles[i].img_misil);
                             this.player.misiles[i].destroy();
                             if (this.targets[j][k].level !== undefined)
                                 this.player.addScore(Nave.level_info[this.targets[j][k].level].score);
                             else
                                 this.player.addScore(this.targets[j][k].score);
-                            // this.player.removeMisil(i);
+                            console.log(this.targets_objects, this.targets);
                         }
                     }
                 }
             }
         }
 
-        this.player.clearMisiles();
+        this.player.clearMisiles(this.targets_objects[0]);
 
         this.flyControls.update(delta);
         this.renderer.render(this.scene, this.camera);

@@ -76,7 +76,6 @@ class Nave {
             new THREE.SphereGeometry(0.2, 32, 32),
             new THREE.MeshBasicMaterial({color: Nave.level_info[this.level].color})
         );
-        60
         this.img_radar.position.copy(this.img.position);
 
         this.soundEffect = new Sound("laser_enemigo.mp3");

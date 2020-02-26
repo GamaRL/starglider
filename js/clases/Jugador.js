@@ -135,8 +135,14 @@ class Jugador {
         this.camera.getWorldDirection(desfase);
 
         position.addScaledVector(desfase, 1);
-        let newMisil = new Misil(position, pointing, img);
-        this.misiles.push(newMisil);
+        let response = true;
+        this.misiles.forEach(misil => {
+           if (misil.target.name === pointing.name) response = false
+        });
+        if (response) {
+            let newMisil = new Misil(position, pointing, img);
+            this.misiles.push(newMisil);
+        }
     }
 
     addScore(extraScore) {
@@ -144,11 +150,9 @@ class Jugador {
         this.puntajeContador.innerText = this.puntaje;
     }
 
-    clearMisiles() {
+    clearMisiles(objects) {
         this.misiles = this.misiles.filter(misil => {
-            console.log("Eliminado");
-            console.log(this.misiles);
-            return misil.live;
+            return misil.live && !(objects.indexOf(misil.targets) >= 0);
         })
     }
 }
