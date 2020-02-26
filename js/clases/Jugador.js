@@ -18,18 +18,20 @@ class Jugador {
         this.vida = 1000;
         this.puntaje = 0;
         this.balas = [];
+
         this.camera = camera;
         this.nave_img = nave_img.clone();
         this.nave_img.position.set(0, 0, 0);
         this.escudo = new Escudo();
-
         this.barraVida = document.createElement("div");
+
         this.barraVida.setAttribute("id", "barraVida");
         document.getElementById("game_output").appendChild(this.barraVida);
-
         this.puntajeContador = document.createElement("div");
+
         this.puntajeContador.setAttribute("id", "puntajeContador");
         document.getElementById("game_output").appendChild(this.puntajeContador);
+        this.addScore(0);
 
         this.misiles = [];
 
@@ -81,15 +83,11 @@ class Jugador {
 
         this.barraVida.style.width = (Math.floor(400 * this.vida / 1000)) + "px";
         if (this.vida < 1000)
-            this.vida += 10;
+            this.vida += 0.5;
 
         let r = (this.vida <= 500) ? 255 : Math.floor(255 * (1 - (this.vida - 500) / 500));
         let g = (this.vida >= 500) ? 255 : Math.floor(255 * (this.vida / 500));
         this.escudo.update(dt);
-
-        for (let i=0; i<this.misiles.length; i++) {
-            this.misiles[i].update(dt);
-        }
 
         this.barraVida.style.backgroundColor = `rgb(${r}, ${g}, 0)`;
     }
@@ -132,12 +130,25 @@ class Jugador {
      * Parámetros:
      ***********************************************/
     dispararMisil(img, pointing) {
-        let newMisil = new Misil(this.nave_img.position.clone(), pointing, img);
+        let position = this.nave_img.position.clone();
+        let desfase = new THREE.Vector3();
+        this.camera.getWorldDirection(desfase);
+
+        position.addScaledVector(desfase, 1);
+        let newMisil = new Misil(position, pointing, img);
         this.misiles.push(newMisil);
     }
 
     addScore(extraScore) {
         this.puntaje += extraScore;
         this.puntajeContador.innerText = this.puntaje;
+    }
+
+    clearMisiles() {
+        this.misiles = this.misiles.filter(misil => {
+            console.log("Eliminado");
+            console.log(this.misiles);
+            return misil.live;
+        })
     }
 }

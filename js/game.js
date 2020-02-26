@@ -36,7 +36,7 @@ loader.load('../statics/3Dmodels/nave11.glb', model => {
             models.push(model.scene.children[0]);
             loader.load('../statics/3Dmodels/nave.glb', model => {
                 models.push(model.scene.children[2]);
-                loader.load('../statics/3Dmodels/met1.glb', model => {
+                loader.load('../statics/3Dmodels/misil.glb', model => {
                     models.push(new THREE.Group().add(model.scene.children[0]));
                     loader.load('../statics/3Dmodels/met2.glb', model => {
                         models.push(new THREE.Group().add(model.scene.children[0]));

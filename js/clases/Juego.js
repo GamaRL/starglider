@@ -56,24 +56,23 @@ class Juego {
         this.scene.add(light2);
 
 
-
-        let lightSun = new THREE.PointLight( 0xffffff, 1.5, 1000 );
-        lightSun.position.set(400,0,0);
+        let lightSun = new THREE.PointLight(0xffffff, 1.5, 1000);
+        lightSun.position.set(400, 0, 0);
         let textureLoader = new THREE.TextureLoader();
-        let textureFlare0 = textureLoader.load( "../statics/images/stars/sun.png" );
-        let textureFlare2 = textureLoader.load( "../statics/images/stars/sun3.png" );
-        let textureFlare3 = textureLoader.load( "../statics/images/stars/sun3.png" );
-        let textureFlare4 = textureLoader.load( "../statics/images/stars/sun3.png" );
-        let textureFlare5 = textureLoader.load( "../statics/images/stars/sun4.png" );
+        let textureFlare0 = textureLoader.load("../statics/images/stars/sun.png");
+        let textureFlare2 = textureLoader.load("../statics/images/stars/sun3.png");
+        let textureFlare3 = textureLoader.load("../statics/images/stars/sun3.png");
+        let textureFlare4 = textureLoader.load("../statics/images/stars/sun3.png");
+        let textureFlare5 = textureLoader.load("../statics/images/stars/sun4.png");
 
         var lensflare = new THREE.Lensflare();
-        lensflare.addElement( new THREE.LensflareElement( textureFlare0, 312, 0 ) );
-        lensflare.addElement( new THREE.LensflareElement( textureFlare2, 52, 0.6 ) );
-        lensflare.addElement( new THREE.LensflareElement( textureFlare3, 22, 0.75 ) );
-        lensflare.addElement( new THREE.LensflareElement( textureFlare4, 72, 0.7 ) );
-        lensflare.addElement( new THREE.LensflareElement( textureFlare5, 50, 0.2 ) );
+        lensflare.addElement(new THREE.LensflareElement(textureFlare0, 312, 0));
+        lensflare.addElement(new THREE.LensflareElement(textureFlare2, 52, 0.6));
+        lensflare.addElement(new THREE.LensflareElement(textureFlare3, 22, 0.75));
+        lensflare.addElement(new THREE.LensflareElement(textureFlare4, 72, 0.7));
+        lensflare.addElement(new THREE.LensflareElement(textureFlare5, 50, 0.2));
 
-        lightSun.add( lensflare );
+        lightSun.add(lensflare);
         this.scene.add(lightSun);
 
 
@@ -324,7 +323,6 @@ class Juego {
                                     this.player.addScore(Nave.level_info[target.level].score);
                                 else
                                     this.player.addScore(target.score);
-                                console.log(this.player.puntaje);
                             }
                         }
                     });
@@ -357,6 +355,34 @@ class Juego {
         this.balas_enemigas = this.removeBalas(this.balas_enemigas);
 
         this.player.update(delta);
+
+        for (let i = 0; i < this.player.misiles.length; i++) {
+            if (this.player.misiles[i].update(delta)) {
+                for (let j = 0; j < 2; j++) {
+                    for (let k = 0; k < this.targets[j].length; k++) {
+                        if (this.player.misiles[i].target.name === this.targets[j][k].img.name) {
+                            this.scene.remove(this.targets[j][k].img);
+                            this.targets[j][k].destroy();
+                            this.targets_objects = this.targets_objects.filter(target => {
+                                return (target.name !== this.targets[j][k]);
+                            });
+                            // this.targets = this.targets.filter(target => {
+                            //     return (target.name !== this.targets[j][k]);
+                            // });
+                            this.scene.remove(this.player.misiles[i].img_misil);
+                            this.player.misiles[i].destroy();
+                            if (this.targets[j][k].level !== undefined)
+                                this.player.addScore(Nave.level_info[this.targets[j][k].level].score);
+                            else
+                                this.player.addScore(this.targets[j][k].score);
+                            // this.player.removeMisil(i);
+                        }
+                    }
+                }
+            }
+        }
+
+        this.player.clearMisiles();
 
         this.flyControls.update(delta);
         this.renderer.render(this.scene, this.camera);
