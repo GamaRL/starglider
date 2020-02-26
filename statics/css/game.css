@@ -132,50 +132,30 @@ div.radar {
     font-size: 40px;
 }
 
-
-@keyframes shieldCharged {
-    from {
-        width: 100px;
-        height: 100px;
-        border: 30px solid rgba(88, 202, 255, 1);
-    }
-    to {
-        border: 50px solid transparent;
-        width: 110px;
-        height: 110px;
-    }
+#num_misiles {
+    position: absolute;
+    bottom: 15%;
+    left: 0;
+    z-index: 50;
+    width: 20vh;
+    height: 20vh;
 }
 
-@keyframes attak {
-    0% {
-        width: 110%;
-        height: 102%;
-    }
-    50% {
-        width: 100%;
-        height: 100%;
-    }
-    100% {
-        width: 110%;
-        height: 101%;
-    }
+#num_misiles img {
+    height: 20vh;
 }
 
-@keyframes waveEffect {
-    from {
-        width: 0;
-        height: 0;
-        opacity: 1;
-        /*border: 5px solid;*/
-    }
-    to {
-        /*border: 100px solid transparent;*/
-        /*border: 100px solid;*/
-        opacity: 0;
-        width: 700px;
-        height: 700px;
-    }
+#num_misiles div {
+    display: inline;
+    color: white;
+    margin: 10px 10px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 8vh;
+    position: absolute;
+    top: 4vh;
+    left: 100%;
 }
+
 
 #modal {
     display: none;
@@ -276,4 +256,45 @@ div.radar {
 
 button:focus {
     outline: none;
+}
+
+@keyframes shieldCharged {
+    from {
+        width: 100px;
+        height: 100px;
+        border: 30px solid rgba(88, 202, 255, 1);
+    }
+    to {
+        border: 50px solid transparent;
+        width: 110px;
+        height: 110px;
+    }
+}
+
+@keyframes attak {
+    0% {
+        width: 110%;
+        height: 102%;
+    }
+    50% {
+        width: 100%;
+        height: 100%;
+    }
+    100% {
+        width: 110%;
+        height: 101%;
+    }
+}
+
+@keyframes waveEffect {
+    from {
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        width: 700px;
+        height: 700px;
+    }
 }

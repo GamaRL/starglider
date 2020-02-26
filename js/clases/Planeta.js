@@ -45,10 +45,13 @@ class Planeta {
         this.movementSpeed = (Math.random() - 0.5) * 0.005;
     }
 
+    /*****************************************
+     * Método update: Actualiza el estado del
+     *   planeta, hace que gire
+     *****************************************/
     update() {
         this.figure.rotation.y += this.movementSpeed;
         this.cloud.rotation.y += this.movementSpeed;
         this.backcloud.rotation.y += this.movementSpeed;
-
     }
 }

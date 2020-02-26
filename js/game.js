@@ -44,7 +44,11 @@ loader.load('../statics/3Dmodels/nave11.glb', model => {
                             models.push(new THREE.Group().add(model.scene.children[0]));
                             loader.load('../statics/3Dmodels/met4.glb', model => {
                                 models.push(new THREE.Group().add(model.scene.children[0]));
-                                init();
+                                loader.load('../statics/3Dmodels/misil.glb', model => {
+                                    models.push(new THREE.Group().add(model.scene.children[0]));
+
+                                    init();
+                                }, undefined, error => console.log(error));
                             }, undefined, error => console.log(error));
                         }, undefined, error => console.log(error));
 
@@ -80,7 +84,7 @@ function init() {
         if (game.playerIsAlive()) {
             game.update();
 
-            if (game.targets[0].length < 5 + Math.floor(game.player.puntaje / 100)) {
+            if (game.countEnemys() < 5 + Math.floor(game.player.puntaje / 100)) {
                 game.maketargets(target_number++, Nave, 0);
             }
             if (game.time.getElapsedTime() - timeMeteoro > 20) {

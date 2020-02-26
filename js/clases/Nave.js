@@ -13,18 +13,18 @@ class Nave {
             color: 0xFF6A09,
             acc_length: 3,
             trigger_probability: 0.975,
-            bullet_speed: 50,
+            bullet_speed: 20,
             bullet_damage: 5,
             score: 10,
             distance_target: 20,
             vida: 100
         },
         {
-            max_speed: 10,
+            max_speed: 12,
             color: 0xFF124F,
-            acc_length: 4,
+            acc_length: 5,
             trigger_probability: 0.97,
-            bullet_speed: 60,
+            bullet_speed: 25,
             bullet_damage: 5,
             score: 15,
             distance_target: 15,
@@ -35,7 +35,7 @@ class Nave {
             color: 0xFF0000,
             acc_length: 7,
             trigger_probability: 0.98,
-            bullet_speed: 60,
+            bullet_speed: 30,
             bullet_damage: 10,
             score: 25,
             distance_target: 50,
@@ -76,7 +76,6 @@ class Nave {
             new THREE.SphereGeometry(0.2, 32, 32),
             new THREE.MeshBasicMaterial({color: Nave.level_info[this.level].color})
         );
-        60
         this.img_radar.position.copy(this.img.position);
 
         this.soundEffect = new Sound("laser_enemigo.mp3");
@@ -108,11 +107,10 @@ class Nave {
             this.img.position,
             velocity,
             0xBD000E,
-            new THREE.SphereBufferGeometry(0.02, 32, 32),
+            new THREE.SphereBufferGeometry(0.05, 32, 32),
             Nave.level_info[this.level].bullet_damage
         ));
     }
-
 
     /*******************************************************
      * Método update: Actualiza la posición de la nave,
@@ -148,10 +146,8 @@ class Nave {
         this.img.lookAt(player_position);
         if (this.level === 2) {
             this.img.rotateY(-1.5);
-            // this.img.rotateY(this.desfase);
         } else {
-            this.img.rotateX(-0.3);
-            // this.img.rotateX(-this.desfase);
+            this.img.rotateX(-0.2);
         }
         this.img_radar.position.copy(this.img.position);
 

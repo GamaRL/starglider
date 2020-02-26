@@ -18,19 +18,32 @@ class Jugador {
         this.vida = 1000;
         this.puntaje = 0;
         this.balas = [];
+
         this.camera = camera;
         this.nave_img = nave_img.clone();
         this.nave_img.position.set(0, 0, 0);
         this.escudo = new Escudo();
-
         this.barraVida = document.createElement("div");
+        this.numMisiles = 5;
+        this.extraMisilCounter = 0;
+
         this.barraVida.setAttribute("id", "barraVida");
         document.getElementById("game_output").appendChild(this.barraVida);
 
         this.puntajeContador = document.createElement("div");
         this.puntajeContador.setAttribute("id", "puntajeContador");
         document.getElementById("game_output").appendChild(this.puntajeContador);
+        this.addScore(0);
 
+        this.numMisliesTag = document.createElement("div");
+        this.numMisliesTag.setAttribute("id", "num_misiles");
+        let divImage = document.createElement("img");
+        divImage.setAttribute("src", "../statics/images/misil.png");
+        this.numMisliesTag.appendChild(divImage);
+        this.numMisliesTag.appendChild(document.createElement("div"));
+        document.getElementById("game_output").appendChild(this.numMisliesTag);
+
+        this.addMisilDispon(0);
         this.misiles = [];
 
         document.onkeypress = (evt) => {
@@ -60,11 +73,11 @@ class Jugador {
             new Bala(
                 new THREE.Vector3(1, 0, 0).unproject(this.camera),
                 velocity,
-                0x0BBD20, ),
+                0x0BBD20,),
             new Bala(
                 new THREE.Vector3(-1, 0, 0).unproject(this.camera),
                 velocity,
-                0x0BBD20, )
+                0x0BBD20,)
         );
     }
 
@@ -81,17 +94,19 @@ class Jugador {
 
         this.barraVida.style.width = (Math.floor(400 * this.vida / 1000)) + "px";
         if (this.vida < 1000)
-            this.vida += 0.3;
+        this.vida += 0.3;
 
         let r = (this.vida <= 500) ? 255 : Math.floor(255 * (1 - (this.vida - 500) / 500));
         let g = (this.vida >= 500) ? 255 : Math.floor(255 * (this.vida / 500));
         this.escudo.update(dt);
 
-        for (let i=0; i<this.misiles.length; i++) {
-            this.misiles[i].update(dt);
-        }
-
         this.barraVida.style.backgroundColor = `rgb(${r}, ${g}, 0)`;
+        this.extraMisilCounter += dt;
+
+        if (this.extraMisilCounter > 20) {
+            this.addMisilDispon(1 + Math.floor(this.puntaje/150));
+            this.extraMisilCounter = 0;
+        }
     }
 
     /*****************************************************
@@ -120,7 +135,7 @@ class Jugador {
             }, 200, this.camera, this.escudo);
 
         } else if (crash) {
-            let  CrashShield = new Sound("shieldcrash.mp3");
+            let CrashShield = new Sound("shieldcrash.mp3");
             CrashShield.play(1);
 
             this.escudo.underFire();
@@ -132,12 +147,40 @@ class Jugador {
      * Parámetros:
      ***********************************************/
     dispararMisil(img, pointing) {
-        let newMisil = new Misil(this.nave_img.position.clone(), pointing, img);
-        this.misiles.push(newMisil);
+        let position = this.nave_img.position.clone();
+        let desfase = new THREE.Vector3();
+        this.camera.getWorldDirection(desfase);
+
+        position.addScaledVector(desfase, 1);
+        let response = true;
+        this.misiles.forEach(misil => {
+            if (misil.target.name === pointing.name) response = false
+        });
+        if (response) {
+            let newMisil = new Misil(position, pointing, img);
+            this.misiles.push(newMisil);
+        }
     }
 
     addScore(extraScore) {
         this.puntaje += extraScore;
         this.puntajeContador.innerText = this.puntaje;
+    }
+
+    clearMisiles(objects) {
+        this.misiles = this.misiles.filter(misil => {
+            return misil.live && !(objects.indexOf(misil.targets) >= 0);
+        })
+    }
+
+    addMisilDispon(number) {
+        let misilElement = document.querySelector("#num_misiles div");
+        console.log(misilElement);
+        this.numMisiles += number;
+        misilElement.innerText = this.numMisiles;
+    }
+
+    hasMisiles() {
+        return this.numMisiles > 0;
     }
 }

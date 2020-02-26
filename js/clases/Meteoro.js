@@ -53,7 +53,7 @@ class Meteoro {
     update(dt, player_position) {
         this.img.position.addScaledVector(this.velocity, dt);
         this.img_radar.position.copy(this.img.position);
-        if (player_position.sub(this.img.position).length() > 100) {
+        if (player_position.sub(this.img.position).length() > 1000) {
             this.destroy();
         }
     }

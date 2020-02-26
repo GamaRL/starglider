@@ -56,25 +56,23 @@ class Juego {
         this.scene.add(light2);
 
 
-
-        let lightSun = new THREE.PointLight( 0xFFE7DA , 2, 4000 );
-        lightSun.position.set(400,0,0);
+        let lightSun = new THREE.PointLight(0xffffff, 1.5, 1000);
+        lightSun.position.set(400, 0, 0);
         let textureLoader = new THREE.TextureLoader();
-        let textureFlare0 = textureLoader.load( "../statics/images/stars/sun.jpeg" );
-
-        let textureFlare2 = textureLoader.load( "../statics/images/stars/sun3.png" );
-        let textureFlare4 = textureLoader.load( "../statics/images/stars/sun3.png" );
-        let textureFlare5 = textureLoader.load( "../statics/images/stars/sun4.png" );
+        let textureFlare0 = textureLoader.load("../statics/images/stars/sun.png");
+        let textureFlare2 = textureLoader.load("../statics/images/stars/sun3.png");
+        let textureFlare3 = textureLoader.load("../statics/images/stars/sun3.png");
+        let textureFlare4 = textureLoader.load("../statics/images/stars/sun3.png");
+        let textureFlare5 = textureLoader.load("../statics/images/stars/sun4.png");
 
         var lensflare = new THREE.Lensflare();
-        lensflare.addElement( new THREE.LensflareElement( textureFlare0, 312, 0 ) );
-        lensflare.addElement( new THREE.LensflareElement( textureFlare2, 52, 0.01 ) );
-        lensflare.addElement( new THREE.LensflareElement( textureFlare2, 52, 0.6 ) );
-        lensflare.addElement( new THREE.LensflareElement( textureFlare2, 22, 0.75 ) );
-        lensflare.addElement( new THREE.LensflareElement( textureFlare4, 72, 0.7 ) );
-        lensflare.addElement( new THREE.LensflareElement( textureFlare5, 50, 0.2 ) );
+        lensflare.addElement(new THREE.LensflareElement(textureFlare0, 312, 0));
+        lensflare.addElement(new THREE.LensflareElement(textureFlare2, 52, 0.6));
+        lensflare.addElement(new THREE.LensflareElement(textureFlare3, 22, 0.75));
+        lensflare.addElement(new THREE.LensflareElement(textureFlare4, 72, 0.7));
+        lensflare.addElement(new THREE.LensflareElement(textureFlare5, 50, 0.2));
 
-        lightSun.add( lensflare );
+        lightSun.add(lensflare);
         this.scene.add(lightSun);
 
 
@@ -86,11 +84,11 @@ class Juego {
 
         this.choosePlanets();
 
-        this.player = new Jugador(this.camera, this.models[3]);
+        this.player = new Jugador(this.camera, this.models[3].clone());
         this.scene.add(this.player.nave_img);
 
-        this.targets = [[], []]; //Guarda los enemigos que se van creando en el juego
-        this.targets_objects = [[], []]; //Guarda el objeto Object3D correspondiente a los enemigos
+        this.targets = []; //Guarda los enemigos que se van creando en el juego
+        this.targets_objects = []; //Guarda el objeto Object3D correspondiente a los enemigos
         this.balas_enemigas = []; //Guarda todas las balas enemigas
 
         this.drawStars(0xBD3673, 50);
@@ -119,13 +117,12 @@ class Juego {
             }
 
             if (evt.keyCode === 77) {
-                if (this.mira.pointing) {
-                    this.player.dispararMisil(this.models[4].clone(), this.mira.pointing);
+                if (this.mira.pointing && this.player.hasMisiles()) {
+                    this.player.dispararMisil(this.models[8].clone(), this.mira.pointing);
                     let newMisil = this.player.misiles[this.player.misiles.length - 1];
-                    console.log(newMisil);
                     this.scene.add(newMisil.img_misil);
+                    this.player.addMisilDispon(-1);
                 }
-
             }
         };
 
@@ -135,7 +132,7 @@ class Juego {
             }
         };
 
-        window.addEventListener('resize', this.onResize, false)
+        window.addEventListener('resize', this.onResize, false);
     };
 
     /*******************************************
@@ -252,8 +249,8 @@ class Juego {
     async maketargets(target_number, constructor, arrayIndex) {
         let img;
         let level;
-        if (arrayIndex === 1) {
-            img = this.models[4 + Math.floor((Math.random() - 0.01) * 4)].clone();
+        if (constructor === Meteoro) {
+            img = this.models[4 + Math.floor(Math.random() * 4)].clone();
         } else {
             level = this.chooseEnemyLevel();
             img = this.models[level].clone();
@@ -266,8 +263,8 @@ class Juego {
             this.player.nave_img.position.clone()
         );
 
-        this.targets[arrayIndex].push(new_target);
-        this.targets_objects[arrayIndex].push(new_target.img);
+        this.targets.push(new_target);
+        this.targets_objects.push(new_target.img);
 
         this.scene.add(new_target.img);
         this.radar.scene.add(new_target.img_radar);
@@ -291,6 +288,20 @@ class Juego {
         });
     }
 
+    /************************************************
+     * Método countEnemys: Cuenta las naves enamigas
+     *   que hay en el juego
+     * Return:
+     * - Cantidad de enemigos (Number)
+     *************************************************/
+    countEnemys() {
+        let enemys = 0;
+        for (let i = 0; i < this.targets.length; i++) {
+            if (this.targets[i] instanceof Nave) enemys++;
+        }
+        return enemys;
+    }
+
 
     /*****************************************************
      * Método update: se encarga de actualizar todos
@@ -312,63 +323,90 @@ class Juego {
 
         this.player.balas.forEach(bala => {
 
-            let crash_object = bala.update(delta, this.targets_objects[0]);
-            crash_object = (!crash_object) ? bala.update(delta, this.targets_objects[1]) : crash_object;
+            let crash_object = bala.update(delta, this.targets_objects);
 
             if (crash_object) {
-                this.targets.forEach(target_array => {
-                    target_array.forEach(target => {
-                        if (target.img.name === crash_object.name) {
-                            if (target.vida > 10) {
-                                target.vida -= bala.damage;
-                            } else if (!target.isDestroy) {
-                                target.destroy();
-                                if (target.level !== undefined)
-                                    this.player.addScore(Nave.level_info[target.level].score);
-                                else
-                                    this.player.addScore(target.score);
-                                console.log(this.player.puntaje);
-                            }
+                this.targets.forEach(target => {
+                    if (target.img.name === crash_object.name) {
+                        if (target.vida > 10) {
+                            target.vida -= bala.damage;
+                        } else if (!target.isDestroy) {
+                            target.destroy();
+                            if (target.level !== undefined)
+                                this.player.addScore(Nave.level_info[target.level].score);
+                            else
+                                this.player.addScore(target.score);
                         }
-                    });
-                })
+                    }
+                });
             }
         });
 
-        this.mira.update(this.targets_objects[0].concat(this.targets_objects[1]), this.camera);
+        this.mira.update(this.targets_objects, this.camera);
 
-        let targetsUpdate = [];
-        this.targets.forEach(targetArray => {
-            targetArray.forEach(target => {
-                target.update(delta, this.camera.position.clone(), this.balas_enemigas);
-            });
-
-            targetsUpdate.push(targetArray.filter(target => {
-                if (target.isDestroy) {
-                    this.scene.remove(target.img);
-                    this.radar.scene.remove(target.img_radar);
-                    return false;
-                } else {
-                    return true;
-                }
-            }));
+        this.targets.forEach(target => {
+            target.update(delta, this.camera.position.clone(), this.balas_enemigas);
         });
 
-        this.targets = targetsUpdate;
+        this.targets = this.targets.filter(target => {
+            if (target.isDestroy) {
+                this.scene.remove(target.img);
+                this.radar.scene.remove(target.img_radar);
+
+                this.targets_objects = this.targets_objects.filter(target_obj => {
+                    return target.img.name !== target_obj.name;
+                });
+
+                return false;
+            } else {
+                return true;
+            }
+        });
 
         this.player.balas = this.removeBalas(this.player.balas);
         this.balas_enemigas = this.removeBalas(this.balas_enemigas);
 
         this.player.update(delta);
 
+        for (let i = 0; i < this.player.misiles.length; i++)
+            if (this.player.misiles[i].update(delta)) {
+                for (let j = 0; j < this.targets.length; j++)
+                    if (this.player.misiles[i].target.name === this.targets[j].img.name) {
+                        this.scene.remove(this.targets[j].img);
+                        this.targets[j].destroy();
+                        this.targets_objects = this.targets_objects.filter(target => {
+                            return (target.name !== this.targets[j].name);
+                        });
+                        this.scene.remove(this.player.misiles[i].img_misil);
+                        this.player.misiles[i].destroy();
+                        if (this.targets[j].level !== undefined)
+                            this.player.addScore(Nave.level_info[this.targets[j].level].score);
+                        else
+                            this.player.addScore(this.targets[j].score);
+                    }
+            }
+
+        this.player.clearMisiles(this.targets_objects);
+
         this.flyControls.update(delta);
         this.renderer.render(this.scene, this.camera);
     }
 
+    /***************************************************
+     * Método playerIsAlive: Pregunta si el jugador aún
+     *   puede juegar.
+     * Return:
+     * - true si el jugador tiene vida o false si ya
+     *     no está vivo (Booleans)
+     ***************************************************/
     playerIsAlive() {
         return this.player.vida > 0;
     }
 
+    /**************************************************
+     * Método endGame: Se encarga de terminar el juego
+     *   mostrando el puntaje
+     **************************************************/
     endGame() {
         let modal = document.getElementById("modal");
         modal.style.display = "block";
