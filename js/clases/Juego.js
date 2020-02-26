@@ -108,7 +108,6 @@ class Juego {
             if (evt.keyCode === 32) {
                 this.soundTheme.play(0.8);
                 this.player.disparar();
-                console.log(this.targets, this.targets_objects);
             }
 
             if (evt.keyCode === 87) {
@@ -120,7 +119,6 @@ class Juego {
                 if (this.mira.pointing) {
                     this.player.dispararMisil(this.models[4].clone(), this.mira.pointing);
                     let newMisil = this.player.misiles[this.player.misiles.length - 1];
-                    console.log(newMisil);
                     this.scene.add(newMisil.img_misil);
                 }
             }
@@ -264,7 +262,6 @@ class Juego {
 
         this.targets.push(new_target);
         this.targets_objects.push(new_target.img);
-        console.log(this.targets, this.targets_objects);
 
         this.scene.add(new_target.img);
         this.radar.scene.add(new_target.img_radar);
