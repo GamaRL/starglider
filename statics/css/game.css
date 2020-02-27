@@ -142,7 +142,8 @@ div.radar {
 }
 
 #num_misiles img {
-    height: 20vh;
+    margin-top: 20%;
+    height: 11vh;
 }
 
 #num_misiles div {
