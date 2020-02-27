@@ -24,7 +24,7 @@ class Jugador {
         this.nave_img.position.set(0, 0, 0);
         this.escudo = new Escudo();
         this.barraVida = document.createElement("div");
-        this.numMisiles = 5;
+        this.numMisiles = 100;
         this.extraMisilCounter = 0;
 
         this.barraVida.setAttribute("id", "barraVida");
