@@ -18,9 +18,9 @@ if (!isset($_COOKIE['nick'])) {
     <script src="../js/vendor/three.min.js"></script>
     <script src="../js/vendor/FlyControls.js"></script>
     <script src="../js/vendor/Lensflare.js"></script>
-
     <script src="../js/vendor/GLTFLoader.js"></script>
     <script src="../js/game.js"></script>
+    <script src="../js/clases/Explosion.js"></script>
     <script src="../js/clases/Radar.js"></script>
     <script src="../js/clases/Jugador.js"></script>
     <script src="../js/clases/Bala.js"></script>

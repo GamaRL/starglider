@@ -23,7 +23,7 @@ class Bala {
             wireframe: true
         }));
         this.dibujo.position.copy(position);
-        this.vida = 3;
+        this.vida = 2;
         this.damage = damage;
         game.scene.add(this.dibujo);
     }
@@ -37,12 +37,14 @@ class Bala {
      *   que puede colisionar
      ********************************************************************/
     update(dt, targets) {
-        let intersects = this.cast_objects(this.velocity.length() * dt, targets);
         let crash_object;
+        let intersects = [];
+        if (this.vida > 1.5)
+            intersects = this.cast_objects(this.velocity.length() * dt, targets);
 
         let velocity = this.velocity.clone();
 
-        if (intersects.length > 0 && this.vida > 0) {
+        if (intersects.length > 0) {
             this.vida = 0;
             crash_object = intersects[0].object.parent;
         } else {

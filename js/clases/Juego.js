@@ -76,7 +76,6 @@ class Juego {
         this.scene.add(lightSun);
 
 
-
         this.mira = new Mira(id_element);
         this.radar = new Radar(id_element);
 
@@ -100,6 +99,7 @@ class Juego {
         this.drawStars(0xffffff, 800);
 
         this.soundTheme = new Sound("theme1.mp3");
+        this.explosions = [];
 
         document.onkeydown = (evt) => {
             /************************************************
@@ -109,6 +109,7 @@ class Juego {
             if (evt.keyCode === 32) {
                 this.soundTheme.play(0.8);
                 this.player.disparar();
+                console.log(this.balas_enemigas.length);
             }
 
             if (evt.keyCode === 87) {
@@ -330,12 +331,18 @@ class Juego {
                     if (target.img.name === crash_object.name) {
                         if (target.vida > 10) {
                             target.vida -= bala.damage;
+                            let newEx = new Explosion(target.img.position.clone(), 5);
+                            this.explosions.push(newEx);
+                            this.scene.add(newEx.effect);
                         } else if (!target.isDestroy) {
                             target.destroy();
                             if (target.level !== undefined)
                                 this.player.addScore(Nave.level_info[target.level].score);
                             else
                                 this.player.addScore(target.score);
+                            let newEx = new Explosion(target.img.position.clone(), 50);
+                            this.explosions.push(newEx);
+                            this.scene.add(newEx.effect);
                         }
                     }
                 });
@@ -372,6 +379,10 @@ class Juego {
             if (this.player.misiles[i].update(delta)) {
                 for (let j = 0; j < this.targets.length; j++)
                     if (this.player.misiles[i].target.name === this.targets[j].img.name) {
+                        let newEx = new Explosion(this.targets[j].img.position.clone(), 100);
+                        this.explosions.push(newEx);
+                        this.scene.add(newEx.effect);
+
                         this.scene.remove(this.targets[j].img);
                         this.targets[j].destroy();
                         this.targets_objects = this.targets_objects.filter(target => {
@@ -385,6 +396,15 @@ class Juego {
                             this.player.addScore(this.targets[j].score);
                     }
             }
+
+        for (let i = 0; i < this.explosions.length; i++) {
+            if (!this.explosions[i].update(delta)) {
+                this.scene.remove(this.explosions[i].effect);
+            }
+        }
+        this.explosions = this.explosions.filter(explosion => {
+            return explosion.live;
+        });
 
         this.player.clearMisiles(this.targets_objects);
 
