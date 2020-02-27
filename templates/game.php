@@ -32,6 +32,7 @@ if (!isset($_COOKIE['nick'])) {
     <script src="../js/clases/Historia.js"></script>
     <script src="../js/clases/Planeta.js"></script>
     <script src="../js/clases/Meteoro.js"></script>
+     <script src="../js/clases/Capsula.js"></script>
     <script src="../js/clases/Juego.js"></script>
 
 </head>

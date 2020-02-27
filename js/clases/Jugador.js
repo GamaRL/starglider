@@ -103,8 +103,8 @@ class Jugador {
         this.barraVida.style.backgroundColor = `rgb(${r}, ${g}, 0)`;
         this.extraMisilCounter += dt;
 
-        if (this.extraMisilCounter > 20) {
-            this.addMisilDispon(1 + Math.floor(this.puntaje / 150));
+        if (this.extraMisilCounter > 15) {
+            this.addMisilDispon(1);
             this.extraMisilCounter = 0;
         }
     }

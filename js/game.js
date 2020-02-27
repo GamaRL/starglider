@@ -46,8 +46,11 @@ loader.load('../statics/3Dmodels/nave1.glb', model => {
                                 models.push(new THREE.Group().add(model.scene.children[0]));
                                 loader.load('../statics/3Dmodels/misil.glb', model => {
                                     models.push(new THREE.Group().add(model.scene.children[0]));
+                                    loader.load('../statics/3Dmodels/capsula.glb', model => {
+                                        models.push(new THREE.Group().add(model.scene.children[0]));
 
-                                    init();
+                                        init();
+                                    }, undefined, error => console.log(error));
                                 }, undefined, error => console.log(error));
                             }, undefined, error => console.log(error));
                         }, undefined, error => console.log(error));

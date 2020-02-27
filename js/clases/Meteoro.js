@@ -36,6 +36,7 @@ class Meteoro {
         );
 
         this.img_radar.position.copy(this.img.position);
+        this.soundDestroyEffect = new Sound("explosion.mp3");
     }
 
 
@@ -63,6 +64,7 @@ class Meteoro {
      * meterito haya sido destruido
      *******************************************/
     destroy() {
+        this.soundDestroyEffect.play();
         this.vida = 0;
         this.isDestroy = true;
     }

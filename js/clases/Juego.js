@@ -100,6 +100,7 @@ class Juego {
 
         this.soundTheme = new Sound("theme1.mp3");
         this.explosions = [];
+        this.capsulas = [];
 
         document.onkeydown = (evt) => {
             /************************************************
@@ -109,7 +110,9 @@ class Juego {
             if (evt.keyCode === 32) {
                 this.soundTheme.play(0.8);
                 this.player.disparar();
-                console.log(this.balas_enemigas.length);
+                if (Math.random() > 0.9) {
+                    this.makeCapsula();
+                }
             }
 
             if (evt.keyCode === 16) {
@@ -137,7 +140,7 @@ class Juego {
             }
 
             if (evt.keyCode === 16) {
-                this.flyControls.rollSpeed = Math.PI/6;
+                this.flyControls.rollSpeed = Math.PI / 6;
             }
         };
 
@@ -175,6 +178,20 @@ class Juego {
             this.scene.add(newPlanet.backcloud);
         });
 
+    }
+
+    makeCapsula() {
+        let position = this.planets[Math.floor(Math.random() * 5)].figure.position.clone().add(
+            new THREE.Vector3(
+                Math.random() - 0.5,
+                Math.random() - 0.5,
+                Math.random() - 0.5
+            ).setLength(150)
+        );
+        let newCapsula = new Capsula(position, this.models[9].clone(), this.camera.position);
+        console.log(newCapsula);
+        this.capsulas.push(newCapsula);
+        this.scene.add(newCapsula.model);
     }
 
     /*******************************************************************
@@ -238,8 +255,7 @@ class Juego {
      * - level (Number)
      ****************************************************/
     chooseEnemyLevel() {
-        let fx = this.player.puntaje * 1.5 + 20;
-        console.log(fx);
+        let fx = Math.random() * (this.player.puntaje * 1.5 + 20);
         if (fx > 200)
             return 2;
         if (fx > 100)
@@ -410,8 +426,18 @@ class Juego {
                 this.scene.remove(this.explosions[i].effect);
             }
         }
+
+        for (let i=0; i< this.capsulas.length; i++ ) {
+            if (!this.capsulas[i].update(delta)) {
+                this.scene.remove(this.capsulas[i].model)
+            }
+        }
         this.explosions = this.explosions.filter(explosion => {
             return explosion.live;
+        });
+
+        this.capsulas = this.capsulas.filter(capsula => {
+            return capsula.isAlive();
         });
 
         this.player.clearMisiles(this.targets_objects);
