@@ -146,6 +146,8 @@ class Nave {
         this.img.lookAt(player_position);
         if (this.level === 2) {
             this.img.rotateY(-1.5);
+        } else if (this.level == 0){
+            this.img.rotateX(-2);
         } else {
             this.img.rotateX(-0.2);
         }

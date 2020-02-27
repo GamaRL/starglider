@@ -120,7 +120,7 @@ class Jugador {
     crashed(crash, damage) {
         if (crash && !this.escudo.isActivated()) {
             let soundCrash = new Sound("crash.mp3");
-            soundCrash.play(0.3);
+            soundCrash.play(0.15);
             this.vida -= damage;
             this.escudo.effect.classList.add("attak");
 

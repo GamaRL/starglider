@@ -112,6 +112,10 @@ class Juego {
                 console.log(this.balas_enemigas.length);
             }
 
+            if (evt.keyCode === 16) {
+                this.flyControls.rollSpeed = Math.PI / 50;
+            }
+
             if (evt.keyCode === 87) {
                 if (!this.maxSpeedActivated)
                     this.flyControls.movementSpeed = 10;
@@ -130,6 +134,10 @@ class Juego {
         document.onkeyup = (evt) => {
             if (evt.keyCode === 87) {
                 this.flyControls.movementSpeed = 1.5;
+            }
+
+            if (evt.keyCode === 16) {
+                this.flyControls.rollSpeed = Math.PI/6;
             }
         };
 
@@ -379,7 +387,7 @@ class Juego {
             if (this.player.misiles[i].update(delta)) {
                 for (let j = 0; j < this.targets.length; j++)
                     if (this.player.misiles[i].target.name === this.targets[j].img.name) {
-                        let newEx = new Explosion(this.targets[j].img.position.clone(), 100);
+                        let newEx = new Explosion(this.targets[j].img.position.clone(), 200);
                         this.explosions.push(newEx);
                         this.scene.add(newEx.effect);
 

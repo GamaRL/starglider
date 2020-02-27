@@ -26,10 +26,10 @@ let text = [];
 let game;
 let timeMeteoro = -20;
 
-loader.load('../statics/3Dmodels/nave11.glb', model => {
+loader.load('../statics/3Dmodels/nave1.glb', model => {
     model.scene.children[0].rotateX(Math.PI);
-    models.push(new THREE.Group().add(model.scene.children[0]));
-
+    console.log(model.scene.children);
+    models.push(model.scene.children[0]);
     loader.load('../statics/3Dmodels/nave2.glb', model => {
         models.push(model.scene.children[0]);
         loader.load('../statics/3Dmodels/nave3.glb', model => {
