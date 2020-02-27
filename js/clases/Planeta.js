@@ -38,7 +38,7 @@ class Planeta {
         let random = Math.random();
         this.cloud = createMesh(new THREE.SphereGeometry( random * 60 + 140, 40, 40), img_effect, true, false);
         this.backcloud = createMesh(new THREE.SphereGeometry(random * 60 + 140, 40, 40), img_effect, true, true );
-        this.figure = createMesh(new THREE.SphereGeometry(random * 60 + 130, 40, 40), img_file, false, false);
+        this.figure = createMesh(new THREE.SphereGeometry(random * 60 + 135, 40, 40), img_file, false, false);
         this.figure.position.copy(position);
         this.cloud.position.copy(position);
         this.backcloud.position.copy(position);
