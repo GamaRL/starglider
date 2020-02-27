@@ -26,7 +26,7 @@ body ul.menu {
 }
 
 body ul.menu li.menu-item {
-    margin: 3%;
+    margin: 0.5em 0;
     background-color: rgba(110, 159, 189, 0.5);
     line-height: 3;
     text-align: center;
@@ -67,4 +67,11 @@ div.regresar{
     left: 1em;
     padding: 1em;
     background-color: rgba(110, 159, 189, 0.5);
+}
+
+span.teclas {
+    background-color: #a8ceb5;
+    line-height: 3;
+    padding: 10px;
+    border-radius: 10px;
 }
