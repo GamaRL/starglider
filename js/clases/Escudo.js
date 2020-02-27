@@ -8,6 +8,9 @@
 class Escudo {
     static max_life = 10;
 
+    /*********************
+     * Método constructor
+     *********************/
     constructor() {
         this.life = Escudo.max_life;
         this.effect = document.createElement("div");
@@ -23,10 +26,20 @@ class Escudo {
         this.activate();
     }
 
+    /**************************************************
+     * Método isActivated: Nos dice si el escudo está
+     *   activado.
+     * Return:
+     * - Boolean
+     **************************************************/
     isActivated() {
         return this.activated;
     }
 
+    /****************************************
+     * Método makeAnimation: Efecto de cuando
+     *   se activa el escudo (Parpadeo)
+     ****************************************/
     makeAnimation() {
         setTimeout(effect => {
             if (effect.classList.contains("activated"))
@@ -48,6 +61,9 @@ class Escudo {
         }, 200, this.effect);
     }
 
+    /************************************
+     * Método activate: Activa el escudo
+     ************************************/
     activate() {
         this.soundEffect.play();
         this.activated = true;
@@ -55,6 +71,9 @@ class Escudo {
         this.makeAnimation();
     }
 
+    /******************************************
+     * Método desactivate: Desactiva el escudo
+     ******************************************/
     desactivate() {
         while (this.effect.firstChild) {
             this.effect.removeChild(this.effect.firstChild);
@@ -67,6 +86,13 @@ class Escudo {
         this.makeAnimation();
     }
 
+    /****************************************
+     * Método update: Actualiza el estado
+     *   del escudo
+     * Parámetros:
+     * - dt (Number): Diferencial de tiempo
+     *     para actualizar el escudo
+     ****************************************/
     update(dt) {
         if (this.activated) {
             this.life -= dt;
@@ -84,6 +110,10 @@ class Escudo {
         }
     }
 
+    /*********************************************
+     * Método underFire: Genera el efecto de borde
+     *   rojo cuando no está activado el escudo
+     *********************************************/
     underFire() {
         let newWave = document.createElement("img");
         newWave.setAttribute("src", "../statics/images/shieldblock.png");

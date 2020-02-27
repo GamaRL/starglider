@@ -15,13 +15,11 @@ class Capsula {
             Math.random() - 0.5
         ).setLength(30);
         this.live = true;
-        // this.player_pos = player_position;
     }
 
     update(dt) {
         this.model.position.addScaledVector(this.velocity, dt);
 
-        // this.model.lookAt(this.player_pos);
         this.model.rotateZ(Math.PI/2 * dt);
         if (this.model.position.length() > 1000)
             this.destroy();

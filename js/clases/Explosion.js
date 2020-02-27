@@ -26,6 +26,12 @@ class Explosion {
         new THREE.TextureLoader().load("../statics/images/exp16.png")
     ];
 
+    /***********************************************************************
+     * Método constructor
+     * Parámetros
+     * - position (Object): Posisión donde se egenerará la explosión
+     * - number (Number): Entre más grande sea, más grande será la explosión
+     ************************************************************************/
     constructor(position, number) {
         this.effect = new THREE.Group();
         this.effect.position.set(position.x, position.y, position.z);
@@ -55,6 +61,13 @@ class Explosion {
         this.time = 0;
     }
 
+    /****************************************************
+     * Método update: Actualiza el estado de la explosión
+     * Parámetros
+     * - dt (Number): Diferencial de tiempo
+     * Return
+     * - Boolean
+     *****************************************************/
     update(dt) {
         this.particles.forEach(particle => {
             particle.particle.position.addScaledVector(particle.velocity, dt);
@@ -66,32 +79,9 @@ class Explosion {
         return this.live;
     }
 
-    generateSprite() {
-        let canvas = document.createElement('canvas');
-        canvas.width = 16;
-        canvas.height = 16;
-
-        let context = canvas.getContext('2d');
-        let gradient = context.createRadialGradient(
-            canvas.width / 2,
-            canvas.height / 2,
-            0,
-            canvas.width / 2,
-            canvas.height / 2,
-            canvas.width / 2);
-
-        gradient.addColorStop(0.0, 'rgba(255,255,255,1)');
-        gradient.addColorStop(0.2, 'rgba(255,255,255,.8)');
-        gradient.addColorStop(0.5, 'rgba(255,255,255,.05)');
-        gradient.addColorStop(0.8, 'rgba(255,255,255,.01)');
-        gradient.addColorStop(1.0, 'rgba(255,255,255,0)');
-        context.fillStyle = gradient;
-        context.fillRect(0, 0, canvas.width, canvas.height);
-        let texture = new THREE.Texture(canvas);
-        texture.needsUpdate = true;
-        return texture;
-    }
-
+    /***************************************
+     * Método destroy: Elimina la explosión
+     ***************************************/
     destroy() {
         this.live = false;
     }

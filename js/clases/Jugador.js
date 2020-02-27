@@ -20,8 +20,10 @@ class Jugador {
         this.balas = [];
 
         this.camera = camera;
+
         this.nave_img = nave_img.clone();
         this.nave_img.position.set(0, 0, 0);
+
         this.escudo = new Escudo();
         this.barraVida = document.createElement("div");
         this.numMisiles = 5;

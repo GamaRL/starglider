@@ -75,7 +75,6 @@ class Juego {
         lightSun.add(lensflare);
         this.scene.add(lightSun);
 
-
         this.mira = new Mira(id_element);
         this.radar = new Radar(id_element);
 

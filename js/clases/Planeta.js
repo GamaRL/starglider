@@ -14,6 +14,8 @@ class Planeta {
      *   al planeta en la escena
      *  -position (Object): Posición en la que se colocará el
      *   planeta
+     *  -img_effect (Object): Modelo 3D que complementará
+     *   a img_file
      ***********************************************************/
     constructor(img_file, position, img_effect) {
         function createMesh(geom, imageFile, cloud = false, back) {

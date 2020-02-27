@@ -25,7 +25,7 @@ class Nave {
             acc_length: 5,
             trigger_probability: 0.97,
             bullet_speed: 25,
-            bullet_damage: 5,
+            bullet_damage: 7,
             score: 15,
             distance_target: 15,
             vida: 150
@@ -67,7 +67,6 @@ class Nave {
             Math.random() - 0.5).setLength(50 - Math.random() * 5)
             .add(player_position));
 
-        this.desfase = Math.random() * Math.PI / 2;
         this.img.name = id;
 
         this.level = level;
